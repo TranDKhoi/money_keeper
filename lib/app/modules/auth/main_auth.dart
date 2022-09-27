@@ -107,7 +107,6 @@ buildPage({required image, required des}) {
           des,
           style: const TextStyle(
             fontSize: 25,
-            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
           textAlign: TextAlign.center,

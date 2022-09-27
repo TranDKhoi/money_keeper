@@ -3,6 +3,10 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/modules/auth/main_auth.dart';
 import 'package:money_keeper/app/modules/auth/signup/signup_screen.dart';
 import 'package:money_keeper/app/modules/auth/signup/verify_signup.dart';
+import 'package:money_keeper/app/modules/bottom_bar/bottom_bar.dart';
+import 'package:money_keeper/app/modules/my_wallet/add_wallet.dart';
+import 'package:money_keeper/app/modules/my_wallet/edit_wallet.dart';
+import 'package:money_keeper/app/modules/my_wallet/my_wallet_screen.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
 import '../modules/auth/forgot/forgot_pass_screen.dart';
@@ -45,6 +49,26 @@ class AppPages {
       name: resetPassRoute,
       page: () => const ResetPassScreen(),
       transition: Transition.fade,
+    ),
+    GetPage(
+      name: bottomBarRoute,
+      page: () => const BottomBar(),
+      transition: Transition.fade,
+    ),
+    GetPage(
+      name: myWalletRoute,
+      page: () => MyWalletScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: addWalletRoute,
+      page: () => AddWalletScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: editWalletRoute,
+      page: () => EditWalletScreen(),
+      transition: Transition.rightToLeft,
     ),
   ];
 }

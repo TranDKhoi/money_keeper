@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/routes/pages.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
+import 'core/values/theme.dart';
+
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
@@ -12,34 +14,10 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       getPages: AppPages.pages,
       debugShowCheckedModeBanner: false,
-      initialRoute: mainAuthScreenRoute,
+      initialRoute: bottomBarRoute,
       builder: EasyLoading.init(),
-
-      //THEMEEEE
-      theme: ThemeData.light().copyWith(
-        colorScheme: const ColorScheme.light(primary: Colors.green),
-        appBarTheme: AppBarTheme(
-          elevation: 0,
-          foregroundColor: Colors.black,
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-            fillColor: Theme.of(context).scaffoldBackgroundColor, filled: true),
-        tabBarTheme: TabBarTheme(
-          labelColor: Colors.black,
-          unselectedLabelColor: Colors.black.withOpacity(0.5),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-        ),
-        listTileTheme: const ListTileThemeData(
-          iconColor: Color(0xff818383),
-        ),
-      ),
+      theme: AppColors.lightTheme,
+      darkTheme: AppColors.darkTheme,
     );
   }
 }
