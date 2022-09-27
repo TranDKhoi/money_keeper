@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/controllers/forgot_controller.dart';
 import 'package:money_keeper/app/controllers/login_controller.dart';
 
 class ForgotPassScreen extends StatefulWidget {
@@ -10,7 +11,7 @@ class ForgotPassScreen extends StatefulWidget {
 }
 
 class _ForgotPassScreenState extends State<ForgotPassScreen> {
-  final _controller = Get.put(LoginController());
+  final _controller = Get.put(ForgotPassController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                 fontSize: 25,
               ),
             ),
+            const SizedBox(height: 20),
             TextField(
               controller: _controller.emailTextController,
               keyboardType: TextInputType.emailAddress,
@@ -37,7 +39,6 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
                 hintText: "Email",
               ),
             ),
-            const SizedBox(height: 20),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {

@@ -50,7 +50,7 @@ class _MainAuthScreenState extends State<MainAuthScreen> {
           children: [
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 40),
-              height: 140,
+              height: 80,
               child: Center(
                 child: SmoothPageIndicator(
                   controller: controller,
@@ -98,7 +98,7 @@ class _MainAuthScreenState extends State<MainAuthScreen> {
 buildPage({required image, required des}) {
   return Column(
     children: [
-      const SizedBox(height: 80),
+      const SizedBox(height: 180),
       Image.asset(image),
       const SizedBox(height: 20),
       Padding(

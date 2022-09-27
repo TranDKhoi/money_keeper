@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/controllers/forgot_controller.dart';
 import 'package:money_keeper/app/controllers/login_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 
@@ -12,7 +13,7 @@ class VerifyForgotScreen extends StatefulWidget {
 }
 
 class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
-  final _controller = Get.put(LoginController());
+  final _controller = Get.put(ForgotPassController());
 
   @override
   Widget build(BuildContext context) {

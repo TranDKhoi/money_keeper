@@ -1,13 +1,14 @@
 //routes navigation
 import 'package:get/get.dart';
-import 'package:money_keeper/app/modules/auth/login/forgot_pass_screen.dart';
 import 'package:money_keeper/app/modules/auth/main_auth.dart';
 import 'package:money_keeper/app/modules/auth/signup/signup_screen.dart';
 import 'package:money_keeper/app/modules/auth/signup/verify_signup.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
+import '../modules/auth/forgot/forgot_pass_screen.dart';
+import '../modules/auth/forgot/reset_pass_screen.dart';
 import '../modules/auth/login/login_screen.dart';
-import '../modules/auth/login/verify_forgot.dart';
+import '../modules/auth/forgot/verify_forgot.dart';
 
 class AppPages {
   static final pages = [
@@ -39,6 +40,11 @@ class AppPages {
       name: verifyForgotRoute,
       page: () => const VerifyForgotScreen(),
       transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: resetPassRoute,
+      page: () => const ResetPassScreen(),
+      transition: Transition.fade,
     ),
   ];
 }

@@ -12,11 +12,11 @@ class Utils {
       ..indicatorColor = Colors.green
       ..userInteractions = false
       ..dismissOnTap = false
-      ..textColor = Colors.black;
+      ..textColor = Colors.black
+      ..toastPosition = EasyLoadingToastPosition.bottom;
   }
 }
 
 extension GetSize on BuildContext {
   Size get screenSize => MediaQuery.of(this).size;
 }
-

@@ -31,6 +31,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 fontSize: 30,
               ),
             ),
+            const SizedBox(height: 20),
             TextField(
               controller: _controller.emailTextController,
               keyboardType: TextInputType.emailAddress,

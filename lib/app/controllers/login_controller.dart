@@ -25,20 +25,6 @@ class LoginController extends GetxController {
     }
   }
 
-  void toVerifyScreen() {
-    if (emailTextController.text.isNotEmpty) {
-      Get.toNamed(verifyForgotRoute);
-    } else {
-      EasyLoading.showToast("Vui lòng điền đủ thông tin");
-    }
-  }
-
-  void verifyCodeFunc() {
-    if (secureCode != null && secureCode == 000000) {
-      EasyLoading.showToast("ok roi nha");
-    }
-  }
-
   bool isValidData() {
     return emailTextController.text.isNotEmpty &&
         passTextController.text.isNotEmpty;

@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:money_keeper/app/controllers/login_controller.dart';
-import 'package:money_keeper/app/core/utils/utils.dart';
+import 'package:money_keeper/app/controllers/forgot_controller.dart';
 
-import '../../../routes/routes.dart';
+import '../../../controllers/login_controller.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class ResetPassScreen extends StatefulWidget {
+  const ResetPassScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ResetPassScreen> createState() => _ResetPassScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _controller = Get.put(LoginController());
+class _ResetPassScreenState extends State<ResetPassScreen> {
+
+  final _controller = Get.put(ForgotPassController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -27,19 +26,11 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const Text(
-              "Đăng nhập",
+              "Khôi phục mật khẩu",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              controller: _controller.emailTextController,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                hintText: "Email",
               ),
             ),
             const SizedBox(height: 20),
@@ -49,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
                 obscureText: _controller.isSecureText.value,
                 decoration: InputDecoration(
-                  hintText: "Mật khẩu",
+                  hintText: "Mật khẩu mới",
                   suffixIcon: GestureDetector(
                     onTap: _controller.changeSecureText,
                     child: Obx(
@@ -64,21 +55,32 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                _controller.loginFunc();
-              },
-              child: const Text("ĐĂNG NHẬP"),
+            Obx(
+                  () => TextField(
+                controller: _controller.rePassTextController,
+                keyboardType: TextInputType.emailAddress,
+                obscureText: _controller.isSecureText.value,
+                decoration: InputDecoration(
+                  hintText: "Xác nhận mật khẩu",
+                  suffixIcon: GestureDetector(
+                    onTap: _controller.changeSecureText,
+                    child: Obx(
+                          () => Icon(
+                        _controller.isSecureText.value
+                            ? Ionicons.eye
+                            : Ionicons.eye_off,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(forgotPassRoute);
+            ElevatedButton(
+              onPressed: () {
+                _controller.setNewPassFunc();
               },
-              child: const Align(
-                alignment: Alignment.topRight,
-                child: Text("Quên mật khẩu?"),
-              ),
+              child: const Text("XÁC NHẬN"),
             ),
           ],
         ),
