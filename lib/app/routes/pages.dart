@@ -13,6 +13,8 @@ import '../modules/auth/forgot/forgot_pass_screen.dart';
 import '../modules/auth/forgot/reset_pass_screen.dart';
 import '../modules/auth/login/login_screen.dart';
 import '../modules/auth/forgot/verify_forgot.dart';
+import '../modules/transaction/add_transaction.dart';
+import '../modules/transaction/edit_transaction.dart';
 
 class AppPages {
   static final pages = [
@@ -68,6 +70,16 @@ class AppPages {
     GetPage(
       name: editWalletRoute,
       page: () => EditWalletScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: addTransactionRoute,
+      page: () => AddTransactionScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: editTransactionRoute,
+      page: () => EditTransactionScreen(),
       transition: Transition.rightToLeft,
     ),
   ];

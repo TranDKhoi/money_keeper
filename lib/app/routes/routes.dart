@@ -10,3 +10,5 @@ const String bottomBarRoute = "/bottombar";
 const String myWalletRoute = "/my_wallet";
 const String addWalletRoute = "/add_wallet";
 const String editWalletRoute = "/edit_wallet";
+const String addTransactionRoute = "/add_transaction";
+const String editTransactionRoute = "/edit_transaction";

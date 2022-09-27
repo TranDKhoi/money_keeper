@@ -5,7 +5,7 @@ import '../modules/home/home_screen.dart';
 
 class BottomBarController extends GetxController {
   List<Widget> listPage = [
-    HomeScreen(),
+    const HomeScreen(),
     Text("2"),
     Text("3"),
     Text("4"),

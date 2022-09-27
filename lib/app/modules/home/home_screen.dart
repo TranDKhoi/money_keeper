@@ -1,14 +1,26 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:money_keeper/app/controllers/bottombar_controller.dart';
 import 'package:money_keeper/app/controllers/home_controller.dart';
+import 'package:money_keeper/app/controllers/transaction_controller.dart';
 import 'package:money_keeper/app/modules/home/widgets/home_chart_bar.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
+import '../../common/widget/transaction_item.dart';
 
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final _controller = Get.put(HomeController());
+
+  final _transactionController = Get.put(TransactionController());
+
+  final BottomBarController _bottomController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -248,20 +260,25 @@ class HomeScreen extends StatelessWidget {
                 //recent spent
                 const SizedBox(height: 20),
                 Row(
-                  children: const [
-                    SizedBox(width: 10),
-                    Text(
+                  children: [
+                    const SizedBox(width: 10),
+                    const Text(
                       "Khoản vừa chi",
                     ),
-                    Spacer(),
-                    Text(
-                      "Chi tiết",
-                      style: TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        _bottomController.changePage(1);
+                      },
+                      child: const Text(
+                        "Chi tiết",
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                   ],
                 ),
                 Card(
@@ -269,35 +286,8 @@ class HomeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: Column(
-                      children: [
-                        ListTile(
-                          onTap: () {},
-                          contentPadding: EdgeInsets.zero,
-                          isThreeLine: true,
-                          dense: true,
-                          leading: const Icon(Ionicons.wallet),
-                          title: const Text(
-                            "Ún và ăn",
-                            style: TextStyle(
-                              fontSize: 20,
-                            ),
-                          ),
-                          subtitle: const Text(
-                            "25/3/2022",
-                            style: TextStyle(
-                              fontSize: 15,
-                            ),
-                          ),
-                          trailing: const Text(
-                            "100.000 đ",
-                            style: TextStyle(
-                              color: Colors.redAccent,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
+                    child: TransactionItem(
+                      onTap: _transactionController.toEditTransactionScreen,
                     ),
                   ),
                 ),
