@@ -143,33 +143,31 @@ class EditTransactionScreen extends StatelessWidget {
                 ),
               ),
             ),
-            StreamBuilder<String>(
-                stream: _controller.imageStream,
-                builder: (context, snap) {
-                  if (snap.hasData && snap.data != "") {
-                    return Stack(
-                      children: [
-                        Image.file(
-                          File(snap.data!),
+            Obx(() {
+              if (_controller.pickedImage.value != null) {
+                return Stack(
+                  children: [
+                    Image.file(
+                      File(_controller.pickedImage.value!),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _controller.deleteImage();
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: Icon(
+                          Ionicons.close,
+                          size: 30,
+                          color: Colors.white,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            _controller.deleteImage();
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(20.0),
-                            child: Icon(
-                              Ionicons.close,
-                              size: 30,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-                  return const SizedBox.shrink();
-                })
+                      ),
+                    ),
+                  ],
+                );
+              }
+              return const SizedBox.shrink();
+            }),
           ],
         ),
       ),
