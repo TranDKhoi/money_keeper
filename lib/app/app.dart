@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/routes/pages.dart';
 import 'package:money_keeper/app/routes/routes.dart';
@@ -18,6 +19,14 @@ class App extends StatelessWidget {
       builder: EasyLoading.init(),
       theme: AppColors.lightTheme,
       darkTheme: AppColors.darkTheme,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('vi'),
+      ],
     );
   }
 }

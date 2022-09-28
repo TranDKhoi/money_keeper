@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:money_keeper/app/controllers/login_controller.dart';
-import 'package:money_keeper/app/core/utils/utils.dart';
 
+import '../../../controllers/auth/login_controller.dart';
 import '../../../routes/routes.dart';
 
 class LoginScreen extends StatefulWidget {

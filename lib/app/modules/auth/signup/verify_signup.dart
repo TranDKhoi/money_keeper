@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
-import 'package:money_keeper/app/controllers/singnup_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
+
+import '../../../controllers/auth/singnup_controller.dart';
 
 class VerifySignupScreen extends StatefulWidget {
   const VerifySignupScreen({Key? key}) : super(key: key);

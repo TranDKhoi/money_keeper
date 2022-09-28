@@ -5,7 +5,7 @@ import 'app/app.dart';
 
 void main(){
   WidgetsFlutterBinding.ensureInitialized();
-  Utils.configLoadingBar();
+  ConfigHelper.configLoadingBar();
   runApp(const App());
 }
 

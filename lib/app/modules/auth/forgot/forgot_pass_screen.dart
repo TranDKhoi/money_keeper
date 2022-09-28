@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:money_keeper/app/controllers/forgot_controller.dart';
-import 'package:money_keeper/app/controllers/login_controller.dart';
+import 'package:money_keeper/app/controllers/auth/forgot_controller.dart';
 
 class ForgotPassScreen extends StatefulWidget {
   const ForgotPassScreen({Key? key}) : super(key: key);

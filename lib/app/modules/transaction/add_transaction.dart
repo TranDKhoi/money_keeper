@@ -1,16 +1,178 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:money_keeper/app/controllers/bottombar_controller.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:money_keeper/app/controllers/transaction/add_transaction_controller.dart';
+
+import '../../core/utils/utils.dart';
 
 class AddTransactionScreen extends StatelessWidget {
   AddTransactionScreen({Key? key}) : super(key: key);
 
-  final BottomBarController _controller = Get.find();
+  final _controller = Get.put(AddTransactionController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text("Khoản chi mới"),
+        actions: [
+          TextButton(
+            onPressed: () {},
+            child: const Text("Lưu"),
+          ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    const TextField(
+                      style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.green,
+                      ),
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        hintText: "0 đ",
+                        hintStyle: TextStyle(
+                          color: Colors.green,
+                        ),
+                        fillColor: Colors.transparent,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: const [
+                        CircleAvatar(),
+                        SizedBox(width: 20),
+                        Expanded(
+                          child: TextField(
+                            enabled: false,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.zero,
+                              hintText: "Chọn danh mục",
+                              fillColor: Colors.transparent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: const [
+                        Icon(Ionicons.list_outline),
+                        SizedBox(width: 30),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.zero,
+                              hintText: "Ghi chú",
+                              fillColor: Colors.transparent,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        const Icon(Ionicons.calendar_outline),
+                        const SizedBox(width: 30),
+                        GestureDetector(
+                          onTap: () async {
+                            DateTime? selectedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2020),
+                                lastDate: DateTime(2030));
+                            if (selectedDate != null) {
+                              _controller.pickedDate.value = selectedDate;
+                            }
+                          },
+                          child: Obx(
+                            () => Text(
+                              FormatHelper()
+                                  .dateFormat(_controller.pickedDate.value),
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: IntrinsicHeight(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          _controller.pickedImageGallery();
+                        },
+                        child: const Icon(
+                          Ionicons.image,
+                          size: 40,
+                        ),
+                      ),
+                      const VerticalDivider(),
+                      GestureDetector(
+                        onTap: () {
+                          _controller.pickedImageCamera();
+                        },
+                        child: const Icon(
+                          Ionicons.camera,
+                          size: 40,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            StreamBuilder<String>(
+                stream: _controller.imageStream,
+                builder: (context, snap) {
+                  if (snap.hasData && snap.data != "") {
+                    return Stack(
+                      children: [
+                        Image.file(
+                          File(snap.data!),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            _controller.deleteImage();
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: Icon(
+                              Ionicons.close,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                  return const SizedBox.shrink();
+                })
+          ],
+        ),
+      ),
     );
   }
 }

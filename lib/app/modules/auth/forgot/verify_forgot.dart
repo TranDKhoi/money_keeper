@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
-import 'package:money_keeper/app/controllers/forgot_controller.dart';
-import 'package:money_keeper/app/controllers/login_controller.dart';
+import 'package:money_keeper/app/controllers/auth/forgot_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 
 class VerifyForgotScreen extends StatefulWidget {

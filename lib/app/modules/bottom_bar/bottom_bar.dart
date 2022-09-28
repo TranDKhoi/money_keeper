@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/bottombar_controller.dart';
-import 'package:money_keeper/app/controllers/transaction_controller.dart';
+import 'package:money_keeper/app/controllers/transaction/transaction_controller.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -13,7 +13,6 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   final _controller = Get.put(BottomBarController());
-  final _transactionController = Get.put(TransactionController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +64,7 @@ class _BottomBarState extends State<BottomBar> {
           color: Colors.white,
         ),
         onPressed: () {
-          _transactionController.toCreateTransactionScreen();
+          _controller.toCreateTransactionScreen();
         },
       ),
     );

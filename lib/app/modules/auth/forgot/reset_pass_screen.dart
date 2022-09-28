@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:money_keeper/app/controllers/forgot_controller.dart';
-
-import '../../../controllers/login_controller.dart';
+import 'package:money_keeper/app/controllers/auth/forgot_controller.dart';
 
 class ResetPassScreen extends StatefulWidget {
   const ResetPassScreen({Key? key}) : super(key: key);

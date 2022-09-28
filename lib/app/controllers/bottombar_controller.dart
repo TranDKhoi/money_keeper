@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/routes/routes.dart';
 
 import '../modules/home/home_screen.dart';
 
@@ -15,5 +16,9 @@ class BottomBarController extends GetxController {
 
   void changePage(int val) {
     currentIndex.value = val;
+  }
+
+  void toCreateTransactionScreen() {
+    Get.toNamed(addTransactionRoute);
   }
 }
