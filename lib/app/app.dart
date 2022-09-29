@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/routes/pages.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
+import 'core/utils/localization_service.dart';
 import 'core/values/theme.dart';
 
 class App extends StatelessWidget {
@@ -19,13 +20,14 @@ class App extends StatelessWidget {
       builder: EasyLoading.init(),
       theme: AppColors.lightTheme,
       darkTheme: AppColors.darkTheme,
+      locale: LocalizationService.locale,
+      fallbackLocale: LocalizationService.fallbackLocale,
+      translations: LocalizationService(),
+      supportedLocales: LocalizationService.supportedLocales,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('vi'),
       ],
     );
   }

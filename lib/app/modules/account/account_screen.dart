@@ -45,7 +45,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     _controller.toMyWalletScreen();
                   },
                   leading: const Icon(Ionicons.wallet_outline),
-                  title: const Text("Ví của tôi"),
+                  title: Text("Mywallet".tr),
                   trailing: const Icon(Ionicons.chevron_forward),
                 ),
                 //setting
@@ -54,7 +54,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     _controller.toSettingScreen();
                   },
                   leading: const Icon(Ionicons.settings_outline),
-                  title: const Text("Cài đặt"),
+                  title: Text("Setting".tr),
                   trailing: const Icon(Ionicons.chevron_forward),
                 ),
                 //log out
@@ -63,7 +63,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     _controller.toLoginScreen();
                   },
                   leading: const Icon(Ionicons.log_in_outline),
-                  title: const Text("Đăng xuất"),
+                  title: Text("Signout".tr),
                   trailing: const Icon(Ionicons.chevron_forward),
                 ),
               ],

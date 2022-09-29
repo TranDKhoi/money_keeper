@@ -29,17 +29,17 @@ class _MainAuthScreenState extends State<MainAuthScreen> {
         children: [
           buildPage(
             image: "assets/images/step1.png",
-            des: "Quản lý tài chính hiệu quả với MoneyKeeper",
+            des: "ManageyourfinanceseffectivelywithMoneyKeeper".tr,
           ),
           buildPage(
               image: "assets/images/step2.png",
-              des: "Cắt giảm những chi phí không cần thiết"),
+              des: "Cutunnecessaryexpenses".tr),
           buildPage(
               image: "assets/images/step3.png",
-              des: "Gia tăng tiết kiệm đều đặn hàng tháng"),
+              des: "Increasesavingssteadilyeverymonth".tr),
           buildPage(
               image: "assets/images/step4.png",
-              des: "Quản lý tất cả ở một nơi"),
+              des: "Manageitallinoneplace".tr),
         ],
       ),
       bottomSheet: Padding(
@@ -68,18 +68,18 @@ class _MainAuthScreenState extends State<MainAuthScreen> {
               onPressed: () {
                 Get.toNamed(signUpScreenRoute);
               },
-              child: Text("ĐĂNG KÝ MIỄN PHÍ"),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
+              child: Text("SIGNUPFORFREE".tr),
             ),
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 Get.toNamed(loginScreenRoute);
               },
-              child: const Text(
-                "ĐĂNG NHẬP",
+              child: Text(
+                "SIGNIN".tr,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.green,

@@ -39,9 +39,9 @@ class _TransactionScreenState extends State<TransactionScreen>
         elevation: 5,
         centerTitle: true,
         title: Column(
-          children: const [
-            Text("Số dư"),
-            Text("100.000đ"),
+          children: [
+            Text("Balance".tr),
+            const Text("100.000đ"),
           ],
         ),
         bottom: PreferredSize(
@@ -100,10 +100,10 @@ class _TransactionScreenState extends State<TransactionScreen>
                     child: Column(
                       children: [
                         Row(
-                          children: const [
-                            Text("Khoản thu"),
-                            Spacer(),
-                            Text(
+                          children: [
+                            Text("Income".tr),
+                            const Spacer(),
+                            const Text(
                               "0",
                               style: TextStyle(
                                 color: Colors.green,
@@ -114,10 +114,10 @@ class _TransactionScreenState extends State<TransactionScreen>
                         ),
                         const SizedBox(height: 5),
                         Row(
-                          children: const [
-                            Text("Khoản chi"),
-                            Spacer(),
-                            Text(
+                          children: [
+                            Text("Expense".tr),
+                            const Spacer(),
+                            const Text(
                               "100.000đ",
                               style: TextStyle(
                                 color: Colors.redAccent,
@@ -141,7 +141,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                         const SizedBox(height: 5),
                         ElevatedButton(
                           onPressed: () {},
-                          child: Text("Xem thống kê kỳ này"),
+                          child: Text("Viewreportofthisperiod".tr),
                         )
                       ],
                     ),

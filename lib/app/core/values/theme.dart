@@ -27,7 +27,7 @@ class AppColors {
       ),
     ),
     listTileTheme: const ListTileThemeData(
-      iconColor: Color(0xff818383),
+      iconColor: Colors.black,
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Colors.grey[50],
@@ -62,7 +62,7 @@ class AppColors {
       ),
     ),
     listTileTheme: const ListTileThemeData(
-      iconColor: Color(0xff818383),
+      iconColor: Colors.white,
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       backgroundColor: Color(0xff303030),

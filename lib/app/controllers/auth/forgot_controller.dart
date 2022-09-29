@@ -17,7 +17,7 @@ class ForgotPassController extends GetxController {
     if (emailTextController.text.isNotEmpty) {
       Get.toNamed(verifyForgotRoute);
     } else {
-      EasyLoading.showToast("Vui lòng điền đủ thông tin");
+      EasyLoading.showToast("Pleaseenteralltheinformation".tr);
     }
   }
 
@@ -29,7 +29,7 @@ class ForgotPassController extends GetxController {
     if (secureCode != null && secureCode == 000000) {
       Get.offAllNamed(resetPassRoute);
     } else {
-      EasyLoading.showToast("Mã không hợp lệ");
+      EasyLoading.showToast("Incorectcode".tr);
     }
   }
 
@@ -39,10 +39,10 @@ class ForgotPassController extends GetxController {
       if (passTextController.text == rePassTextController.text) {
         Get.offAllNamed(loginScreenRoute);
       } else {
-        EasyLoading.showToast("Mật khẩu không khớp");
+        EasyLoading.showToast("Incorectpassword".tr);
       }
     } else {
-      EasyLoading.showToast("Vui lòng điền đủ thông tin");
+      EasyLoading.showToast("Pleaseenteralltheinformation".tr);
     }
   }
 }

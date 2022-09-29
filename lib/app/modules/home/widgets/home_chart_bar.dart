@@ -31,11 +31,11 @@ class HomeChartBar extends StatelessWidget {
                       () => Text(
                         _controller.selectedReport.value == 0
                             ? value.toInt() == 0
-                                ? "Tuần trước"
-                                : "Tuần này"
+                                ? "Lastweek".tr
+                                : "Thisweek".tr
                             : value.toInt() == 0
-                                ? "Tháng trước"
-                                : "Tháng này",
+                                ? "Lastmonth".tr
+                                : "Thismonth".tr,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,

@@ -24,10 +24,10 @@ class _SignupScreenState extends State<SignupScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Đăng ký",
+            Text(
+              "Signup".tr,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
@@ -47,7 +47,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 keyboardType: TextInputType.emailAddress,
                 obscureText: _controller.isSecureText.value,
                 decoration: InputDecoration(
-                  hintText: "Mật khẩu",
+                  hintText: "Password".tr,
                   suffixIcon: GestureDetector(
                     onTap: _controller.changeSecureText,
                     child: Obx(
@@ -66,7 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
               onPressed: () {
                 _controller.toVerifyScreen();
               },
-              child: const Text("ĐĂNG KÝ"),
+              child: Text("SIGNUP".tr),
             ),
           ],
         ),

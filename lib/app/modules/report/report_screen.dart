@@ -38,9 +38,9 @@ class _ReportScreenState extends State<ReportScreen>
         elevation: 5,
         centerTitle: true,
         title: Column(
-          children: const [
-            Text("Số dư"),
-            Text("100.000đ"),
+          children: [
+            Text("Balance".tr),
+            const Text("100.000đ"),
           ],
         ),
         bottom: PreferredSize(
@@ -88,15 +88,15 @@ class _ReportScreenState extends State<ReportScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
-                "Thu và Chi",
-                style: TextStyle(
+              Text(
+                "IncomeandExpense".tr,
+                style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 10),
-              const Text("Còn lại"),
+              Text("Totalleft".tr),
               const Text(
                 "50.000đ",
                 style: TextStyle(fontSize: 25),
@@ -107,9 +107,9 @@ class _ReportScreenState extends State<ReportScreen>
               const SizedBox(height: 10),
               Row(
                 children: [
-                  const Text(
-                    "Khoản thu",
-                    style: TextStyle(
+                  Text(
+                    "Income".tr,
+                    style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
@@ -119,9 +119,9 @@ class _ReportScreenState extends State<ReportScreen>
                     onTap: () {
                       _controller.toIncomeDetailsScreen();
                     },
-                    child: const Text(
-                      "Chi tiết",
-                      style: TextStyle(
+                    child: Text(
+                      "Detail".tr,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.green,
                       ),
@@ -145,9 +145,9 @@ class _ReportScreenState extends State<ReportScreen>
               const SizedBox(height: 10),
               Row(
                 children: [
-                  const Text(
-                    "Khoản chi",
-                    style: TextStyle(
+                  Text(
+                    "Expense".tr,
+                    style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
                     ),
@@ -157,9 +157,9 @@ class _ReportScreenState extends State<ReportScreen>
                     onTap: () {
                       _controller.toExpenseDetailsScreen();
                     },
-                    child: const Text(
-                      "Chi tiết",
-                      style: TextStyle(
+                    child: Text(
+                      "Detail".tr,
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.green,
                       ),

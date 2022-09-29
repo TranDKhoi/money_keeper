@@ -35,15 +35,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           "100.000 đ",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 35,
                           ),
                         ),
-                        Text("Tổng số dư"),
+                        Text("Totalbalance".tr),
                       ],
                     ),
                     const Spacer(),
@@ -61,9 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Row(
                           children: [
-                            const Text(
-                              "Ví của tôi",
-                              style: TextStyle(
+                            Text(
+                              "Mywallet".tr,
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -73,9 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 _controller.toAllWalletScreen();
                               },
-                              child: const Text(
-                                "Xem thêm",
-                                style: TextStyle(
+                              child: Text(
+                                "Seemore".tr,
+                                style: const TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -87,15 +87,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         const Divider(),
                         const SizedBox(height: 10),
                         Row(
-                          children: const [
-                            Icon(Ionicons.earth),
-                            SizedBox(width: 10),
+                          children: [
+                            const Icon(Ionicons.earth),
+                            const SizedBox(width: 10),
                             Text(
-                              "Toàn bộ",
-                              style: TextStyle(fontSize: 25),
+                              "All".tr,
+                              style: const TextStyle(fontSize: 25),
                             ),
-                            Spacer(),
-                            Text(
+                            const Spacer(),
+                            const Text(
                               "100.000 đ",
                               style: TextStyle(fontSize: 20),
                             ),
@@ -108,20 +108,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 //report
                 const SizedBox(height: 20),
                 Row(
-                  children: const [
-                    SizedBox(width: 10),
+                  children: [
+                    const SizedBox(width: 10),
                     Text(
-                      "Thống kê",
+                      "Report".tr,
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
-                      "Chi tiết",
-                      style: TextStyle(
+                      "Detail".tr,
+                      style: const TextStyle(
                         color: Colors.green,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                   ],
                 ),
                 //week-month
@@ -151,12 +151,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? Colors.grey[100]
                                               : Theme.of(context)
                                                   .scaffoldBackgroundColor,
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(8.0),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          "Tuần",
+                                          "Week".tr,
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 20,
                                             color: Colors.grey,
                                           ),
@@ -177,12 +177,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ? Theme.of(context)
                                                   .scaffoldBackgroundColor
                                               : Colors.grey[100],
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(8.0),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          "Tháng",
+                                          "Month".tr,
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 20, color: Colors.grey),
                                         ),
                                       ),
@@ -207,7 +207,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             Obx(
                               () => Text(
-                                "Tổng chi ${_controller.selectedReport.value == 0 ? "tuần" : "tháng"} này",
+                                _controller.selectedReport.value == 0
+                                    ? "Totalexpenseofthisweek".tr
+                                    : "Totalexpenseofthismonth".tr,
                               ),
                             ),
                           ],
@@ -217,9 +219,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         HomeChartBar(),
                         //most spent
                         const SizedBox(height: 10),
-                        const Text(
-                          "Chi nhiều nhất",
-                          style: TextStyle(
+                        Text(
+                          "Mostexpense".tr,
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
@@ -260,17 +262,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   children: [
                     const SizedBox(width: 10),
-                    const Text(
-                      "Khoản vừa chi",
+                    Text(
+                      "Recently".tr,
                     ),
                     const Spacer(),
                     GestureDetector(
                       onTap: () {
                         _bottomController.changePage(1);
                       },
-                      child: const Text(
-                        "Chi tiết",
-                        style: TextStyle(
+                      child: Text(
+                        "Detail".tr,
+                        style: const TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.bold,
                         ),

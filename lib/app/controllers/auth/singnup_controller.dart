@@ -19,7 +19,7 @@ class SignupController extends GetxController{
     if (isValidData()) {
       Get.toNamed(verifySignupRoute);
     } else {
-      EasyLoading.showToast("Vui lòng điền đủ thông tin");
+      EasyLoading.showToast("Pleaseenteralltheinformation".tr);
     }
   }
 

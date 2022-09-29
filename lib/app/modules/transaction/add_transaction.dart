@@ -16,11 +16,11 @@ class AddTransactionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Khoản chi mới"),
+        title: Text("Newtransaction".tr),
         actions: [
           TextButton(
             onPressed: () {},
-            child: const Text("Lưu"),
+            child: Text("Save".tr),
           ),
         ],
       ),
@@ -49,15 +49,15 @@ class AddTransactionScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Row(
-                      children: const [
-                        CircleAvatar(),
-                        SizedBox(width: 20),
+                      children: [
+                        const CircleAvatar(),
+                        const SizedBox(width: 20),
                         Expanded(
                           child: TextField(
                             enabled: false,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
-                              hintText: "Chọn danh mục",
+                              hintText: "Selectcategory".tr,
                               fillColor: Colors.transparent,
                             ),
                           ),
@@ -66,14 +66,14 @@ class AddTransactionScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Row(
-                      children: const [
-                        Icon(Ionicons.list_outline),
-                        SizedBox(width: 30),
+                      children: [
+                        const Icon(Ionicons.list_outline),
+                        const SizedBox(width: 30),
                         Expanded(
                           child: TextField(
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
-                              hintText: "Ghi chú",
+                              hintText: "Note".tr,
                               fillColor: Colors.transparent,
                             ),
                           ),

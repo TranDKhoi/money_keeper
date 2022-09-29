@@ -25,7 +25,7 @@ class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "Một mã gồm 6 ký tự đã được gửi đến ${_controller.emailTextController.text}",
+              "${"A6charactercodehasbeensenttotheemail".tr} ${_controller.emailTextController.text}",
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -57,16 +57,16 @@ class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
               onPressed: () {
                 _controller.verifyCodeFunc();
               },
-              child: const Text("XÁC MINH"),
+              child: Text("VERIFY".tr),
             ),
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 Get.back();
               },
-              child: const Align(
+              child: Align(
                 alignment: Alignment.topRight,
-                child: Text("Không nhận được mã?"),
+                child: Text("Didntreceiveanycode".tr),
               ),
             ),
             const SizedBox(height: 100),

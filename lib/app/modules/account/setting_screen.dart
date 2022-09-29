@@ -12,13 +12,13 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cài đặt và bảo mật"),
+        title: Text("Setting".tr),
       ),
       body: Column(
         children: [
           ListTile(
-            leading: Icon(Ionicons.moon_outline),
-            title: Text("Chế độ ban đêm"),
+            leading: const Icon(Ionicons.moon_outline),
+            title: Text("Darkmode".tr),
             trailing: Obx(
               () => Switch(
                 onChanged: (val) {
@@ -27,7 +27,19 @@ class SettingScreen extends StatelessWidget {
                 value: _controller.isDarkMode.value,
               ),
             ),
-          )
+          ),
+          ListTile(
+            leading: const Icon(Ionicons.earth_outline),
+            title: Text("Vietnamese".tr),
+            trailing: Obx(
+              () => Switch(
+                onChanged: (val) {
+                  _controller.changeLanguage(val);
+                },
+                value: _controller.isVietnamese.value,
+              ),
+            ),
+          ),
         ],
       ),
     );

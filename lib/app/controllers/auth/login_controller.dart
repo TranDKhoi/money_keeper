@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/routes/routes.dart';
 
 class LoginController extends GetxController {
   var isSecureText = true.obs;
@@ -17,9 +18,9 @@ class LoginController extends GetxController {
 
   void loginFunc() {
     if (isValidData()) {
-      //login api
+     Get.toNamed(bottomBarRoute);
     } else {
-      EasyLoading.showToast("Vui lòng điền đủ thông tin");
+      EasyLoading.showToast("Pleaseenteralltheinformation".tr);
     }
   }
 

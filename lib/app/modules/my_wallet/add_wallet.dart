@@ -12,7 +12,7 @@ class AddWalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Thêm ví mới"),
+        title: Text("Addwallet".tr),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -38,7 +38,7 @@ class AddWalletScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             fillColor: Colors.transparent,
                             filled: true,
-                            hintText: "Tên ví",
+                            hintText: "Walletname",
                           ),
                         ),
                       ),
@@ -46,23 +46,23 @@ class AddWalletScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Ionicons.trending_up,
                         size: 30,
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       Expanded(
                         child: TextField(
                           keyboardType: TextInputType.number,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                           ),
                           decoration: InputDecoration(
                             fillColor: Colors.transparent,
                             filled: true,
-                            hintText: "Số dư",
-                            suffix: Text("VND"),
+                            hintText: "Balance".tr,
+                            suffix: const Text("VND"),
                           ),
                         ),
                       ),
@@ -76,16 +76,16 @@ class AddWalletScreen extends StatelessWidget {
             value: false,
             onChanged: (val) {},
             isThreeLine: true,
-            title: const Text("Không bao gồm vào ví tổng"),
-            subtitle: const Text(
-                "Tạo ví này và không bao gồm số dư của nó vào ví tổng"),
+            title: Text("Notincludeintotalbalance".tr),
+            subtitle: Text(
+                "Createanewwalletanddonotincludeitintototalbalance".tr),
           ),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ElevatedButton(
               onPressed: () {},
-              child: const Text("THÊM MỚI"),
+              child: Text("ADDNEW".tr),
             ),
           ),
           const SizedBox(height: 30),

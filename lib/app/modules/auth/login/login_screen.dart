@@ -25,10 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Đăng nhập",
+            Text(
+              "Signin".tr,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
@@ -48,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
                 obscureText: _controller.isSecureText.value,
                 decoration: InputDecoration(
-                  hintText: "Mật khẩu",
+                  hintText: "Password".tr,
                   suffixIcon: GestureDetector(
                     onTap: _controller.changeSecureText,
                     child: Obx(
@@ -67,16 +67,16 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 _controller.loginFunc();
               },
-              child: const Text("ĐĂNG NHẬP"),
+              child: Text("SIGNIN".tr),
             ),
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 Get.toNamed(forgotPassRoute);
               },
-              child: const Align(
+              child: Align(
                 alignment: Alignment.topRight,
-                child: Text("Quên mật khẩu?"),
+                child: Text("Forgotpassword".tr),
               ),
             ),
           ],

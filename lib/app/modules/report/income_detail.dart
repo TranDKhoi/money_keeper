@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:money_keeper/app/modules/report/widgets/report_pie_chart.dart';
 
 import '../../common/widget/in_ex_item.dart';
@@ -7,19 +8,19 @@ class IncomeDetail extends StatelessWidget {
   IncomeDetail({Key? key}) : super(key: key);
 
   final List<Widget> listIncome = [
-    InExItem(),
-    InExItem(),
-    InExItem(),
-    InExItem(),
-    InExItem(),
-    InExItem(),
+    const InExItem(),
+    const InExItem(),
+    const InExItem(),
+    const InExItem(),
+    const InExItem(),
+    const InExItem(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Chi tiết khoản thu"),
+        title: Text("Incomedetail".tr),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -29,10 +30,10 @@ class IncomeDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                "Tổng thu",
-                style: TextStyle(fontSize: 30),
+                "Totalincome".tr,
+                style: const TextStyle(fontSize: 30),
               ),
-              Text(
+              const Text(
                 "200.000 đ",
                 style: TextStyle(
                   fontSize: 20,
@@ -40,9 +41,9 @@ class IncomeDetail extends StatelessWidget {
                 ),
               ),
               Row(
-                children: [Expanded(child: ReportPieChart())],
+                children: const [Expanded(child: ReportPieChart())],
               ),
-              Divider(thickness: 1),
+              const Divider(thickness: 1),
               ...listIncome,
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ReportBarChart extends StatelessWidget {
   const ReportBarChart({Key? key}) : super(key: key);
@@ -72,16 +73,16 @@ class ReportBarChart extends StatelessWidget {
     String text;
     switch (value.toInt()) {
       case 0:
-        text = 'Tuần 1';
+        text = "Week1".tr;
         break;
       case 1:
-        text = 'Tuần 2';
+        text = "Week2".tr;
         break;
       case 2:
-        text = 'Tuần 3';
+        text = "Week3".tr;
         break;
       case 3:
-        text = 'Tuần 4';
+        text = "Week4".tr;
         break;
       default:
         text = '';

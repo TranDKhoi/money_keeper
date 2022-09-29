@@ -23,10 +23,10 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Khôi phục mật khẩu",
+            Text(
+              "Resetpassword".tr,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
               ),
@@ -38,7 +38,7 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
                 keyboardType: TextInputType.emailAddress,
                 obscureText: _controller.isSecureText.value,
                 decoration: InputDecoration(
-                  hintText: "Mật khẩu mới",
+                  hintText: "Newpassword".tr,
                   suffixIcon: GestureDetector(
                     onTap: _controller.changeSecureText,
                     child: Obx(
@@ -59,7 +59,7 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
                 keyboardType: TextInputType.emailAddress,
                 obscureText: _controller.isSecureText.value,
                 decoration: InputDecoration(
-                  hintText: "Xác nhận mật khẩu",
+                  hintText: "Confirmpassword".tr,
                   suffixIcon: GestureDetector(
                     onTap: _controller.changeSecureText,
                     child: Obx(
@@ -78,7 +78,7 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
               onPressed: () {
                 _controller.setNewPassFunc();
               },
-              child: const Text("XÁC NHẬN"),
+              child: Text("CONFIRM".tr),
             ),
           ],
         ),

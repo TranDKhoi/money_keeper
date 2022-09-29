@@ -13,12 +13,12 @@ class MyWalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Ví của tôi"),
+        title: Text("Mywallet".tr),
       ),
       body: Column(
         children: [
           const Divider(thickness: 1),
-          const ListTile(
+          ListTile(
             isThreeLine: true,
             dense: true,
             leading: Icon(
@@ -26,7 +26,7 @@ class MyWalletScreen extends StatelessWidget {
               size: 40,
             ),
             title: Text(
-              "Toàn bộ",
+              "All".tr,
               style: TextStyle(
                 fontSize: 25,
               ),
@@ -40,12 +40,12 @@ class MyWalletScreen extends StatelessWidget {
           ),
           const Divider(thickness: 1),
           const SizedBox(height: 20),
-          const Align(
+          Align(
             alignment: Alignment.topLeft,
             child: Padding(
               padding: EdgeInsets.only(left: 20, bottom: 10),
               child: Text(
-                "Bao gồm",
+                "Including".tr,
                 style: TextStyle(
                   fontSize: 20,
                 ),

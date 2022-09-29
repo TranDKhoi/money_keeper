@@ -22,10 +22,10 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const Text(
-              "Nhập địa chỉ email mà bạn muốn khôi phục mật khẩu",
+            Text(
+              "Entertheemailaccountthatyouwanttorecovery".tr,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 25,
               ),
@@ -34,7 +34,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
             TextField(
               controller: _controller.emailTextController,
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 hintText: "Email",
               ),
             ),
@@ -43,7 +43,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
               onPressed: () {
                 _controller.toVerifyScreen();
               },
-              child: const Text("GỬI MÃ"),
+              child: Text("SENDCODE".tr),
             ),
             const SizedBox(height: 100),
           ],

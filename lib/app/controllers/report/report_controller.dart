@@ -33,11 +33,11 @@ class ReportController extends GetxController {
         if (i > DateTime.now().month + 1) continue;
         String time = "$i/202$j";
         if (time.contains("${DateTime.now().month - 1}/${DateTime.now().year}"))
-          time = "Tháng trước";
+          time = "Lastmonth".tr;
         if (time.contains("${DateTime.now().month}/${DateTime.now().year}"))
-          time = "Tháng này";
+          time = "Thismonth".tr;
         if (time.contains("${DateTime.now().month + 1}/${DateTime.now().year}"))
-          time = "Tháng sau";
+          time = "Nextmonth".tr;
         listTimeline.add(time);
       }
     }

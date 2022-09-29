@@ -32,22 +32,22 @@ class _BottomBarState extends State<BottomBar> {
                 selectedFontSize: 25,
                 type: BottomNavigationBarType.fixed,
                 onTap: (i) => _controller.changePage(i),
-                items: const [
+                items: [
                   BottomNavigationBarItem(
-                    icon: Icon(Ionicons.home),
-                    label: "Trang chủ",
+                    icon: const Icon(Ionicons.home),
+                    label: "Home".tr,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Ionicons.wallet),
-                    label: "Khoản chi",
+                    icon: const Icon(Ionicons.wallet),
+                    label: "Transaction".tr,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Ionicons.stats_chart),
-                    label: "Thống kê",
+                    icon: const Icon(Ionicons.stats_chart),
+                    label: "Report".tr,
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Ionicons.person),
-                    label: "Tài khoản",
+                    icon: const Icon(Ionicons.person),
+                    label: "Account".tr,
                   ),
                 ],
               ),
