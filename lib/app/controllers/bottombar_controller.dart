@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/modules/account/account_screen.dart';
+import 'package:money_keeper/app/modules/transaction/transaction_screen.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
 import '../modules/home/home_screen.dart';
+import '../modules/report/report_screen.dart';
 
 class BottomBarController extends GetxController {
   List<Widget> listPage = [
     const HomeScreen(),
-    Text("2"),
-    Text("3"),
-    Text("4"),
+    const TransactionScreen(),
+    const ReportScreen(),
+    const AccountScreen(),
   ];
 
   var currentIndex = 0.obs;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
-import '../../controllers/my_wallet_controller.dart';
+import '../../controllers/wallet/my_wallet_controller.dart';
 
 class AddWalletScreen extends StatelessWidget {
   AddWalletScreen({Key? key}) : super(key: key);

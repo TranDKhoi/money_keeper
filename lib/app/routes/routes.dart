@@ -12,3 +12,6 @@ const String addWalletRoute = "/add_wallet";
 const String editWalletRoute = "/edit_wallet";
 const String addTransactionRoute = "/add_transaction";
 const String editTransactionRoute = "/edit_transaction";
+const String incomeDetailRoute = "/income_detail";
+const String expenseDetailRoute = "/expense_detail";
+const String settingRoute = "/setting_route";

@@ -7,12 +7,15 @@ import 'package:money_keeper/app/modules/bottom_bar/bottom_bar.dart';
 import 'package:money_keeper/app/modules/my_wallet/add_wallet.dart';
 import 'package:money_keeper/app/modules/my_wallet/edit_wallet.dart';
 import 'package:money_keeper/app/modules/my_wallet/my_wallet_screen.dart';
+import 'package:money_keeper/app/modules/report/expense_detail.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
+import '../modules/account/setting_screen.dart';
 import '../modules/auth/forgot/forgot_pass_screen.dart';
 import '../modules/auth/forgot/reset_pass_screen.dart';
 import '../modules/auth/login/login_screen.dart';
 import '../modules/auth/forgot/verify_forgot.dart';
+import '../modules/report/income_detail.dart';
 import '../modules/transaction/add_transaction.dart';
 import '../modules/transaction/edit_transaction.dart';
 
@@ -80,6 +83,21 @@ class AppPages {
     GetPage(
       name: editTransactionRoute,
       page: () => EditTransactionScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: incomeDetailRoute,
+      page: () => IncomeDetail(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: expenseDetailRoute,
+      page: () => ExpenseDetail(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: settingRoute,
+      page: () => SettingScreen(),
       transition: Transition.rightToLeft,
     ),
   ];

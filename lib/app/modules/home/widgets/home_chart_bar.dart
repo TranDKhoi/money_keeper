@@ -6,7 +6,7 @@ import 'package:money_keeper/app/controllers/home_controller.dart';
 class HomeChartBar extends StatelessWidget {
   HomeChartBar({Key? key}) : super(key: key);
 
-  final _controller = Get.put(HomeController());
+  final HomeController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/bottombar_controller.dart';
-import 'package:money_keeper/app/controllers/transaction/transaction_controller.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
@@ -43,8 +42,8 @@ class _BottomBarState extends State<BottomBar> {
                     label: "Khoản chi",
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(Ionicons.cash),
-                    label: "Kế hoạch",
+                    icon: Icon(Ionicons.stats_chart),
+                    label: "Thống kê",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(Ionicons.person),

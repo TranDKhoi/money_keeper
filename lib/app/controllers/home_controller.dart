@@ -11,4 +11,8 @@ class HomeController extends GetxController {
   void toAllWalletScreen() {
     Get.toNamed(myWalletRoute);
   }
+
+  void toEditTransactionScreen(){
+    Get.toNamed(editTransactionRoute);
+  }
 }

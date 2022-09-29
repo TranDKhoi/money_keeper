@@ -15,9 +15,9 @@ class AppColors {
         fillColor: Colors.grey[50],
         filled: true,
         suffixIconColor: Colors.black),
-    tabBarTheme: TabBarTheme(
-      labelColor: Colors.black,
-      unselectedLabelColor: Colors.black.withOpacity(0.5),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.green,
+      unselectedLabelColor: Colors.black,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -50,9 +50,9 @@ class AppColors {
         fillColor: Color(0xff303030),
         filled: true,
         suffixIconColor: Colors.white),
-    tabBarTheme: TabBarTheme(
-      labelColor: Colors.black,
-      unselectedLabelColor: Colors.black.withOpacity(0.5),
+    tabBarTheme: const TabBarTheme(
+      labelColor: Colors.green,
+      unselectedLabelColor: Colors.white,
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

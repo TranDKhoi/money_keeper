@@ -6,7 +6,7 @@ import 'package:money_keeper/app/controllers/home_controller.dart';
 import 'package:money_keeper/app/controllers/transaction/transaction_controller.dart';
 import 'package:money_keeper/app/modules/home/widgets/home_chart_bar.dart';
 
-import '../../common/widget/transaction_item.dart';
+import '../../common/widget/home_transaction_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,8 +17,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = Get.put(HomeController());
-
-  final _transactionController = Get.put(TransactionController());
 
   final BottomBarController _bottomController = Get.find();
 
@@ -286,8 +284,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(20)),
                   child: Padding(
                     padding: const EdgeInsets.all(20.0),
-                    child: TransactionItem(
-                      onTap: _transactionController.toEditTransactionScreen,
+                    child: HomeTransactionItem(
+                      onTap: _controller.toEditTransactionScreen,
                     ),
                   ),
                 ),

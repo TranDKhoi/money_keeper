@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
-class TransactionItem extends StatelessWidget {
-  const TransactionItem({Key? key, required this.onTap}) : super(key: key);
+class HomeTransactionItem extends StatelessWidget {
+  const HomeTransactionItem({Key? key, required this.onTap}) : super(key: key);
 
   final VoidCallback onTap;
 

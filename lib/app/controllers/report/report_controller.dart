@@ -1,24 +1,14 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
-class TransactionController extends GetxController {
+class ReportController extends GetxController {
   var selectedWallet = "Ví tổng".obs;
   List<String> listWallet = ["Ví tổng", 'One', 'Two', 'Three', 'Four'];
   var listTimeline = [].obs;
   var selectedTimeLine = Rxn<String>();
 
-  TransactionController() {
+  ReportController() {
     generateTimeLine();
-  }
-
-  void toCreateTransactionScreen() {
-    Get.toNamed(addTransactionRoute);
-  }
-
-  void toEditTransactionScreen() {
-    Get.toNamed(editTransactionRoute);
   }
 
   void changeWallet(String value) {
@@ -27,6 +17,14 @@ class TransactionController extends GetxController {
 
   void changeTimeLine(int index) {
     selectedTimeLine.value = listTimeline[index];
+  }
+
+  void toIncomeDetailsScreen() {
+    Get.toNamed(incomeDetailRoute);
+  }
+
+  void toExpenseDetailsScreen() {
+    Get.toNamed(expenseDetailRoute);
   }
 
   void generateTimeLine() {

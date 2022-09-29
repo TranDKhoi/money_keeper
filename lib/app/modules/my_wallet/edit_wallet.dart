@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:money_keeper/app/controllers/my_wallet_controller.dart';
+import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 
 class EditWalletScreen extends StatelessWidget {
   EditWalletScreen({Key? key}) : super(key: key);
