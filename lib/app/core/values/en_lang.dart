@@ -52,7 +52,7 @@ const Map<String, String> enLanguagePackage = {
   "Notincludeintotalbalance": "Not include in total balance",
   "Createanewwalletanddonotincludeitintototalbalance":
       "Create a new wallet and do not include it into total balance",
-  "ADDNEW": "ADDNEW",
+  "ADDNEW": "ADD NEW",
   "DELETETHISWALLETFOREVER": "DELETE THIS WALLET FOREVER",
   "UPDATE": "UPDATE",
   "Including": "Including",
@@ -73,9 +73,10 @@ const Map<String, String> enLanguagePackage = {
   "Selectcategory": "Select category",
   "Note": "Note",
   "Edittransaction": "Edit transaction",
-  "Viewreportofthisperiod": "View report of thi speriod",
+  "Viewreportofthisperiod": "View report of this period",
   "Pleaseenteralltheinformation": "Please enter all the information",
-  "Incorectcode": "Incorect code",
-  "Incorectpassword": "Incorect password",
+  "Incorectcode": "Incorrect code",
+  "Incorectpassword": "Incorrect password",
   "Vietnamese": "Vietnamese",
+  "Type":"Type",
 };

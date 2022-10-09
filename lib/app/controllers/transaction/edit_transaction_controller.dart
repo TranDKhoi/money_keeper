@@ -7,10 +7,8 @@ import '../../core/utils/utils.dart';
 class EditTransactionController extends GetxController {
   var pickedImage = Rxn<String>();
   var pickedDate = DateTime.now().obs;
-
-  EditTransactionController() {
-    print("createeee");
-  }
+  var selectedType = Rxn<String>();
+  var listType = ["Income".tr,"Expense".tr];
 
   void pickedImageGallery() async {
     String? picked = await ImageHelper.ins.pickSingleImage();
@@ -24,5 +22,9 @@ class EditTransactionController extends GetxController {
 
   void deleteImage() {
     pickedImage.value = null;
+  }
+
+  void changeType (String val){
+    selectedType.value = val;
   }
 }

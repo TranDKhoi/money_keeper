@@ -114,11 +114,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       "Report".tr,
                     ),
                     const Spacer(),
-                    Text(
-                      "Detail".tr,
-                      style: const TextStyle(
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
+                    GestureDetector(
+                      onTap: () {
+                        _bottomController.changePage(2);
+                      },
+                      child: Text(
+                        "Detail".tr,
+                        style: const TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),

@@ -67,6 +67,29 @@ class EditTransactionScreen extends StatelessWidget {
                     const SizedBox(height: 10),
                     Row(
                       children: [
+                        const Icon(Ionicons.swap_horizontal),
+                        const SizedBox(width: 30),
+                        Obx(
+                              () => DropdownButton<String>(
+                            value: _controller.selectedType.value,
+                            hint: Text("Type".tr),
+                            icon: const Icon(Ionicons.caret_down),
+                            onChanged: (String? value) {
+                              _controller.changeType(value!);
+                            },
+                            items: _controller.listType.map((String value) {
+                              return DropdownMenuItem(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
                         const Icon(Ionicons.list_outline),
                         const SizedBox(width: 30),
                         Expanded(

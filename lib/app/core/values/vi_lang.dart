@@ -78,4 +78,5 @@ const Map<String, String> viLanguagePackage = {
   "Incorectcode": "Mã không hợp lệ",
   "Incorectpassword": "Mật khẩu không khớp",
   "Vietnamese": "Tiếng Việt",
+  "Type":"Khoản",
 };
