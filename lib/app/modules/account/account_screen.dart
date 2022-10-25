@@ -11,7 +11,7 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  final _controller = Get.put(AccountController());
+  final AccountController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

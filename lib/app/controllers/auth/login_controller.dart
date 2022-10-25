@@ -2,7 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/controllers/account/account_controller.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/routes/routes.dart';
+import 'package:money_keeper/data/services/auth_service.dart';
+
+import '../../../data/models/user.dart';
 
 class LoginController extends GetxController {
   var isSecureText = true.obs;
@@ -16,9 +21,22 @@ class LoginController extends GetxController {
     isSecureText.value = !isSecureText.value;
   }
 
-  void loginFunc() {
+  loginFunc() async {
     if (isValidData()) {
-     Get.toNamed(bottomBarRoute);
+      User u = User(
+          email: emailTextController.text, password: passTextController.text);
+
+      EasyLoading.show();
+      var res = await AuthService.ins.login(user: u);
+      EasyLoading.dismiss();
+
+      if (res.isSuccess) {
+        final AccountController ac = Get.find();
+        ac.currentUser.value = User.fromJson(res.dataJson);
+        Get.toNamed(bottomBarRoute);
+      } else {
+        EasyLoading.showToast(res.errorMessage);
+      }
     } else {
       EasyLoading.showToast("Pleaseenteralltheinformation".tr);
     }

@@ -16,7 +16,7 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       getPages: AppPages.pages,
       debugShowCheckedModeBanner: false,
-      initialRoute: bottomBarRoute,
+      initialRoute: mainAuthScreenRoute,
       builder: EasyLoading.init(),
       theme: AppColors.lightTheme,
       darkTheme: AppColors.darkTheme,

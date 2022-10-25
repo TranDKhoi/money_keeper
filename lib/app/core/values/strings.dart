@@ -1,0 +1,1 @@
+const api_url = "https://money-love-api.azurewebsites.net/api";

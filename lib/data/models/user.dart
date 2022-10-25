@@ -7,10 +7,10 @@ class User {
   String? email;
   String? password;
 
-  User(
+  User({
     this.email,
     this.password,
-  );
+  });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 

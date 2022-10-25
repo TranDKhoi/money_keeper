@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/core/utils/localization_service.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
+import '../../../data/models/user.dart';
 import '../../core/utils/utils.dart';
 import '../../core/values/theme.dart';
 
 class AccountController extends GetxController {
   var isDarkMode = false.obs;
   var isVietnamese = false.obs;
+  var currentUser = Rxn<User>();
 
   void pickAvatar() async {
     String? picked = await ImageHelper.ins.pickAvatar();
