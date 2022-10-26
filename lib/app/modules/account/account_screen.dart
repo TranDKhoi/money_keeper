@@ -34,8 +34,8 @@ class _AccountScreenState extends State<AccountScreen> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Tranxyz88@gmail.com",
+                Text(
+                  _controller.currentUser.value?.email ?? "",
                   textAlign: TextAlign.center,
                 ),
                 const Divider(thickness: 1),
