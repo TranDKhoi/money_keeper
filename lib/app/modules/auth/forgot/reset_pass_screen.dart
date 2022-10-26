@@ -12,7 +12,7 @@ class ResetPassScreen extends StatefulWidget {
 
 class _ResetPassScreenState extends State<ResetPassScreen> {
 
-  final _controller = Get.put(ForgotPassController());
+  final ForgotPassController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import '../../controllers/wallet/my_wallet_controller.dart';
 
 class AddWalletScreen extends StatelessWidget {
   AddWalletScreen({Key? key}) : super(key: key);
-  final _controller = Get.put(MyWalletController());
+  final MyWalletController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,7 @@ class VerifyForgotScreen extends StatefulWidget {
 }
 
 class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
-  final _controller = Get.put(ForgotPassController());
+  final ForgotPassController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
                 length: 6,
                 onCompleted: (String value) {
                   setState(() {
-                    _controller.secureCode = int.parse(value);
+                    _controller.secureCode = value;
                   });
                 },
                 onEditing: (bool value) {

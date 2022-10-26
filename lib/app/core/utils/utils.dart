@@ -18,7 +18,8 @@ class ConfigHelper {
       ..userInteractions = false
       ..dismissOnTap = false
       ..textColor = Colors.black
-      ..toastPosition = EasyLoadingToastPosition.bottom;
+      ..toastPosition = EasyLoadingToastPosition.bottom
+      ..displayDuration = const Duration(seconds: 5);
   }
 }
 
@@ -38,7 +39,7 @@ extension ApiResponseHandler on Response {
       case 401:
         return jsonDecode(body)["message"];
       case 404:
-        return jsonDecode(body)["message"];
+        return "Not Found";
       default:
         return "Internal Server Error";
     }

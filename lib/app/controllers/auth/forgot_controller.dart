@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
+import 'package:money_keeper/data/services/auth_service.dart';
 
 import '../../routes/routes.dart';
 
@@ -11,11 +13,20 @@ class ForgotPassController extends GetxController {
   final emailTextController = TextEditingController();
   final passTextController = TextEditingController();
   final rePassTextController = TextEditingController();
-  int? secureCode;
+  String? secureCode;
 
-  void toVerifyScreen() {
+  void toVerifyScreen() async {
     if (emailTextController.text.isNotEmpty) {
-      Get.toNamed(verifyForgotRoute);
+      EasyLoading.show();
+      var res =
+          await AuthService.ins.forgotPassword(email: emailTextController.text);
+      EasyLoading.dismiss();
+
+      if (res.isSuccess) {
+        Get.toNamed(verifyForgotRoute);
+      } else {
+        EasyLoading.showToast("Error");
+      }
     } else {
       EasyLoading.showToast("Pleaseenteralltheinformation".tr);
     }
@@ -25,19 +36,38 @@ class ForgotPassController extends GetxController {
     isSecureText.value = !isSecureText.value;
   }
 
-  void verifyCodeFunc() {
-    if (secureCode != null && secureCode == 000000) {
-      Get.offAllNamed(resetPassRoute);
+  void verifyCodeFunc() async {
+    if (secureCode != null) {
+      EasyLoading.show();
+      var res = await AuthService.ins.verifyResetPassword(
+          email: emailTextController.text, otp: secureCode!);
+      EasyLoading.dismiss();
+
+      if (res.isSuccess) {
+        Get.offAllNamed(resetPassRoute);
+      } else {
+        EasyLoading.showToast("Error");
+      }
     } else {
       EasyLoading.showToast("Incorectcode".tr);
     }
   }
 
-  void setNewPassFunc() {
+  void setNewPassFunc() async {
     if (passTextController.text.isNotEmpty &&
         rePassTextController.text.isNotEmpty) {
       if (passTextController.text == rePassTextController.text) {
-        Get.offAllNamed(loginScreenRoute);
+        EasyLoading.show();
+        var res = await AuthService.ins.resetPassword(
+            email: emailTextController.text,
+            password: rePassTextController.text);
+        EasyLoading.dismiss();
+
+        if (res.isSuccess) {
+          Get.offAllNamed(loginScreenRoute);
+        } else {
+          EasyLoading.showToast(res.errorMessage);
+        }
       } else {
         EasyLoading.showToast("Incorectpassword".tr);
       }

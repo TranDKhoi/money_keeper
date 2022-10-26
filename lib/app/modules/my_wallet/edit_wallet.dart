@@ -6,7 +6,7 @@ import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 class EditWalletScreen extends StatelessWidget {
   EditWalletScreen({Key? key}) : super(key: key);
 
-  final _controller = Get.put(MyWalletController());
+  final MyWalletController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

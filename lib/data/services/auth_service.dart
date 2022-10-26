@@ -34,11 +34,47 @@ class AuthService {
   Future<Response> verifyAccount(
       {required String email, required String otp}) async {
     return await post(
-      Uri.parse("$api_url/auth/sign-up"),
+      Uri.parse("$api_url/auth/verify-account"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode({"email": email, "otp": otp}),
+    );
+  }
+
+  Future<Response> forgotPassword({required String email}) async {
+    return await post(
+      Uri.parse("$api_url/auth/forgot-password"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(email),
+    );
+  }
+
+  Future<Response> verifyResetPassword(
+      {required String email, required String otp}) async {
+    return await post(
+      Uri.parse("$api_url/auth/verify-reset-password"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({"email": email, "otp": otp}),
+    );
+  }
+
+  Future<Response> resetPassword(
+      {required String email, required String password}) async {
+    return await post(
+      Uri.parse("$api_url/auth/reset-password"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+        "email": email,
+        "newPassword": password,
+        "retypePassword": password
+      }),
     );
   }
 }

@@ -13,7 +13,7 @@ class VerifySignupScreen extends StatefulWidget {
 }
 
 class _VerifySignupScreenState extends State<VerifySignupScreen> {
-  final _controller = Get.put(SignupController());
+  final SignupController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _VerifySignupScreenState extends State<VerifySignupScreen> {
                 length: 6,
                 onCompleted: (String value) {
                   setState(() {
-                    _controller.secureCode = int.parse(value);
+                    _controller.secureCode = value;
                   });
                 },
                 onEditing: (bool value) {
