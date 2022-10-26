@@ -28,10 +28,10 @@ class SignupController extends GetxController {
       var res = await AuthService.ins.signUp(user: u);
       EasyLoading.dismiss();
 
-      if (res.isSuccess) {
+      if (res.isOk) {
         Get.toNamed(verifySignupRoute);
       } else {
-        EasyLoading.showToast(res.errorMessage);
+        EasyLoading.showToast(res.message);
       }
     } else {
       EasyLoading.showToast("Pleaseenteralltheinformation".tr);
@@ -45,7 +45,7 @@ class SignupController extends GetxController {
           .verifyAccount(email: emailTextController.text, otp: secureCode!);
       EasyLoading.dismiss();
 
-      if (res.isSuccess) {
+      if (res.isOk) {
         Get.toNamed(bottomBarRoute);
       } else {
         EasyLoading.showToast("Incorectcode".tr);

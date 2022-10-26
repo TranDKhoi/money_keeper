@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:http/http.dart';
+import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -28,22 +28,9 @@ extension GetSize on BuildContext {
 }
 
 extension ApiResponseHandler on Response {
-  bool get isSuccess => statusCode == 200;
+  Map<String, dynamic> get data => body["data"];
 
-  Map<String, dynamic> get dataJson => jsonDecode(body)["data"];
-
-  String get errorMessage {
-    switch (statusCode) {
-      case 400:
-        return jsonDecode(body)["message"];
-      case 401:
-        return jsonDecode(body)["message"];
-      case 404:
-        return "Not Found";
-      default:
-        return "Internal Server Error";
-    }
-  }
+  String get message => body["message"];
 }
 
 class ImageHelper {

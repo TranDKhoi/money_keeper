@@ -29,13 +29,12 @@ class LoginController extends GetxController {
       EasyLoading.show();
       var res = await AuthService.ins.login(user: u);
       EasyLoading.dismiss();
-
-      if (res.isSuccess) {
+      if (res.isOk) {
         final AccountController ac = Get.find();
-        ac.currentUser.value = User.fromJson(res.dataJson);
+        ac.currentUser.value = User.fromJson(res.data);
         Get.toNamed(bottomBarRoute);
       } else {
-        EasyLoading.showToast(res.errorMessage);
+        EasyLoading.showToast(res.message);
       }
     } else {
       EasyLoading.showToast("Pleaseenteralltheinformation".tr);

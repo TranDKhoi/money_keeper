@@ -22,7 +22,7 @@ class ForgotPassController extends GetxController {
           await AuthService.ins.forgotPassword(email: emailTextController.text);
       EasyLoading.dismiss();
 
-      if (res.isSuccess) {
+      if (res.isOk) {
         Get.toNamed(verifyForgotRoute);
       } else {
         EasyLoading.showToast("Error");
@@ -43,7 +43,7 @@ class ForgotPassController extends GetxController {
           email: emailTextController.text, otp: secureCode!);
       EasyLoading.dismiss();
 
-      if (res.isSuccess) {
+      if (res.isOk) {
         Get.offAllNamed(resetPassRoute);
       } else {
         EasyLoading.showToast("Error");
@@ -63,10 +63,10 @@ class ForgotPassController extends GetxController {
             password: rePassTextController.text);
         EasyLoading.dismiss();
 
-        if (res.isSuccess) {
+        if (res.isOk) {
           Get.offAllNamed(loginScreenRoute);
         } else {
-          EasyLoading.showToast(res.errorMessage);
+          EasyLoading.showToast(res.message);
         }
       } else {
         EasyLoading.showToast("Incorectpassword".tr);
