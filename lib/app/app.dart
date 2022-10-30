@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/controllers/account/account_controller.dart';
+import 'package:money_keeper/app/modules/bottom_bar/bottom_bar.dart';
 import 'package:money_keeper/app/routes/pages.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
@@ -16,19 +18,15 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       getPages: AppPages.pages,
       debugShowCheckedModeBanner: false,
-      initialRoute: mainAuthScreenRoute,
+      initialRoute: Get.find<AccountController>().currentUser.value?.id == null
+          ? mainAuthScreenRoute
+          : bottomBarRoute,
       builder: EasyLoading.init(),
       theme: AppColors.lightTheme,
       darkTheme: AppColors.darkTheme,
-      locale: LocalizationService.locale,
+      locale: LocalizationService.currentLocale,
       fallbackLocale: LocalizationService.fallbackLocale,
       translations: LocalizationService(),
-      supportedLocales: LocalizationService.supportedLocales,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
     );
   }
 }

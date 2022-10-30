@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/core/utils/get_storage_service.dart';
 import 'package:money_keeper/app/core/utils/localization_service.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
@@ -25,6 +25,7 @@ class AccountController extends GetxController {
   }
 
   void toLoginScreen() {
+    GetStorageService.ins.clearUserToken();
     Get.offAllNamed(mainAuthScreenRoute);
   }
 
@@ -35,6 +36,7 @@ class AccountController extends GetxController {
     } else {
       Get.changeTheme(AppColors.lightTheme);
     }
+    GetStorageService.ins.setAppTheme(isDarkMode.value);
   }
 
   void changeLanguage(bool val) {
@@ -44,5 +46,6 @@ class AccountController extends GetxController {
     } else {
       LocalizationService.changeLocale("en");
     }
+    GetStorageService.ins.setAppLanguage(isVietnamese.value);
   }
 }

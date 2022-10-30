@@ -7,16 +7,11 @@ import '../values/en_lang.dart';
 import '../values/vi_lang.dart';
 
 class LocalizationService extends Translations {
-  static final locale = _getLocaleFromSupported();
-  static const fallbackLocale = Locale('vi', 'VN');
+  static Locale currentLocale = const Locale('en', 'US');
+  static const fallbackLocale = Locale('en', 'US');
   static final languageCodes = [
     'en',
     'vi',
-  ];
-
-  static final List displayLangList = [
-    {'name': 'English(US)', 'languageCode': 'en'},
-    {'name': 'Tiếng Việt', 'languageCode': 'vi'},
   ];
 
 // các Locale được support
@@ -24,11 +19,6 @@ class LocalizationService extends Translations {
     const Locale('en', 'US'),
     const Locale('vi', 'VN'),
   ];
-
-  static final langs = LinkedHashMap.from({
-    'en': 'English',
-    'vi': 'Tiếng Việt',
-  });
 
   static void changeLocale(String languageCode) {
     final locale = _getLocaleFromSupported(languageCode: languageCode);

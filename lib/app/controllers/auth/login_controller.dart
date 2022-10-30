@@ -8,6 +8,7 @@ import 'package:money_keeper/app/routes/routes.dart';
 import 'package:money_keeper/data/services/auth_service.dart';
 
 import '../../../data/models/user.dart';
+import '../../core/utils/get_storage_service.dart';
 
 class LoginController extends GetxController {
   var isSecureText = true.obs;
@@ -29,9 +30,14 @@ class LoginController extends GetxController {
       EasyLoading.show();
       var res = await AuthService.ins.login(user: u);
       EasyLoading.dismiss();
+
       if (res.isOk) {
         final AccountController ac = Get.find();
         ac.currentUser.value = User.fromJson(res.data);
+
+        //save to local
+        GetStorageService.ins.setUserToken(ac.currentUser.value!.id!);
+
         Get.toNamed(bottomBarRoute);
       } else {
         EasyLoading.showToast(res.message);
