@@ -6,6 +6,7 @@ import 'package:money_keeper/app/routes/routes.dart';
 import '../../../data/models/user.dart';
 import '../../core/utils/utils.dart';
 import '../../core/values/theme.dart';
+import '../../modules/category/manage_category.dart';
 
 class AccountController extends GetxController {
   var isDarkMode = false.obs;
@@ -18,6 +19,10 @@ class AccountController extends GetxController {
 
   void toMyWalletScreen() {
     Get.toNamed(myWalletRoute);
+  }
+
+  void toManageCategoryScreen() {
+    Get.to(ManageCategoryScreen(canBack: false));
   }
 
   void toSettingScreen() {

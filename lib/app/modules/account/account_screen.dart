@@ -48,6 +48,14 @@ class _AccountScreenState extends State<AccountScreen> {
                   title: Text("Mywallet".tr),
                   trailing: const Icon(Ionicons.chevron_forward),
                 ),
+                ListTile(
+                  onTap: () {
+                    _controller.toManageCategoryScreen();
+                  },
+                  leading: const Icon(Ionicons.file_tray_full_outline),
+                  title: Text("ManageCategory".tr),
+                  trailing: const Icon(Ionicons.chevron_forward),
+                ),
                 //setting
                 ListTile(
                   onTap: () {

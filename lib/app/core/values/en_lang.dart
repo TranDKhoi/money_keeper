@@ -79,4 +79,7 @@ const Map<String, String> enLanguagePackage = {
   "Incorectpassword": "Incorrect password",
   "Vietnamese": "Vietnamese",
   "Type":"Type",
+  "ManageCategory":"Category",
+  "Categoryname": "Category name",
+
 };

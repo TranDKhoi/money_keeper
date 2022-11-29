@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
+import '../../../data/models/category.dart';
 import '../../core/utils/utils.dart';
 
 class AddTransactionController extends GetxController {
   var pickedImage = Rxn<String>();
   var pickedDate = DateTime.now().obs;
   var selectedType = Rxn<String>();
+  var selectedCategory = Rxn<Category>();
 
   var listType = ["Income".tr,"Expense".tr];
 

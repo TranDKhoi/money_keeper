@@ -15,6 +15,7 @@ import '../modules/auth/forgot/forgot_pass_screen.dart';
 import '../modules/auth/forgot/reset_pass_screen.dart';
 import '../modules/auth/login/login_screen.dart';
 import '../modules/auth/forgot/verify_forgot.dart';
+import '../modules/category/manage_category.dart';
 import '../modules/report/income_detail.dart';
 import '../modules/transaction/add_transaction.dart';
 import '../modules/transaction/edit_transaction.dart';
@@ -98,6 +99,11 @@ class AppPages {
     GetPage(
       name: settingRoute,
       page: () => SettingScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: manageCategoryRoute,
+      page: () => ManageCategoryScreen(),
       transition: Transition.rightToLeft,
     ),
   ];

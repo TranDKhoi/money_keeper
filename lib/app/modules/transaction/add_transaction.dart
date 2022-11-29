@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/transaction/add_transaction_controller.dart';
+import 'package:money_keeper/app/routes/routes.dart';
 
+import '../../../data/models/category.dart';
 import '../../core/utils/utils.dart';
 
 class AddTransactionScreen extends StatelessWidget {
@@ -50,15 +52,42 @@ class AddTransactionScreen extends StatelessWidget {
                     const SizedBox(height: 10),
                     Row(
                       children: [
-                        const CircleAvatar(),
+                        Obx(
+                          () {
+                            if (_controller.selectedCategory.value != null) {
+                              return CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Image.asset(
+                                    "assets/icons/${_controller.selectedCategory.value!.image}.png"),
+                              );
+                            } else {
+                              return const CircleAvatar();
+                            }
+                          },
+                        ),
                         const SizedBox(width: 20),
-                        Expanded(
-                          child: TextField(
-                            enabled: false,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              hintText: "Selectcategory".tr,
-                              fillColor: Colors.transparent,
+                        Obx(
+                          () => Expanded(
+                            child: TextField(
+                              enabled: true,
+                              onTap: () async {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                var res =
+                                    await Get.toNamed(manageCategoryRoute);
+                                if (res != null) {
+                                  _controller.selectedCategory.value = res;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                hintText: _controller
+                                            .selectedCategory.value?.name ==
+                                        null
+                                    ? "Selectcategory".tr
+                                    : _controller.selectedCategory.value!.name,
+                                fillColor: Colors.transparent,
+                              ),
                             ),
                           ),
                         ),

@@ -2,13 +2,15 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
+import '../../../data/models/category.dart';
 import '../../core/utils/utils.dart';
 
 class EditTransactionController extends GetxController {
   var pickedImage = Rxn<String>();
   var pickedDate = DateTime.now().obs;
   var selectedType = Rxn<String>();
-  var listType = ["Income".tr,"Expense".tr];
+  var listType = ["Income".tr, "Expense".tr];
+  var selectedCategory = Rxn<Category>();
 
   void pickedImageGallery() async {
     String? picked = await ImageHelper.ins.pickSingleImage();
@@ -24,7 +26,7 @@ class EditTransactionController extends GetxController {
     pickedImage.value = null;
   }
 
-  void changeType (String val){
+  void changeType(String val) {
     selectedType.value = val;
   }
 }

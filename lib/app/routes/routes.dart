@@ -15,3 +15,4 @@ const String editTransactionRoute = "/edit_transaction";
 const String incomeDetailRoute = "/income_detail";
 const String expenseDetailRoute = "/expense_detail";
 const String settingRoute = "/setting_route";
+const String manageCategoryRoute = "/manage_category";

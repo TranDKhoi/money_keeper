@@ -6,6 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/transaction/edit_transaction_controller.dart';
 
 import '../../core/utils/utils.dart';
+import '../../routes/routes.dart';
 
 class EditTransactionScreen extends StatelessWidget {
   EditTransactionScreen({Key? key}) : super(key: key);
@@ -50,15 +51,42 @@ class EditTransactionScreen extends StatelessWidget {
                     const SizedBox(height: 10),
                     Row(
                       children: [
-                        const CircleAvatar(),
+                        Obx(
+                          () {
+                            if (_controller.selectedCategory.value != null) {
+                              return CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Image.asset(
+                                    "assets/icons/${_controller.selectedCategory.value!.image}.png"),
+                              );
+                            } else {
+                              return const CircleAvatar();
+                            }
+                          },
+                        ),
                         const SizedBox(width: 20),
-                        Expanded(
-                          child: TextField(
-                            enabled: false,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.zero,
-                              hintText: "Selectcategory".tr,
-                              fillColor: Colors.transparent,
+                        Obx(
+                          () => Expanded(
+                            child: TextField(
+                              enabled: true,
+                              onTap: () async {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                var res =
+                                    await Get.toNamed(manageCategoryRoute);
+                                if (res != null) {
+                                  _controller.selectedCategory.value = res;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                hintText: _controller
+                                            .selectedCategory.value?.name ==
+                                        null
+                                    ? "Selectcategory".tr
+                                    : _controller.selectedCategory.value!.name,
+                                fillColor: Colors.transparent,
+                              ),
                             ),
                           ),
                         ),
@@ -70,7 +98,7 @@ class EditTransactionScreen extends StatelessWidget {
                         const Icon(Ionicons.swap_horizontal),
                         const SizedBox(width: 30),
                         Obx(
-                              () => DropdownButton<String>(
+                          () => DropdownButton<String>(
                             value: _controller.selectedType.value,
                             hint: Text("Type".tr),
                             icon: const Icon(Ionicons.caret_down),
