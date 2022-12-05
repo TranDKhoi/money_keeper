@@ -24,7 +24,7 @@ void _getUserToken() {
   var token = GetStorageService.ins.getUserToken();
   if (token != null) {
     //get user by id
-    ac.currentUser.value = User(id: token);
+    ac.currentUser.value = User(token: token);
   }
 }
 

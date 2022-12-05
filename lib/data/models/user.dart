@@ -7,11 +7,13 @@ class User {
   String? id;
   String? email;
   String? password;
+  String? token;
 
   User({
     this.id,
     this.email,
     this.password,
+    this.token,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

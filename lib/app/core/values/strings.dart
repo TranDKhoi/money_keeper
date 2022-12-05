@@ -1,1 +1,1 @@
-const api_url = "https://money-love-api.azurewebsites.net/api";
+const api_url = "https://mochi-api.azurewebsites.net/api";

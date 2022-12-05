@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/core/utils/get_storage_service.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 import 'package:money_keeper/data/services/auth_service.dart';
@@ -22,8 +23,8 @@ class SignupController extends GetxController {
   toVerifyScreen() async {
     if (isValidData()) {
       var u = User(
-          email: emailTextController.text,
-          password: passwordTextController.text);
+          email: emailTextController.text.trim(),
+          password: passwordTextController.text.trim());
       EasyLoading.show();
       var res = await AuthService.ins.signUp(user: u);
       EasyLoading.dismiss();
@@ -42,11 +43,12 @@ class SignupController extends GetxController {
     if (secureCode != null) {
       EasyLoading.show();
       var res = await AuthService.ins
-          .verifyAccount(email: emailTextController.text, otp: secureCode!);
+          .verifyAccount(email: emailTextController.text, code: secureCode!);
       EasyLoading.dismiss();
 
       if (res.isOk) {
         Get.toNamed(bottomBarRoute);
+        GetStorageService.ins.setUserToken(res.data["token"]);
       } else {
         EasyLoading.showToast("Incorectcode".tr);
       }

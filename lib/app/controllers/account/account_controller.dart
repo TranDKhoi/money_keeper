@@ -22,7 +22,7 @@ class AccountController extends GetxController {
   }
 
   void toManageCategoryScreen() {
-    Get.to(ManageCategoryScreen(canBack: false));
+    Get.to(() => ManageCategoryScreen(canBack: false));
   }
 
   void toSettingScreen() {

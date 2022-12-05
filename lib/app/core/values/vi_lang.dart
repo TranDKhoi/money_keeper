@@ -10,8 +10,8 @@ const Map<String, String> viLanguagePackage = {
   "Newpassword": "Mật khẩu mới",
   "Confirmpassword": "Xác nhận mật khẩu",
   "CONFIRM": "XÁC NHẬN",
-  "A6charactercodehasbeensenttotheemail":
-      "Một mã gồm 6 ký tự đã được gửi đến email",
+  "A4charactercodehasbeensenttotheemail":
+      "Một mã gồm 4 ký tự đã được gửi đến email",
   "VERIFY": "XÁC MINH",
   "Didntreceiveanycode": "Không nhận được mã?",
   "Signin": "Đăng nhập",

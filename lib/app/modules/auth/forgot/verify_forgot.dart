@@ -25,7 +25,7 @@ class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "${"A6charactercodehasbeensenttotheemail".tr} ${_controller.emailTextController.text}",
+              "${"A4charactercodehasbeensenttotheemail".tr} ${_controller.emailTextController.text}",
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -41,7 +41,7 @@ class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
                 itemSize: context.screenSize.width / 8,
                 underlineColor: Colors.grey,
                 keyboardType: TextInputType.number,
-                length: 6,
+                length: 4,
                 onCompleted: (String value) {
                   setState(() {
                     _controller.secureCode = value;

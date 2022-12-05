@@ -10,8 +10,8 @@ const Map<String, String> enLanguagePackage = {
   "Newpassword": "New password",
   "Confirmpassword": "Confirm password",
   "CONFIRM": "CONFIRM",
-  "A6charactercodehasbeensenttotheemail":
-      "A 6-character code has been sent to the email",
+  "A4charactercodehasbeensenttotheemail":
+      "A 4-character code has been sent to the email",
   "VERIFY": "VERIFY",
   "Didntreceiveanycode": "Didn't receive any code?",
   "Signin": "Sign in",

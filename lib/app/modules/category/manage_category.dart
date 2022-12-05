@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../data/models/category.dart';
@@ -13,21 +13,61 @@ class ManageCategoryScreen extends StatelessWidget {
   final _controller = Get.put(CategoryController());
   bool canBack;
 
-  final List<Category> listCate =
-      List.generate(13, (index) => Category(name: "name $index", image: index));
+  final List<Category> listCate = List.generate(
+      13,
+      (index) => Category(
+          name: "name $index",
+          image: index,
+          type: index % 2 == 0 ? "Income".tr : "Expense".tr));
 
   @override
   Widget build(BuildContext context) {
+    final incomeList =
+        listCate.where((element) => element.type == "Income".tr).toList();
+    final expenseList =
+        listCate.where((element) => element.type == "Expense".tr).toList();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("ManageCategory".tr),
       ),
-      body: ListView.builder(
+      body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, i) {
-          return _buildSlideItem(listCate[i]);
-        },
-        itemCount: listCate.length,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Income".tr,
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, i) {
+                  return _buildSlideItem(incomeList[i]);
+                },
+                itemCount: incomeList.length,
+              ),
+              const SizedBox(height: 20),
+              Text(
+                "Expense".tr,
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, i) {
+                  return _buildSlideItem(expenseList[i]);
+                },
+                itemCount: expenseList.length,
+              ),
+            ],
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,

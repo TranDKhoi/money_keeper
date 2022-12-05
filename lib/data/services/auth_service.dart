@@ -12,49 +12,46 @@ class AuthService extends GetConnect {
 
   Future<Response> login({required User user}) async {
     return await post(
-      "$api_url/auth/sign-in", jsonEncode(user),
+      "$api_url/auth/login",
+      jsonEncode(user),
     );
   }
 
   Future<Response> signUp({required User user}) async {
     return await post(
-      "$api_url/auth/sign-up",
+      "$api_url/auth/register",
       jsonEncode(user),
     );
   }
 
   Future<Response> verifyAccount(
-      {required String email, required String otp}) async {
+      {required String email, required String code}) async {
     return await post(
       "$api_url/auth/verify-account",
-      jsonEncode({"email": email, "otp": otp}),
+      jsonEncode({"email": email, "code": code}),
     );
   }
 
   Future<Response> forgotPassword({required String email}) async {
     return await post(
       "$api_url/auth/forgot-password",
-      jsonEncode(email),
+      jsonEncode({"email": email}),
     );
   }
 
   Future<Response> verifyResetPassword(
-      {required String email, required String otp}) async {
+      {required String email, required String code}) async {
     return await post(
-      "$api_url/auth/verify-reset-password",
-      jsonEncode({"email": email, "otp": otp}),
+      "$api_url/auth/verify-code-repassword",
+      jsonEncode({"email": email, "code": code}),
     );
   }
 
   Future<Response> resetPassword(
-      {required String email, required String password}) async {
+      {required String token, required String password}) async {
     return await post(
       "$api_url/auth/reset-password",
-      jsonEncode({
-        "email": email,
-        "newPassword": password,
-        "retypePassword": password
-      }),
+      jsonEncode({"token": token, "password": password}),
     );
   }
 }

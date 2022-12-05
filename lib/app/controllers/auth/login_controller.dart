@@ -36,7 +36,7 @@ class LoginController extends GetxController {
         ac.currentUser.value = User.fromJson(res.data);
 
         //save to local
-        GetStorageService.ins.setUserToken(ac.currentUser.value!.id!);
+        GetStorageService.ins.setUserToken(ac.currentUser.value!.token!);
 
         Get.toNamed(bottomBarRoute);
       } else {

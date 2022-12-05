@@ -14,6 +14,7 @@ class ForgotPassController extends GetxController {
   final passTextController = TextEditingController();
   final rePassTextController = TextEditingController();
   String? secureCode;
+  String? resetPassToken;
 
   void toVerifyScreen() async {
     if (emailTextController.text.isNotEmpty) {
@@ -25,7 +26,7 @@ class ForgotPassController extends GetxController {
       if (res.isOk) {
         Get.toNamed(verifyForgotRoute);
       } else {
-        EasyLoading.showToast("Error");
+        EasyLoading.showToast(res.message);
       }
     } else {
       EasyLoading.showToast("Pleaseenteralltheinformation".tr);
@@ -40,11 +41,12 @@ class ForgotPassController extends GetxController {
     if (secureCode != null) {
       EasyLoading.show();
       var res = await AuthService.ins.verifyResetPassword(
-          email: emailTextController.text, otp: secureCode!);
+          email: emailTextController.text, code: secureCode!);
       EasyLoading.dismiss();
 
       if (res.isOk) {
         Get.offAllNamed(resetPassRoute);
+        resetPassToken = res.body["data"];
       } else {
         EasyLoading.showToast("Error");
       }
@@ -59,12 +61,13 @@ class ForgotPassController extends GetxController {
       if (passTextController.text == rePassTextController.text) {
         EasyLoading.show();
         var res = await AuthService.ins.resetPassword(
-            email: emailTextController.text,
+            token: resetPassToken!,
             password: rePassTextController.text);
         EasyLoading.dismiss();
 
         if (res.isOk) {
           Get.offAllNamed(loginScreenRoute);
+          resetPassToken = null;
         } else {
           EasyLoading.showToast(res.message);
         }
