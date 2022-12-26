@@ -38,12 +38,16 @@ class _BottomBarState extends State<BottomBar> {
                     label: "Home".tr,
                   ),
                   BottomNavigationBarItem(
-                    icon: const Icon(Ionicons.wallet),
+                    icon: const Icon(Ionicons.swap_horizontal_outline),
                     label: "Transaction".tr,
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Ionicons.stats_chart),
                     label: "Report".tr,
+                  ),
+                  BottomNavigationBarItem(
+                    icon: const Icon(Ionicons.calendar_outline),
+                    label: "Planning".tr,
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Ionicons.person),
@@ -55,12 +59,22 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green,
-        child: const Icon(
-          Ionicons.add,
-          color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(
+              Ionicons.add,
+              color: Colors.white,
+              size: 20,
+            ),
+            Icon(
+              Ionicons.swap_horizontal_outline,
+              color: Colors.white,
+              size: 20,
+            ),
+          ],
         ),
         onPressed: () {
           _controller.toCreateTransactionScreen();

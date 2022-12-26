@@ -19,9 +19,7 @@ class IconModalBottomSheet extends StatelessWidget {
               margin: const EdgeInsets.all(15),
               child: GestureDetector(
                 onTap: () {
-                  final controller = Get.find<CategoryController>();
-                  controller.selectedCategoryPic.value = index;
-                  Get.back();
+                  Get.back(result: index);
                 },
                 child: CircleAvatar(
                   radius: 25,

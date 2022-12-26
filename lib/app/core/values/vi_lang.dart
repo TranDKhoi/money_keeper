@@ -81,4 +81,22 @@ const Map<String, String> viLanguagePackage = {
   "Type": "Khoản",
   "ManageCategory": "Danh mục",
   "Categoryname": "Tên danh mục",
+  "Planning": "Kế hoạch",
+  "Budget": "Ngân sách",
+  "Afinancial":
+      "Một kế hoạch tài chính giúp bạn cân bằng khoản thu và khoản chi của mình",
+  "Event": "Sự kiện",
+  "Createaneventto":
+      "Tạo một sự kiện để theo dõi một sự kiện có thực nào đó, ví dụ như đi du lịch cuối tuần",
+  "Running": "Đang áp dụng",
+  "Finished": "Đã kết thúc",
+  "Addevent": "Thêm sự kiện",
+  "Editevent": "Sửa sự kiện",
+  "Eventname": "Tên sự kiện",
+  "Enddate": "Ngày kết thúc",
+  "Selectwallet": "Chọn ví",
+  "Spent": "Đã chi",
+  "Markasfinished": "Đánh dấu kết thúc",
+  "Markasunfinished": "Đánh dấu chưa kết thúc",
+  "Listoftransaction":"Danh sách thu chi",
 };

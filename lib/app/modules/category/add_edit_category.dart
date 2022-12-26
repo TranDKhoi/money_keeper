@@ -29,11 +29,15 @@ class AddEditCategoryScreen extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           GestureDetector(
-            onTap: () {
-              showModalBottomSheet<void>(
+            onTap: () async {
+              var res = await showModalBottomSheet<int>(
                   context: context,
                   builder: (BuildContext context) =>
                       const IconModalBottomSheet());
+
+              if (res != null) {
+                _controller.selectedCategoryPic.value = res;
+              }
             },
             child: Row(
               children: [

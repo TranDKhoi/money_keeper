@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
-import 'package:money_keeper/app/routes/routes.dart';
 
 class MyWalletScreen extends StatelessWidget {
   MyWalletScreen({Key? key}) : super(key: key);
 
-  final _controller = Get.put(MyWalletController());
+  final _controller = Get.put(MyWalletController())..getAllWalletData();
+  final bool isFromTransactionScreen = Get.arguments ?? false;
 
   @override
   Widget build(BuildContext context) {
@@ -58,18 +58,23 @@ class MyWalletScreen extends StatelessWidget {
               itemBuilder: (context1, index1) {
                 return ListTile(
                   onTap: () {
-                    _controller.toEditWallet();
+                    if (isFromTransactionScreen) {
+                      Get.back(result: _controller.listWallet.value![index1]);
+                    } else {
+                      _controller
+                          .toEditWallet(_controller.listWallet.value![index1]);
+                    }
                   },
                   isThreeLine: true,
                   dense: true,
                   leading: const Icon(Ionicons.cash),
                   title: Text(
-                    "Ví số $index1",
+                    _controller.listWallet.value![index1].name!,
                     style: const TextStyle(fontSize: 25),
                   ),
-                  subtitle: const Text(
-                    "100.000 d",
-                    style: TextStyle(fontSize: 15),
+                  subtitle: Text(
+                    "${_controller.listWallet.value![index1].balance} đ",
+                    style: const TextStyle(fontSize: 15),
                   ),
                 );
               },

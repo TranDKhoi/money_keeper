@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 
 import '../../../data/models/category.dart';
+import '../../../data/models/wallet.dart';
 import '../../core/utils/utils.dart';
 
 class AddTransactionController extends GetxController {
@@ -10,6 +11,7 @@ class AddTransactionController extends GetxController {
   var pickedDate = DateTime.now().obs;
   var selectedType = Rxn<String>();
   var selectedCategory = Rxn<Category>();
+  var selectedWallet = Rxn<Wallet>();
 
   var listType = ["Income".tr,"Expense".tr];
 

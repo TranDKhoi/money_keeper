@@ -3,10 +3,13 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 
+import '../../../data/models/wallet.dart';
+
 class EditWalletScreen extends StatelessWidget {
   EditWalletScreen({Key? key}) : super(key: key);
 
   final MyWalletController _controller = Get.find();
+  final selectedWallet = Get.arguments as Wallet;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,9 @@ class EditWalletScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 20),
                       Expanded(
-                        child: TextField(
+                        child: TextFormField(
+                          initialValue: selectedWallet.name,
+                          onChanged: (s) {},
                           style: const TextStyle(
                             fontSize: 20,
                           ),
@@ -53,7 +58,8 @@ class EditWalletScreen extends StatelessWidget {
                       ),
                       const SizedBox(width: 20),
                       Expanded(
-                        child: TextField(
+                        child: TextFormField(
+                          initialValue: selectedWallet.balance.toString(),
                           keyboardType: TextInputType.number,
                           style: const TextStyle(
                             fontSize: 20,
@@ -77,8 +83,8 @@ class EditWalletScreen extends StatelessWidget {
             onChanged: (val) {},
             isThreeLine: true,
             title: Text("Notincludeintotalbalance".tr),
-            subtitle: Text(
-                "Createanewwalletanddonotincludeitintototalbalance".tr),
+            subtitle:
+                Text("Createanewwalletanddonotincludeitintototalbalance".tr),
           ),
           const SizedBox(height: 30),
           GestureDetector(

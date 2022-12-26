@@ -78,8 +78,25 @@ const Map<String, String> enLanguagePackage = {
   "Incorectcode": "Incorrect code",
   "Incorectpassword": "Incorrect password",
   "Vietnamese": "Vietnamese",
-  "Type":"Type",
-  "ManageCategory":"Category",
+  "Type": "Type",
+  "ManageCategory": "Category",
   "Categoryname": "Category name",
-
+  "Planning": "Planning",
+  "Budget": "Budget",
+  "Afinancial":
+      "A financial plan that helps you balance your income and expenses",
+  "Event": "Event",
+  "Createaneventto":
+      "Create an event to track a real event, for example a weekend trip",
+  "Running": "Running",
+  "Finished": "Finished",
+  "Addevent": "Add event",
+  "Editevent": "Edit event",
+  "Eventname": "Event name",
+  "Enddate": "End date",
+  "Selectwallet": "Select wallet",
+  "Spent": "Spent",
+  "Markasfinished": "Mark as finished",
+  "Markasunfinished": "Mark as unfinished",
+  "Listoftransaction":"List of transaction",
 };

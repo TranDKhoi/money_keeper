@@ -6,7 +6,6 @@ import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/transaction/add_transaction_controller.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
-import '../../../data/models/category.dart';
 import '../../core/utils/utils.dart';
 
 class AddTransactionScreen extends StatelessWidget {
@@ -50,6 +49,7 @@ class AddTransactionScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
+                    //category
                     Row(
                       children: [
                         Obx(
@@ -94,6 +94,7 @@ class AddTransactionScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 10),
+                    //type
                     Row(
                       children: [
                         const Icon(Ionicons.swap_horizontal),
@@ -117,6 +118,7 @@ class AddTransactionScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
+                    //note
                     Row(
                       children: [
                         const Icon(Ionicons.list_outline),
@@ -133,6 +135,7 @@ class AddTransactionScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
+                    //date
                     Row(
                       children: [
                         const Icon(Ionicons.calendar_outline),
@@ -154,6 +157,39 @@ class AddTransactionScreen extends StatelessWidget {
                                   .dateFormat(_controller.pickedDate.value),
                               style: const TextStyle(
                                 fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    //wallet
+                    Row(
+                      children: [
+                        const Icon(Ionicons.cash),
+                        const SizedBox(width: 20),
+                        Obx(
+                          () => Expanded(
+                            child: TextField(
+                              enabled: true,
+                              onTap: () async {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                var res = await Get.toNamed(myWalletRoute,
+                                    arguments: true);
+                                if (res != null) {
+                                  _controller.selectedWallet.value = res;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                hintText: _controller
+                                            .selectedWallet.value?.name ==
+                                        null
+                                    ? "Selectwallet".tr
+                                    : _controller.selectedWallet.value!.name,
+                                fillColor: Colors.transparent,
                               ),
                             ),
                           ),

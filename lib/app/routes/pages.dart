@@ -13,9 +13,12 @@ import 'package:money_keeper/app/routes/routes.dart';
 import '../modules/account/setting_screen.dart';
 import '../modules/auth/forgot/forgot_pass_screen.dart';
 import '../modules/auth/forgot/reset_pass_screen.dart';
-import '../modules/auth/login/login_screen.dart';
 import '../modules/auth/forgot/verify_forgot.dart';
+import '../modules/auth/login/login_screen.dart';
 import '../modules/category/manage_category.dart';
+import '../modules/planning/event/add_edit_event.dart';
+import '../modules/planning/event/event_info_screen.dart';
+import '../modules/planning/event/event_screen.dart';
 import '../modules/report/income_detail.dart';
 import '../modules/transaction/add_transaction.dart';
 import '../modules/transaction/edit_transaction.dart';
@@ -104,6 +107,21 @@ class AppPages {
     GetPage(
       name: manageCategoryRoute,
       page: () => ManageCategoryScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: eventScreenRoute,
+      page: () => const EventScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: addEventScreenRoute,
+      page: () => AddEditEventScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: eventInfoScreenRoute,
+      page: () => EventInfoScreen(),
       transition: Transition.rightToLeft,
     ),
   ];
