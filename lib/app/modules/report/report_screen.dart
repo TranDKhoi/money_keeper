@@ -6,6 +6,8 @@ import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/modules/report/widgets/report_bar_chart.dart';
 import 'package:money_keeper/app/modules/report/widgets/report_pie_chart.dart';
 
+import '../../core/values/r.dart';
+
 class ReportScreen extends StatefulWidget {
   const ReportScreen({Key? key}) : super(key: key);
 
@@ -39,7 +41,7 @@ class _ReportScreenState extends State<ReportScreen>
         centerTitle: true,
         title: Column(
           children: [
-            Text("Balance".tr),
+            Text(R.Balance.tr),
             const Text("100.000đ"),
           ],
         ),
@@ -89,14 +91,14 @@ class _ReportScreenState extends State<ReportScreen>
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                "IncomeandExpense".tr,
+                R.IncomeandExpense.tr,
                 style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 10),
-              Text("Totalleft".tr),
+              Text(R.Totalleft.tr),
               const Text(
                 "50.000đ",
                 style: TextStyle(fontSize: 25),
@@ -108,7 +110,7 @@ class _ReportScreenState extends State<ReportScreen>
               Row(
                 children: [
                   Text(
-                    "Income".tr,
+                    R.Income.tr,
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -120,7 +122,7 @@ class _ReportScreenState extends State<ReportScreen>
                       _controller.toIncomeDetailsScreen();
                     },
                     child: Text(
-                      "Detail".tr,
+                      R.Detail.tr,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.green,
@@ -146,7 +148,7 @@ class _ReportScreenState extends State<ReportScreen>
               Row(
                 children: [
                   Text(
-                    "Expense".tr,
+                    R.Expense.tr,
                     style: const TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -158,7 +160,7 @@ class _ReportScreenState extends State<ReportScreen>
                       _controller.toExpenseDetailsScreen();
                     },
                     child: Text(
-                      "Detail".tr,
+                      R.Detail.tr,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.green,

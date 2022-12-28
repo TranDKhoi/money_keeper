@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/modules/report/widgets/report_pie_chart.dart';
 
 import '../../common/widget/in_ex_item.dart';
+import '../../core/values/r.dart';
 
 class IncomeDetail extends StatelessWidget {
   IncomeDetail({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class IncomeDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Incomedetail".tr),
+        title: Text(R.Incomedetail.tr),
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -30,7 +31,7 @@ class IncomeDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                "Totalincome".tr,
+                R.Totalincome.tr,
                 style: const TextStyle(fontSize: 30),
               ),
               const Text(

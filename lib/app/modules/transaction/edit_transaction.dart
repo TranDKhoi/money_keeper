@@ -6,6 +6,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/transaction/edit_transaction_controller.dart';
 
 import '../../core/utils/utils.dart';
+import '../../core/values/r.dart';
 import '../../routes/routes.dart';
 
 class EditTransactionScreen extends StatelessWidget {
@@ -17,11 +18,11 @@ class EditTransactionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edittransaction".tr),
+        title: Text(R.Edittransaction.tr),
         actions: [
           TextButton(
             onPressed: () {},
-            child: Text("Save".tr),
+            child: Text(R.Save.tr),
           ),
         ],
       ),
@@ -83,7 +84,7 @@ class EditTransactionScreen extends StatelessWidget {
                                 hintText: _controller
                                             .selectedCategory.value?.name ==
                                         null
-                                    ? "Selectcategory".tr
+                                    ? R.Selectcategory.tr
                                     : _controller.selectedCategory.value!.name,
                                 fillColor: Colors.transparent,
                               ),
@@ -100,7 +101,7 @@ class EditTransactionScreen extends StatelessWidget {
                         Obx(
                           () => DropdownButton<String>(
                             value: _controller.selectedType.value,
-                            hint: Text("Type".tr),
+                            hint: Text(R.Type.tr),
                             icon: const Icon(Ionicons.caret_down),
                             onChanged: (String? value) {
                               _controller.changeType(value!);
@@ -124,7 +125,7 @@ class EditTransactionScreen extends StatelessWidget {
                           child: TextField(
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
-                              hintText: "Note".tr,
+                              hintText: R.Note.tr,
                               fillColor: Colors.transparent,
                             ),
                           ),

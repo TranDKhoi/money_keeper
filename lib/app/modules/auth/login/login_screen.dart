@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../controllers/auth/login_controller.dart';
+import '../../../core/values/r.dart';
 import '../../../routes/routes.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "Signin".tr,
+              R.Signin.tr,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
                 obscureText: _controller.isSecureText.value,
                 decoration: InputDecoration(
-                  hintText: "Password".tr,
+                  hintText: R.Password.tr,
                   suffixIcon: GestureDetector(
                     onTap: _controller.changeSecureText,
                     child: Obx(
@@ -67,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 _controller.loginFunc();
               },
-              child: Text("SIGNIN".tr),
+              child: Text(R.SIGNIN.tr),
             ),
             const SizedBox(height: 20),
             GestureDetector(
@@ -76,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
               child: Align(
                 alignment: Alignment.topRight,
-                child: Text("Forgotpassword".tr),
+                child: Text(R.Forgotpassword.tr),
               ),
             ),
           ],

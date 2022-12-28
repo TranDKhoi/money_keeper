@@ -4,12 +4,13 @@ import 'package:get/get.dart';
 
 import '../../../data/models/category.dart';
 import '../../core/utils/utils.dart';
+import '../../core/values/r.dart';
 
 class EditTransactionController extends GetxController {
   var pickedImage = Rxn<String>();
   var pickedDate = DateTime.now().obs;
   var selectedType = Rxn<String>();
-  var listType = ["Income".tr, "Expense".tr];
+  var listType = [R.Income.tr, R.Expense.tr];
   var selectedCategory = Rxn<Category>();
 
   void pickedImageGallery() async {

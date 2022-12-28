@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../controllers/auth/singnup_controller.dart';
+import '../../../core/values/r.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _SignupScreenState extends State<SignupScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "Signup".tr,
+              R.Signup.tr,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -47,7 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 keyboardType: TextInputType.emailAddress,
                 obscureText: _controller.isSecureText.value,
                 decoration: InputDecoration(
-                  hintText: "Password".tr,
+                  hintText: R.Password.tr,
                   suffixIcon: GestureDetector(
                     onTap: _controller.changeSecureText,
                     child: Obx(
@@ -66,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
               onPressed: () {
                 _controller.toVerifyScreen();
               },
-              child: Text("SIGNUP".tr),
+              child: Text(R.SIGNUP.tr),
             ),
           ],
         ),

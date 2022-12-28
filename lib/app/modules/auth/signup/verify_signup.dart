@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 
 import '../../../controllers/auth/singnup_controller.dart';
+import '../../../core/values/r.dart';
 
 class VerifySignupScreen extends StatefulWidget {
   const VerifySignupScreen({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _VerifySignupScreenState extends State<VerifySignupScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "${"A4charactercodehasbeensenttotheemail".tr} ${_controller.emailTextController.text}",
+              "${R.A4charactercodehasbeensenttotheemail.tr} ${_controller.emailTextController.text}",
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -58,7 +59,7 @@ class _VerifySignupScreenState extends State<VerifySignupScreen> {
               onPressed: () {
                 _controller.verifyCodeFunc();
               },
-              child: Text("VERIFY".tr),
+              child: Text(R.VERIFY.tr),
             ),
             const SizedBox(height: 20),
             GestureDetector(
@@ -67,7 +68,7 @@ class _VerifySignupScreenState extends State<VerifySignupScreen> {
               },
               child: Align(
                 alignment: Alignment.topRight,
-                child: Text("Didntreceiveanycode".tr),
+                child: Text(R.Didntreceiveanycode.tr),
               ),
             ),
             const SizedBox(height: 100),

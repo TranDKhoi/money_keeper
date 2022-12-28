@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
+import '../../core/values/r.dart';
+
 class TransactionController extends GetxController {
   var selectedWallet = "Ví tổng".obs;
   List<String> listWallet = ["Ví tổng", 'One', 'Two', 'Three', 'Four'];
@@ -35,11 +37,11 @@ class TransactionController extends GetxController {
         if (i > DateTime.now().month + 1) continue;
         String time = "$i/202$j";
         if (time.contains("${DateTime.now().month - 1}/${DateTime.now().year}"))
-          time = "Lastmonth".tr;
+          time = R.Lastmonth.tr;
         if (time.contains("${DateTime.now().month}/${DateTime.now().year}"))
-          time = "Thismonth".tr;
+          time = R.Thismonth.tr;
         if (time.contains("${DateTime.now().month + 1}/${DateTime.now().year}"))
-          time = "Nextmonth".tr;
+          time = R.Nextmonth.tr;
         listTimeline.add(time);
       }
     }

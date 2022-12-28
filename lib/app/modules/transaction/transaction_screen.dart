@@ -5,6 +5,7 @@ import 'package:money_keeper/app/controllers/transaction/transaction_controller.
 import 'package:money_keeper/app/core/utils/utils.dart';
 
 import '../../common/widget/card_transction_item.dart';
+import '../../core/values/r.dart';
 
 class TransactionScreen extends StatefulWidget {
   const TransactionScreen({Key? key}) : super(key: key);
@@ -40,7 +41,7 @@ class _TransactionScreenState extends State<TransactionScreen>
         centerTitle: true,
         title: Column(
           children: [
-            Text("Balance".tr),
+            Text(R.Balance.tr),
             const Text("100.000đ"),
           ],
         ),
@@ -101,7 +102,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                       children: [
                         Row(
                           children: [
-                            Text("Income".tr),
+                            Text(R.Income.tr),
                             const Spacer(),
                             const Text(
                               "0",
@@ -115,7 +116,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                         const SizedBox(height: 5),
                         Row(
                           children: [
-                            Text("Expense".tr),
+                            Text(R.Expense.tr),
                             const Spacer(),
                             const Text(
                               "100.000đ",
@@ -141,7 +142,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                         const SizedBox(height: 5),
                         ElevatedButton(
                           onPressed: () {},
-                          child: Text("Viewreportofthisperiod".tr),
+                          child: Text(R.Viewreportofthisperiod.tr),
                         )
                       ],
                     ),

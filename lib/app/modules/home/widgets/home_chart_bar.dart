@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/controllers/home_controller.dart';
 
+import '../../../core/values/r.dart';
+
 class HomeChartBar extends StatelessWidget {
   HomeChartBar({Key? key}) : super(key: key);
 
@@ -31,11 +33,11 @@ class HomeChartBar extends StatelessWidget {
                       () => Text(
                         _controller.selectedReport.value == 0
                             ? value.toInt() == 0
-                                ? "Lastweek".tr
-                                : "Thisweek".tr
+                                ? R.Lastweek.tr
+                                : R.Thisweek.tr
                             : value.toInt() == 0
-                                ? "Lastmonth".tr
-                                : "Thismonth".tr,
+                                ? R.Lastmonth.tr
+                                : R.Thismonth.tr,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,

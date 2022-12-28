@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/account/account_controller.dart';
 
+import '../../core/values/R.dart';
+
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
 
@@ -45,7 +47,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     _controller.toMyWalletScreen();
                   },
                   leading: const Icon(Ionicons.wallet_outline),
-                  title: Text("Mywallet".tr),
+                  title: Text(R.Mywallet.tr),
                   trailing: const Icon(Ionicons.chevron_forward),
                 ),
                 ListTile(
@@ -53,7 +55,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     _controller.toManageCategoryScreen();
                   },
                   leading: const Icon(Ionicons.file_tray_full_outline),
-                  title: Text("ManageCategory".tr),
+                  title: Text(R.ManageCategory.tr),
                   trailing: const Icon(Ionicons.chevron_forward),
                 ),
                 //setting
@@ -62,7 +64,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     _controller.toSettingScreen();
                   },
                   leading: const Icon(Ionicons.settings_outline),
-                  title: Text("Setting".tr),
+                  title: Text(R.Setting.tr),
                   trailing: const Icon(Ionicons.chevron_forward),
                 ),
                 //log out
@@ -71,7 +73,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     _controller.toLoginScreen();
                   },
                   leading: const Icon(Ionicons.log_in_outline),
-                  title: Text("Signout".tr),
+                  title: Text(R.Signout.tr),
                   trailing: const Icon(Ionicons.chevron_forward),
                 ),
               ],

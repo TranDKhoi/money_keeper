@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/account/account_controller.dart';
 
+import '../../core/values/r.dart';
+
 class SettingScreen extends StatelessWidget {
   SettingScreen({Key? key}) : super(key: key);
 
@@ -12,13 +14,13 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Setting".tr),
+        title: Text(R.Setting.tr),
       ),
       body: Column(
         children: [
           ListTile(
             leading: const Icon(Ionicons.moon_outline),
-            title: Text("Darkmode".tr),
+            title: Text(R.Darkmode.tr),
             trailing: Obx(
               () => Switch(
                 onChanged: (val) {
@@ -30,7 +32,7 @@ class SettingScreen extends StatelessWidget {
           ),
           ListTile(
             leading: const Icon(Ionicons.earth_outline),
-            title: Text("Vietnamese".tr),
+            title: Text(R.Vietnamese.tr),
             trailing: Obx(
               () => Switch(
                 onChanged: (val) {

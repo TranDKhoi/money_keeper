@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/bottombar_controller.dart';
 
+import '../../core/values/r.dart';
+
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
 
@@ -35,23 +37,23 @@ class _BottomBarState extends State<BottomBar> {
                 items: [
                   BottomNavigationBarItem(
                     icon: const Icon(Ionicons.home),
-                    label: "Home".tr,
+                    label: R.Home.tr,
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Ionicons.swap_horizontal_outline),
-                    label: "Transaction".tr,
+                    label: R.Transaction.tr,
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Ionicons.stats_chart),
-                    label: "Report".tr,
+                    label: R.Report.tr,
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Ionicons.calendar_outline),
-                    label: "Planning".tr,
+                    label: R.Planning.tr,
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Ionicons.person),
-                    label: "Account".tr,
+                    label: R.Account.tr,
                   ),
                 ],
               ),

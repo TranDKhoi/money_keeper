@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
 import '../../controllers/planning/planning_controller.dart';
+import '../../core/values/r.dart';
 
 class PlanningScreen extends StatefulWidget {
   const PlanningScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Planning".tr),
+        title: Text(R.Planning.tr),
         actions: [
           Obx(
             () => DropdownButton<String>(
@@ -52,13 +53,13 @@ class _PlanningScreenState extends State<PlanningScreen> {
             ),
             trailing: const Icon(Ionicons.chevron_forward_outline),
             title: Text(
-              "Budget".tr,
+              R.Budget.tr,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.green,
               ),
             ),
-            subtitle: Text("Afinancial".tr),
+            subtitle: Text(R.Afinancial.tr),
           ),
           ListTile(
             onTap: () => Get.toNamed(eventScreenRoute),
@@ -70,13 +71,13 @@ class _PlanningScreenState extends State<PlanningScreen> {
             ),
             trailing: const Icon(Ionicons.chevron_forward_outline),
             title: Text(
-              "Event".tr,
+              R.Event.tr,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.green,
               ),
             ),
-            subtitle: Text("Createaneventto".tr),
+            subtitle: Text(R.Createaneventto.tr),
           ),
         ],
       ),

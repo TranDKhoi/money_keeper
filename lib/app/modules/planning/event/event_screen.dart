@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
 import '../../../controllers/planning/event/event_controller.dart';
+import '../../../core/values/r.dart';
 
 class EventScreen extends StatefulWidget {
   const EventScreen({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class _EventScreenState extends State<EventScreen>
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
-        title: Text("Event".tr),
+        title: Text(R.Event.tr),
         actions: [
           Obx(
             () => DropdownButton<String>(
@@ -67,11 +68,11 @@ class _EventScreenState extends State<EventScreen>
             tabs: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Text("Running".tr),
+                child: Text(R.Running.tr),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Text("Finished".tr),
+                child: Text(R.Finished.tr),
               )
             ]),
       ),
@@ -85,7 +86,9 @@ class _EventScreenState extends State<EventScreen>
                   (e) => Card(
                     child: InkWell(
                       onTap: () =>
-                          Get.toNamed(eventInfoScreenRoute, arguments: e)?.then((value) => _controller.changeEventTabBar(_tabController.index)),
+                          Get.toNamed(eventInfoScreenRoute, arguments: e)?.then(
+                              (value) => _controller
+                                  .changeEventTabBar(_tabController.index)),
                       child: Padding(
                         padding: const EdgeInsets.all(20),
                         child: Row(
@@ -107,7 +110,7 @@ class _EventScreenState extends State<EventScreen>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "Spent".tr,
+                                      R.Spent.tr,
                                       style: const TextStyle(fontSize: 15),
                                     ),
                                     const Text(

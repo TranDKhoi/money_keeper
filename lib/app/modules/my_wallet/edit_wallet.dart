@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 
 import '../../../data/models/wallet.dart';
+import '../../core/values/r.dart';
 
 class EditWalletScreen extends StatelessWidget {
   EditWalletScreen({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class EditWalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Editwallet".tr),
+        title: Text(R.Editwallet.tr),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -43,7 +44,7 @@ class EditWalletScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             fillColor: Colors.transparent,
                             filled: true,
-                            hintText: "Walletname".tr,
+                            hintText: R.Walletname.tr,
                           ),
                         ),
                       ),
@@ -67,7 +68,7 @@ class EditWalletScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             fillColor: Colors.transparent,
                             filled: true,
-                            hintText: "Balance".tr,
+                            hintText: R.Balance.tr,
                             suffix: const Text("VND"),
                           ),
                         ),
@@ -82,9 +83,9 @@ class EditWalletScreen extends StatelessWidget {
             value: false,
             onChanged: (val) {},
             isThreeLine: true,
-            title: Text("Notincludeintotalbalance".tr),
+            title: Text(R.Notincludeintotalbalance.tr),
             subtitle:
-                Text("Createanewwalletanddonotincludeitintototalbalance".tr),
+                Text(R.Createanewwalletanddonotincludeitintototalbalance.tr),
           ),
           const SizedBox(height: 30),
           GestureDetector(
@@ -99,7 +100,7 @@ class EditWalletScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 5),
                 Text(
-                  "DELETETHISWALLETFOREVER".tr,
+                  R.DELETETHISWALLETFOREVER.tr,
                   style: const TextStyle(color: Colors.red),
                 ),
               ],
@@ -110,7 +111,7 @@ class EditWalletScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ElevatedButton(
               onPressed: () {},
-              child: Text("UPDATE".tr),
+              child: Text(R.UPDATE.tr),
             ),
           ),
           const SizedBox(height: 30),

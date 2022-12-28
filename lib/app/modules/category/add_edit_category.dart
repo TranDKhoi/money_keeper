@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/modules/category/widgets/category_icon_modal.dart';
 
 import '../../controllers/category/category_controller.dart';
+import '../../core/values/r.dart';
 
 class AddEditCategoryScreen extends StatelessWidget {
   AddEditCategoryScreen({Key? key}) : super(key: key);
@@ -21,11 +22,11 @@ class AddEditCategoryScreen extends StatelessWidget {
           Obx(
             () => _controller.selectedEditCategory.value == null
                 ? TextField(
-                    decoration: InputDecoration(hintText: "Categoryname".tr))
+                    decoration: InputDecoration(hintText: R.Categoryname.tr))
                 : TextField(
                     controller: nameController
                       ..text = _controller.selectedEditCategory.value!.name!,
-                    decoration: InputDecoration(hintText: "Categoryname".tr)),
+                    decoration: InputDecoration(hintText: R.Categoryname.tr)),
           ),
           const SizedBox(height: 20),
           GestureDetector(
@@ -72,7 +73,7 @@ class AddEditCategoryScreen extends StatelessWidget {
                       value: _controller.selectedEditCategory.value != null
                           ? _controller.selectedEditCategory.value!.type
                           : _controller.selectedType.value,
-                      hint: Text("Type".tr),
+                      hint: Text(R.Type.tr),
                       isExpanded: true,
                       icon: const Icon(Ionicons.caret_down),
                       onChanged: (String? value) {
@@ -91,7 +92,7 @@ class AddEditCategoryScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 50),
-          ElevatedButton(onPressed: () {}, child: Text("Save".tr))
+          ElevatedButton(onPressed: () {}, child: Text(R.Save.tr))
         ],
       ),
     );

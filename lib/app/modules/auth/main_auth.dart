@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../core/values/r.dart';
 import '../../routes/routes.dart';
 
 class MainAuthScreen extends StatefulWidget {
@@ -29,17 +30,17 @@ class _MainAuthScreenState extends State<MainAuthScreen> {
         children: [
           buildPage(
             image: "assets/images/step1.png",
-            des: "ManageyourfinanceseffectivelywithMoneyKeeper".tr,
+            des: R.ManageyourfinanceseffectivelywithMoneyKeeper.tr,
           ),
           buildPage(
               image: "assets/images/step2.png",
-              des: "Cutunnecessaryexpenses".tr),
+              des: R.Cutunnecessaryexpenses.tr),
           buildPage(
               image: "assets/images/step3.png",
-              des: "Increasesavingssteadilyeverymonth".tr),
+              des: R.Increasesavingssteadilyeverymonth.tr),
           buildPage(
               image: "assets/images/step4.png",
-              des: "Manageitallinoneplace".tr),
+              des: R.Manageitallinoneplace.tr),
         ],
       ),
       bottomSheet: Padding(
@@ -71,7 +72,7 @@ class _MainAuthScreenState extends State<MainAuthScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,
               ),
-              child: Text("SIGNUPFORFREE".tr),
+              child: Text(R.SIGNUPFORFREE.tr),
             ),
             const SizedBox(height: 20),
             GestureDetector(
@@ -79,7 +80,7 @@ class _MainAuthScreenState extends State<MainAuthScreen> {
                 Get.toNamed(loginScreenRoute);
               },
               child: Text(
-                "SIGNIN".tr,
+                R.SIGNIN.tr,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.green,

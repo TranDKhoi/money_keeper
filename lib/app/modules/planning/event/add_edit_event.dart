@@ -5,6 +5,7 @@ import 'package:ionicons/ionicons.dart';
 import '../../../../data/models/event.dart';
 import '../../../controllers/planning/event/add_edit_event_controller.dart';
 import '../../../core/utils/utils.dart';
+import '../../../core/values/r.dart';
 import '../../../routes/routes.dart';
 import '../../category/widgets/category_icon_modal.dart';
 
@@ -22,8 +23,8 @@ class AddEditEventScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(selectedEvent == null ? "Addevent".tr : "Editevent".tr),
-        actions: [TextButton(onPressed: () {}, child: Text("Save".tr))],
+        title: Text(selectedEvent == null ? R.Addevent.tr : R.Editevent.tr),
+        actions: [TextButton(onPressed: () {}, child: Text(R.Save.tr))],
       ),
       /////
       body: Card(
@@ -66,7 +67,7 @@ class AddEditEventScreen extends StatelessWidget {
                       onChanged: (s) => _controller.eventName.value = s,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
-                        hintText: "Eventname".tr,
+                        hintText: R.Eventname.tr,
                         fillColor: Colors.transparent,
                       ),
                     ),
@@ -94,7 +95,7 @@ class AddEditEventScreen extends StatelessWidget {
                     child: Obx(() {
                       if (_controller.endDate.value == null) {
                         return Text(
-                          "Enddate".tr,
+                          R.Enddate.tr,
                           style: const TextStyle(
                             fontSize: 16,
                           ),
@@ -133,7 +134,7 @@ class AddEditEventScreen extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                           hintText:
                               _controller.selectedWallet.value?.name == null
-                                  ? "Selectwallet".tr
+                                  ? R.Selectwallet.tr
                                   : _controller.selectedWallet.value!.name,
                           fillColor: Colors.transparent,
                         ),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/controllers/auth/forgot_controller.dart';
 
+import '../../../core/values/r.dart';
+
 class ForgotPassScreen extends StatefulWidget {
   const ForgotPassScreen({Key? key}) : super(key: key);
 
@@ -23,7 +25,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "Entertheemailaccountthatyouwanttorecovery".tr,
+              R.Entertheemailaccountthatyouwanttorecovery.tr,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -43,7 +45,7 @@ class _ForgotPassScreenState extends State<ForgotPassScreen> {
               onPressed: () {
                 _controller.toVerifyScreen();
               },
-              child: Text("SENDCODE".tr),
+              child: Text(R.SENDCODE.tr),
             ),
             const SizedBox(height: 100),
           ],

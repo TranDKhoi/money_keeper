@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 
 import '../../../../data/models/event.dart';
 import '../../../core/utils/utils.dart';
+import '../../../core/values/r.dart';
 import '../../../routes/routes.dart';
 
 class EventInfoScreen extends StatefulWidget {
@@ -66,7 +67,7 @@ class _EventInfoScreenState extends State<EventInfoScreen> {
                 ),
                 const SizedBox(width: 25),
                 Text(
-                  "${"Enddate".tr}: ",
+                  "${R.Enddate.tr}: ",
                   style: const TextStyle(
                     fontSize: 18,
                   ),
@@ -108,11 +109,11 @@ class _EventInfoScreenState extends State<EventInfoScreen> {
                           selectedEvent.isFinished = !selectedEvent.isFinished!;
                         }),
                     child: Text(selectedEvent.isFinished!
-                        ? "Markasunfinished".tr
-                        : "Markasfinished".tr)),
+                        ? R.Markasunfinished.tr
+                        : R.Markasfinished.tr)),
                 const Spacer(),
                 ElevatedButton(
-                    onPressed: () {}, child: Text("Listoftransaction".tr)),
+                    onPressed: () {}, child: Text(R.Listoftransaction.tr)),
               ],
             ),
           ],

@@ -7,6 +7,7 @@ import 'package:money_keeper/app/controllers/transaction/add_transaction_control
 import 'package:money_keeper/app/routes/routes.dart';
 
 import '../../core/utils/utils.dart';
+import '../../core/values/r.dart';
 
 class AddTransactionScreen extends StatelessWidget {
   AddTransactionScreen({Key? key}) : super(key: key);
@@ -17,11 +18,11 @@ class AddTransactionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Newtransaction".tr),
+        title: Text(R.Newtransaction.tr),
         actions: [
           TextButton(
             onPressed: () {},
-            child: Text("Save".tr),
+            child: Text(R.Save.tr),
           ),
         ],
       ),
@@ -84,7 +85,7 @@ class AddTransactionScreen extends StatelessWidget {
                                 hintText: _controller
                                             .selectedCategory.value?.name ==
                                         null
-                                    ? "Selectcategory".tr
+                                    ? R.Selectcategory.tr
                                     : _controller.selectedCategory.value!.name,
                                 fillColor: Colors.transparent,
                               ),
@@ -102,7 +103,7 @@ class AddTransactionScreen extends StatelessWidget {
                         Obx(
                           () => DropdownButton<String>(
                             value: _controller.selectedType.value,
-                            hint: Text("Type".tr),
+                            hint: Text(R.Type.tr),
                             icon: const Icon(Ionicons.caret_down),
                             onChanged: (String? value) {
                               _controller.changeType(value!);
@@ -127,7 +128,7 @@ class AddTransactionScreen extends StatelessWidget {
                           child: TextField(
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
-                              hintText: "Note".tr,
+                              hintText: R.Note.tr,
                               fillColor: Colors.transparent,
                             ),
                           ),
@@ -187,7 +188,7 @@ class AddTransactionScreen extends StatelessWidget {
                                 hintText: _controller
                                             .selectedWallet.value?.name ==
                                         null
-                                    ? "Selectwallet".tr
+                                    ? R.Selectwallet.tr
                                     : _controller.selectedWallet.value!.name,
                                 fillColor: Colors.transparent,
                               ),

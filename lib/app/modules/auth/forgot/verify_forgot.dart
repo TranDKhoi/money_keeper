@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/controllers/auth/forgot_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 
+import '../../../core/values/r.dart';
+
 class VerifyForgotScreen extends StatefulWidget {
   const VerifyForgotScreen({Key? key}) : super(key: key);
 
@@ -25,7 +27,7 @@ class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "${"A4charactercodehasbeensenttotheemail".tr} ${_controller.emailTextController.text}",
+              "${R.A4charactercodehasbeensenttotheemail.tr} ${_controller.emailTextController.text}",
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -57,7 +59,7 @@ class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
               onPressed: () {
                 _controller.verifyCodeFunc();
               },
-              child: Text("VERIFY".tr),
+              child: Text(R.VERIFY.tr),
             ),
             const SizedBox(height: 20),
             GestureDetector(
@@ -66,7 +68,7 @@ class _VerifyForgotScreenState extends State<VerifyForgotScreen> {
               },
               child: Align(
                 alignment: Alignment.topRight,
-                child: Text("Didntreceiveanycode".tr),
+                child: Text(R.Didntreceiveanycode.tr),
               ),
             ),
             const SizedBox(height: 100),

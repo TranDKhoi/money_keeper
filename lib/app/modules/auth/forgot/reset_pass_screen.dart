@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/auth/forgot_controller.dart';
 
+import '../../../core/values/r.dart';
+
 class ResetPassScreen extends StatefulWidget {
   const ResetPassScreen({Key? key}) : super(key: key);
 
@@ -11,7 +13,6 @@ class ResetPassScreen extends StatefulWidget {
 }
 
 class _ResetPassScreenState extends State<ResetPassScreen> {
-
   final ForgotPassController _controller = Get.find();
 
   @override
@@ -24,7 +25,7 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              "Resetpassword".tr,
+              R.Resetpassword.tr,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
@@ -38,7 +39,7 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
                 keyboardType: TextInputType.emailAddress,
                 obscureText: _controller.isSecureText.value,
                 decoration: InputDecoration(
-                  hintText: "Newpassword".tr,
+                  hintText: R.Newpassword.tr,
                   suffixIcon: GestureDetector(
                     onTap: _controller.changeSecureText,
                     child: Obx(
@@ -54,16 +55,16 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
             ),
             const SizedBox(height: 20),
             Obx(
-                  () => TextField(
+              () => TextField(
                 controller: _controller.rePassTextController,
                 keyboardType: TextInputType.emailAddress,
                 obscureText: _controller.isSecureText.value,
                 decoration: InputDecoration(
-                  hintText: "Confirmpassword".tr,
+                  hintText: R.Confirmpassword.tr,
                   suffixIcon: GestureDetector(
                     onTap: _controller.changeSecureText,
                     child: Obx(
-                          () => Icon(
+                      () => Icon(
                         _controller.isSecureText.value
                             ? Ionicons.eye
                             : Ionicons.eye_off,
@@ -78,7 +79,7 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
               onPressed: () {
                 _controller.setNewPassFunc();
               },
-              child: Text("CONFIRM".tr),
+              child: Text(R.CONFIRM.tr),
             ),
           ],
         ),

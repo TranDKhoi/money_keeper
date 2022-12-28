@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../controllers/wallet/my_wallet_controller.dart';
+import '../../core/values/r.dart';
 
 class AddWalletScreen extends StatelessWidget {
   AddWalletScreen({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class AddWalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Addwallet".tr),
+        title: Text(R.Addwallet.tr),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,7 +62,7 @@ class AddWalletScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             fillColor: Colors.transparent,
                             filled: true,
-                            hintText: "Balance".tr,
+                            hintText: R.Balance.tr,
                             suffix: const Text("VND"),
                           ),
                         ),
@@ -76,16 +77,16 @@ class AddWalletScreen extends StatelessWidget {
             value: false,
             onChanged: (val) {},
             isThreeLine: true,
-            title: Text("Notincludeintotalbalance".tr),
-            subtitle: Text(
-                "Createanewwalletanddonotincludeitintototalbalance".tr),
+            title: Text(R.Notincludeintotalbalance.tr),
+            subtitle:
+                Text(R.Createanewwalletanddonotincludeitintototalbalance.tr),
           ),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ElevatedButton(
               onPressed: () {},
-              child: Text("ADDNEW".tr),
+              child: Text(R.ADDNEW.tr),
             ),
           ),
           const SizedBox(height: 30),

@@ -9,6 +9,7 @@ import 'package:money_keeper/data/services/auth_service.dart';
 
 import '../../../data/models/user.dart';
 import '../../core/utils/get_storage_service.dart';
+import '../../core/values/r.dart';
 
 class LoginController extends GetxController {
   var isSecureText = true.obs;
@@ -43,7 +44,7 @@ class LoginController extends GetxController {
         EasyLoading.showToast(res.message);
       }
     } else {
-      EasyLoading.showToast("Pleaseenteralltheinformation".tr);
+      EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
     }
   }
 

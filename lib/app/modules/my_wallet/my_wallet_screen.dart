@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 
+import '../../core/values/r.dart';
+
 class MyWalletScreen extends StatelessWidget {
   MyWalletScreen({Key? key}) : super(key: key);
 
@@ -13,7 +15,7 @@ class MyWalletScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Mywallet".tr),
+        title: Text(R.Mywallet.tr),
       ),
       body: Column(
         children: [
@@ -26,7 +28,7 @@ class MyWalletScreen extends StatelessWidget {
               size: 40,
             ),
             title: Text(
-              "All".tr,
+              R.All.tr,
               style: TextStyle(
                 fontSize: 25,
               ),
@@ -45,7 +47,7 @@ class MyWalletScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(left: 20, bottom: 10),
               child: Text(
-                "Including".tr,
+                R.Including.tr,
                 style: TextStyle(
                   fontSize: 20,
                 ),

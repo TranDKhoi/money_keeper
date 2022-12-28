@@ -18,9 +18,10 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       getPages: AppPages.pages,
       debugShowCheckedModeBanner: false,
-      initialRoute: Get.find<AccountController>().currentUser.value?.token == null
-          ? mainAuthScreenRoute
-          : bottomBarRoute,
+      initialRoute:
+          Get.find<AccountController>().currentUser.value?.token == null
+              ? mainAuthScreenRoute
+              : bottomBarRoute,
       builder: EasyLoading.init(),
       theme: AppColors.lightTheme,
       darkTheme: AppColors.darkTheme,

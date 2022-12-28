@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/data/services/auth_service.dart';
 
+import '../../core/values/r.dart';
 import '../../routes/routes.dart';
 
 class ForgotPassController extends GetxController {
@@ -29,7 +30,7 @@ class ForgotPassController extends GetxController {
         EasyLoading.showToast(res.message);
       }
     } else {
-      EasyLoading.showToast("Pleaseenteralltheinformation".tr);
+      EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
     }
   }
 
@@ -51,7 +52,7 @@ class ForgotPassController extends GetxController {
         EasyLoading.showToast("Error");
       }
     } else {
-      EasyLoading.showToast("Incorectcode".tr);
+      EasyLoading.showToast(R.Incorectcode.tr);
     }
   }
 
@@ -61,8 +62,7 @@ class ForgotPassController extends GetxController {
       if (passTextController.text == rePassTextController.text) {
         EasyLoading.show();
         var res = await AuthService.ins.resetPassword(
-            token: resetPassToken!,
-            password: rePassTextController.text);
+            token: resetPassToken!, password: rePassTextController.text);
         EasyLoading.dismiss();
 
         if (res.isOk) {
@@ -72,10 +72,10 @@ class ForgotPassController extends GetxController {
           EasyLoading.showToast(res.message);
         }
       } else {
-        EasyLoading.showToast("Incorectpassword".tr);
+        EasyLoading.showToast(R.Incorectpassword.tr);
       }
     } else {
-      EasyLoading.showToast("Pleaseenteralltheinformation".tr);
+      EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
     }
   }
 }

@@ -7,6 +7,7 @@ import 'package:money_keeper/app/controllers/transaction/transaction_controller.
 import 'package:money_keeper/app/modules/home/widgets/home_chart_bar.dart';
 
 import '../../common/widget/home_transaction_item.dart';
+import '../../core/values/r.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontSize: 35,
                           ),
                         ),
-                        Text("Totalbalance".tr),
+                        Text(R.Totalbalance.tr),
                       ],
                     ),
                     const Spacer(),
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           children: [
                             Text(
-                              "Mywallet".tr,
+                              R.Mywallet.tr,
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
@@ -74,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 _controller.toAllWalletScreen();
                               },
                               child: Text(
-                                "Seemore".tr,
+                                R.Seemore.tr,
                                 style: const TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.bold,
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Icon(Ionicons.earth),
                             const SizedBox(width: 10),
                             Text(
-                              "All".tr,
+                              R.All.tr,
                               style: const TextStyle(fontSize: 25),
                             ),
                             const Spacer(),
@@ -111,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const SizedBox(width: 10),
                     Text(
-                      "Report".tr,
+                      R.Report.tr,
                     ),
                     const Spacer(),
                     GestureDetector(
@@ -119,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         _bottomController.changePage(2);
                       },
                       child: Text(
-                        "Detail".tr,
+                        R.Detail.tr,
                         style: const TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.bold,
@@ -159,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          "Week".tr,
+                                          R.Week.tr,
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                             fontSize: 20,
@@ -185,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Text(
-                                          "Month".tr,
+                                          R.Month.tr,
                                           textAlign: TextAlign.center,
                                           style: const TextStyle(
                                               fontSize: 20, color: Colors.grey),
@@ -213,8 +214,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             Obx(
                               () => Text(
                                 _controller.selectedReport.value == 0
-                                    ? "Totalexpenseofthisweek".tr
-                                    : "Totalexpenseofthismonth".tr,
+                                    ? R.Totalexpenseofthisweek.tr
+                                    : R.Totalexpenseofthismonth.tr,
                               ),
                             ),
                           ],
@@ -225,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         //most spent
                         const SizedBox(height: 10),
                         Text(
-                          "Mostexpense".tr,
+                          R.Mostexpense.tr,
                           style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -268,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const SizedBox(width: 10),
                     Text(
-                      "Recently".tr,
+                      R.Recently.tr,
                     ),
                     const Spacer(),
                     GestureDetector(
@@ -276,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         _bottomController.changePage(1);
                       },
                       child: Text(
-                        "Detail".tr,
+                        R.Detail.tr,
                         style: const TextStyle(
                           color: Colors.green,
                           fontWeight: FontWeight.bold,
