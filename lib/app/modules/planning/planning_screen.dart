@@ -44,7 +44,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
       body: ListView(
         children: [
           ListTile(
-            onTap: () {},
+            onTap: () => Get.toNamed(budgetScreenRoute),
             contentPadding: const EdgeInsets.all(20),
             leading: const Icon(
               Ionicons.pie_chart,

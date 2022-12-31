@@ -108,4 +108,16 @@ class R {
   static const Debtcollection = "Debt Collection";
   static const Debt = "Debt";
   static const Repayment = "Repayment";
+  static const Totalbudget = "totalbudget";
+  static const budget = "budget";
+  static const Left = "Left";
+  static const days = "day(s)";
+  static const now = "now";
+  static const result = "result";
+  static const hour = "hour";
+  static const left = "left";
+  static const recommendeddaily = "Recommended daily spending";
+  static const projectedspending = "Projected spending";
+  static const actualspending = "Actual spending";
+  static const Overspent = "Overspent";
 }

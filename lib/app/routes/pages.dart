@@ -16,9 +16,12 @@ import '../modules/auth/forgot/reset_pass_screen.dart';
 import '../modules/auth/forgot/verify_forgot.dart';
 import '../modules/auth/login/login_screen.dart';
 import '../modules/category/manage_category.dart';
+import '../modules/planning/budget/budget_info_screen.dart';
+import '../modules/planning/budget/budget_screen.dart';
 import '../modules/planning/event/add_edit_event.dart';
 import '../modules/planning/event/event_info_screen.dart';
 import '../modules/planning/event/event_screen.dart';
+import '../modules/planning/event/event_transaction_screen.dart';
 import '../modules/report/income_detail.dart';
 import '../modules/transaction/add_transaction.dart';
 import '../modules/transaction/edit_transaction.dart';
@@ -122,6 +125,21 @@ class AppPages {
     GetPage(
       name: eventInfoScreenRoute,
       page: () => EventInfoScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: eventTransactionScreenRoute,
+      page: () => const EventTransactionScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: budgetScreenRoute,
+      page: () => BudgetScreen(),
+      transition: Transition.rightToLeft,
+    ),
+    GetPage(
+      name: budgetInfoScreen,
+      page: () => BudgetInfoScreen(),
       transition: Transition.rightToLeft,
     ),
   ];

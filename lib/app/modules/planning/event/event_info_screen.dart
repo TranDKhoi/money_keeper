@@ -113,7 +113,8 @@ class _EventInfoScreenState extends State<EventInfoScreen> {
                         : R.Markasfinished.tr)),
                 const Spacer(),
                 ElevatedButton(
-                    onPressed: () {}, child: Text(R.Listoftransaction.tr)),
+                    onPressed: () => Get.toNamed(eventTransactionScreenRoute),
+                    child: Text(R.Listoftransaction.tr)),
               ],
             ),
           ],

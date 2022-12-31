@@ -19,3 +19,6 @@ const String manageCategoryRoute = "/manage_category";
 const String eventScreenRoute = "/event_screen";
 const String addEventScreenRoute = "/add_event_screen";
 const String eventInfoScreenRoute = "/event_info_screen";
+const String eventTransactionScreenRoute = "/event_transaction_screen";
+const String budgetScreenRoute = "/budget_screen";
+const String budgetInfoScreen = "/budget_info_screen";
