@@ -32,17 +32,27 @@ class TransactionController extends GetxController {
   }
 
   void generateTimeLine() {
-    for (int j = 1; j <= 2; j++) {
-      for (int i = 1; i <= 12; i++) {
-        if (i > DateTime.now().month + 1) continue;
-        String time = "$i/202$j";
-        if (time.contains("${DateTime.now().month - 1}/${DateTime.now().year}"))
-          time = R.Lastmonth.tr;
-        if (time.contains("${DateTime.now().month}/${DateTime.now().year}"))
-          time = R.Thismonth.tr;
-        if (time.contains("${DateTime.now().month + 1}/${DateTime.now().year}"))
-          time = R.Nextmonth.tr;
-        listTimeline.add(time);
+    int yearStep = 1;
+    while (yearStep <= 2) {
+      if (yearStep == 1) {
+        for (int i = 1; i <= 12; i++) {
+          String time = "$i/${DateTime.now().year - 1}";
+          listTimeline.add(time);
+        }
+      } else if (yearStep == 2) {
+        for (int i = 1; i <= DateTime.now().month+1; i++) {
+          String time = "$i/${DateTime.now().year}";
+          if (i == DateTime.now().month - 1) time = R.Lastmonth.tr;
+          if (i == DateTime.now().month) time = R.Thismonth.tr;
+          if (i == DateTime.now().month + 1) time = R.Nextmonth.tr;
+          listTimeline.add(time);
+        }
+      }
+      yearStep++;
+    }
+    for (int i = 0; i < listTimeline.length; i++) {
+      if (listTimeline[i] == R.Thismonth.tr) {
+        listTimeline[i - 1] = R.Lastmonth.tr;
       }
     }
   }

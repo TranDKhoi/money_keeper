@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/bottombar_controller.dart';
 import 'package:money_keeper/app/controllers/home_controller.dart';
-import 'package:money_keeper/app/controllers/transaction/transaction_controller.dart';
 import 'package:money_keeper/app/modules/home/widgets/home_chart_bar.dart';
 
 import '../../common/widget/home_transaction_item.dart';
