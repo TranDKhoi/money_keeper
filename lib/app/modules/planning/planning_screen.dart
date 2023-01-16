@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
-import '../../controllers/planning/planning_controller.dart';
 import '../../core/values/r.dart';
 
 class PlanningScreen extends StatefulWidget {
@@ -14,31 +13,12 @@ class PlanningScreen extends StatefulWidget {
 }
 
 class _PlanningScreenState extends State<PlanningScreen> {
-  final _controller = Get.put(PlanningController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(R.Planning.tr),
-        actions: [
-          Obx(
-            () => DropdownButton<String>(
-              value: _controller.selectedWallet.value,
-              icon: const Icon(Ionicons.caret_down),
-              onChanged: (String? value) {
-                _controller.changeWallet(value!);
-              },
-              items: _controller.listWallet.map((String value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
-          ),
-          const SizedBox(width: 20),
-        ],
       ),
       //////////////////
       body: ListView(

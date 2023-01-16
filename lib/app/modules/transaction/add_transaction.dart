@@ -59,7 +59,7 @@ class AddTransactionScreen extends StatelessWidget {
                               return CircleAvatar(
                                 backgroundColor: Colors.transparent,
                                 child: Image.asset(
-                                    "assets/icons/${_controller.selectedCategory.value!.image}.png"),
+                                    "assets/icons/${_controller.selectedCategory.value!.icon}.png"),
                               );
                             } else {
                               return const CircleAvatar();
@@ -168,7 +168,22 @@ class AddTransactionScreen extends StatelessWidget {
                     //wallet
                     Row(
                       children: [
-                        const Icon(Ionicons.cash),
+                        Obx(
+                          () {
+                            if (_controller.selectedWallet.value != null) {
+                              return CircleAvatar(
+                                radius: 20,
+                                backgroundColor: Colors.transparent,
+                                child: Image.asset(
+                                    "assets/icons/${_controller.selectedWallet.value?.icon}.png"),
+                              );
+                            }
+                            return const CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.grey,
+                            );
+                          },
+                        ),
                         const SizedBox(width: 20),
                         Obx(
                           () => Expanded(

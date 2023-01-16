@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 
+import '../../core/utils/utils.dart';
 import '../../core/values/r.dart';
 
 class MyWalletScreen extends StatelessWidget {
   MyWalletScreen({Key? key}) : super(key: key);
 
-  final _controller = Get.put(MyWalletController())..getAllWalletData();
+  final _controller = Get.find<MyWalletController>();
   final bool isFromTransactionScreen = Get.arguments ?? false;
 
   @override
@@ -16,6 +17,12 @@ class MyWalletScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(R.Mywallet.tr),
+        actions: [
+          IconButton(
+            onPressed: () => _controller.getAllWallet(),
+            icon: const Icon(Ionicons.refresh),
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -23,19 +30,19 @@ class MyWalletScreen extends StatelessWidget {
           ListTile(
             isThreeLine: true,
             dense: true,
-            leading: Icon(
+            leading: const Icon(
               Ionicons.earth,
               size: 40,
             ),
             title: Text(
               R.All.tr,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 25,
               ),
             ),
             subtitle: Text(
-              "100.000 đ",
-              style: TextStyle(
+              _calculateTotalBalance(),
+              style: const TextStyle(
                 fontSize: 15,
               ),
             ),
@@ -45,45 +52,53 @@ class MyWalletScreen extends StatelessWidget {
           Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: EdgeInsets.only(left: 20, bottom: 10),
+              padding: const EdgeInsets.only(left: 20, bottom: 10),
               child: Text(
                 R.Including.tr,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: ListView.separated(
-              physics: const BouncingScrollPhysics(),
-              itemBuilder: (context1, index1) {
-                return ListTile(
-                  onTap: () {
-                    if (isFromTransactionScreen) {
-                      Get.back(result: _controller.listWallet.value![index1]);
-                    } else {
-                      _controller
-                          .toEditWallet(_controller.listWallet.value![index1]);
-                    }
-                  },
-                  isThreeLine: true,
-                  dense: true,
-                  leading: const Icon(Ionicons.cash),
-                  title: Text(
-                    _controller.listWallet.value![index1].name!,
-                    style: const TextStyle(fontSize: 25),
-                  ),
-                  subtitle: Text(
-                    "${_controller.listWallet.value![index1].balance} đ",
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                );
-              },
-              separatorBuilder: (context2, index2) {
-                return const Divider(thickness: 1);
-              },
-              itemCount: 5,
+          Obx(
+            () => Expanded(
+              child: ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context1, index1) {
+                  return ListTile(
+                    onTap: () {
+                      if (isFromTransactionScreen) {
+                        Get.back(result: _controller.listWallet[index1]);
+                      } else {
+                        _controller
+                            .toEditWallet(_controller.listWallet[index1]);
+                      }
+                    },
+                    isThreeLine: true,
+                    dense: true,
+                    leading: CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.transparent,
+                      child: Image.asset(
+                          "assets/icons/${_controller.listWallet[index1].icon}.png"),
+                    ),
+                    title: Text(
+                      _controller.listWallet[index1].name!,
+                      style: const TextStyle(fontSize: 25),
+                    ),
+                    subtitle: Text(
+                      FormatHelper()
+                          .moneyFormat(_controller.listWallet[index1].balance!),
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                  );
+                },
+                separatorBuilder: (context2, index2) {
+                  return const Divider(thickness: 1);
+                },
+                itemCount: _controller.listWallet.length,
+              ),
             ),
           ),
         ],
@@ -99,5 +114,13 @@ class MyWalletScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _calculateTotalBalance() {
+    int total = 0;
+    for (int i = 0; i < _controller.listWallet.length; i++) {
+      total += _controller.listWallet[i].balance!;
+    }
+    return FormatHelper().moneyFormat(total);
   }
 }

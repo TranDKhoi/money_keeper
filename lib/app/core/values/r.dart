@@ -120,4 +120,13 @@ class R {
   static const projectedspending = "Projected spending";
   static const actualspending = "Actual spending";
   static const Overspent = "Overspent";
+  static const Groupwallet = "Groupwallet";
+  static const Totalwallet = "Totalwallet";
+  static const Standard = "Standard";
+  static const Categorylist = "Categorylist";
+  static const instructionofcategorylist = "instructionofcategorylist";
+  static const RequiredExpense = "RequiredExpense";
+  static const NecessaryExpense = "NecessaryExpense";
+  static const Entertainment = "Entertainment";
+  static const InvestingOrDebt  = "InvestingOrDebt ";
 }

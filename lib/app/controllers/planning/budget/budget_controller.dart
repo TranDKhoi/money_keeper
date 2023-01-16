@@ -1,15 +1,32 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:in_date_utils/in_date_utils.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 
+import '../../../../data/models/category.dart';
+import '../../../../data/models/wallet.dart';
+import '../../../../data/services/category_service.dart';
 import '../../../core/values/r.dart';
+import '../../wallet/my_wallet_controller.dart';
 
 class BudgetController extends GetxController {
   var listTimeline = [].obs;
   var selectedTimeLine = Rxn<String>();
+  var listWallet = <Wallet>[].obs;
+  var selectedWallet = Wallet().obs;
+  var listCateBudget = <Category>[].obs;
 
   BudgetController() {
+    listWallet.value = List.from(Get.find<MyWalletController>().listWallet);
+    selectedWallet.value = listWallet[0];
+    _getListCategoryOfWallet(selectedWallet.value.id!);
     generateTimeLine();
     _calculatePositionByMonth();
+  }
+
+  void changeWallet(Wallet value) {
+    selectedWallet.value = value;
+    _getListCategoryOfWallet(selectedWallet.value.id!);
   }
 
   void changeTimeLine(int index) {
@@ -54,5 +71,22 @@ class BudgetController extends GetxController {
     double diffPercentage = today / dayInMonth;
 
     _cursorPosition *= diffPercentage;
+  }
+
+  Future<void> _getListCategoryOfWallet(int id) async {
+    EasyLoading.show();
+    var res = await CategoryService.ins.getCategoryByWalletId(id);
+    EasyLoading.dismiss();
+
+    if (res.isOk) {
+      listCateBudget.value = [];
+      for (int i = 0; i < res.data.length; i++) {
+        if (Category.fromJson(res.data[i]).type == "Expense") {
+          listCateBudget.add(Category.fromJson(res.data[i]));
+        }
+      }
+    } else {
+      EasyLoading.showToast("Server Error");
+    }
   }
 }

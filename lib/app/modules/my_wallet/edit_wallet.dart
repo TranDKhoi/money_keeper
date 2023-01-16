@@ -5,6 +5,7 @@ import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 
 import '../../../data/models/wallet.dart';
 import '../../core/values/r.dart';
+import '../category/widgets/category_icon_modal.dart';
 
 class EditWalletScreen extends StatelessWidget {
   EditWalletScreen({Key? key}) : super(key: key);
@@ -29,9 +30,39 @@ class EditWalletScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Icon(
-                        Ionicons.wallet,
-                        size: 30,
+                      GestureDetector(
+                        onTap: () async {
+                          var res = await showModalBottomSheet<int>(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  const IconModalBottomSheet());
+
+                          if (res != null) {
+                            _controller.selectedCategoryPic.value = res;
+                          }
+                        },
+                        child: Obx(() {
+                          if (_controller.selectedCategoryPic.value != null) {
+                            return CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.transparent,
+                              child: Image.asset(
+                                  "assets/icons/${_controller.selectedCategoryPic.value}.png"),
+                            );
+                          }
+                          if (selectedWallet.icon != null) {
+                            return CircleAvatar(
+                              radius: 20,
+                              backgroundColor: Colors.transparent,
+                              child: Image.asset(
+                                  "assets/icons/${selectedWallet.icon}.png"),
+                            );
+                          }
+                          return const CircleAvatar(
+                            radius: 20,
+                            backgroundColor: Colors.grey,
+                          );
+                        }),
                       ),
                       const SizedBox(width: 20),
                       Expanded(

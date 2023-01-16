@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/transaction/transaction_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 
+import '../../../data/models/wallet.dart';
 import '../../common/widget/card_transction_item.dart';
 import '../../core/values/r.dart';
 
@@ -42,7 +43,8 @@ class _TransactionScreenState extends State<TransactionScreen>
         title: Column(
           children: [
             Text(R.Balance.tr),
-            const Text("100.000đ"),
+            Obx(() => Text(FormatHelper()
+                .moneyFormat(_controller.selectedWallet.value.balance!))),
           ],
         ),
         bottom: PreferredSize(
@@ -50,16 +52,16 @@ class _TransactionScreenState extends State<TransactionScreen>
           child: Column(
             children: [
               Obx(
-                () => DropdownButton<String>(
+                () => DropdownButton<Wallet>(
                   value: _controller.selectedWallet.value,
                   icon: const Icon(Ionicons.caret_down),
-                  onChanged: (String? value) {
+                  onChanged: (Wallet? value) {
                     _controller.changeWallet(value!);
                   },
-                  items: _controller.listWallet.map((String value) {
+                  items: _controller.listWallet.map((Wallet value) {
                     return DropdownMenuItem(
                       value: value,
-                      child: Text(value),
+                      child: Text(value.name!),
                     );
                   }).toList(),
                 ),

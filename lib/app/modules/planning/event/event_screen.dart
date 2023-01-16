@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
+import '../../../../data/models/wallet.dart';
 import '../../../controllers/planning/event/event_controller.dart';
 import '../../../core/values/r.dart';
 
@@ -42,16 +43,16 @@ class _EventScreenState extends State<EventScreen>
         title: Text(R.Event.tr),
         actions: [
           Obx(
-            () => DropdownButton<String>(
+            () => DropdownButton<Wallet>(
               value: _controller.selectedWallet.value,
               icon: const Icon(Ionicons.caret_down),
-              onChanged: (String? value) {
+              onChanged: (Wallet? value) {
                 _controller.changeWallet(value!);
               },
-              items: _controller.listWallet.map((String value) {
+              items: _controller.listWallet.map((Wallet value) {
                 return DropdownMenuItem(
                   value: value,
-                  child: Text(value),
+                  child: Text(value.name!),
                 );
               }).toList(),
             ),

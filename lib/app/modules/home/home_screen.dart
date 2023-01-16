@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/bottombar_controller.dart';
 import 'package:money_keeper/app/controllers/home_controller.dart';
+import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 import 'package:money_keeper/app/modules/home/widgets/home_chart_bar.dart';
 
 import '../../common/widget/home_transaction_item.dart';
+import '../../core/utils/utils.dart';
 import '../../core/values/r.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,8 +19,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = Get.put(HomeController());
-
   final BottomBarController _bottomController = Get.find();
+  final _walletController = Get.find<MyWalletController>();
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "100.000 đ",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 35,
+                        Obx(
+                          () => Text(
+                            _calculateTotalBalance(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 35,
+                            ),
                           ),
                         ),
                         Text(R.Totalbalance.tr),
@@ -95,9 +99,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: const TextStyle(fontSize: 25),
                             ),
                             const Spacer(),
-                            const Text(
-                              "100.000 đ",
-                              style: TextStyle(fontSize: 20),
+                            Obx(
+                              () => Text(
+                                _calculateTotalBalance(),
+                                style: const TextStyle(fontSize: 20),
+                              ),
                             ),
                           ],
                         ),
@@ -303,5 +309,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  String _calculateTotalBalance() {
+    int total = 0;
+    for (int i = 0; i < _walletController.listWallet.length; i++) {
+      total += _walletController.listWallet[i].balance!;
+    }
+    return FormatHelper().moneyFormat(total);
   }
 }

@@ -8,6 +8,7 @@ import 'package:money_keeper/data/services/auth_service.dart';
 
 import '../../../data/models/user.dart';
 import '../../core/values/r.dart';
+import '../account/account_controller.dart';
 
 class SignupController extends GetxController {
   var isSecureText = true.obs;
@@ -32,8 +33,6 @@ class SignupController extends GetxController {
 
       if (res.isOk) {
         Get.toNamed(verifySignupRoute);
-      } else {
-        EasyLoading.showToast(res.message);
       }
     } else {
       EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
@@ -49,7 +48,13 @@ class SignupController extends GetxController {
 
       if (res.isOk) {
         Get.toNamed(bottomBarRoute);
-        GetStorageService.ins.setUserToken(res.data["token"]);
+        GetStorageService.ins.setUserToken(res.body["token"]);
+
+        final user = User.fromJson(res.data);
+        user.token = GetStorageService.ins.getUserToken();
+
+        final ac = Get.find<AccountController>();
+        ac.currentUser.value = user;
       } else {
         EasyLoading.showToast(R.Incorectcode.tr);
       }

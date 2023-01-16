@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/bottombar_controller.dart';
 
+import '../../controllers/wallet/my_wallet_controller.dart';
 import '../../core/values/r.dart';
 
 class BottomBar extends StatefulWidget {
@@ -14,6 +15,7 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   final _controller = Get.put(BottomBarController());
+  final _walletController = Get.put(MyWalletController())..getAllWallet();
 
   @override
   Widget build(BuildContext context) {

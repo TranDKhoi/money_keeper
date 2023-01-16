@@ -35,7 +35,7 @@ class LoginController extends GetxController {
       if (res.isOk) {
         final AccountController ac = Get.find();
         ac.currentUser.value = User.fromJson(res.data);
-
+        ac.currentUser.value!.token = res.body["token"];
         //save to local
         GetStorageService.ins.setUserToken(ac.currentUser.value!.token!);
 

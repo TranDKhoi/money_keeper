@@ -118,4 +118,14 @@ const Map<String, String> viLanguagePackage = {
   R.projectedspending: "Chi tiêu dự kiến",
   R.actualspending: "Chi tiêu thực tế",
   R.Overspent: "Chi quá mức",
+  R.Groupwallet: "Ví nhóm",
+  R.Totalwallet: "Ví tổng",
+  R.Standard: "Tiêu chuẩn",
+  R.Categorylist: "Danh sách mục",
+  R.instructionofcategorylist:
+      "Danh mục của ví mới này sẽ được sao chép toàn bộ từ danh mục của nhóm danh mục mà bọn chọn",
+  R.RequiredExpense: "Chi tiêu bắt buộc",
+  R.NecessaryExpense: "Chi tiêu cần thiết",
+  R.Entertainment: "Vui chơi giải trí",
+  R.InvestingOrDebt : "Đầu tư & nợ",
 };

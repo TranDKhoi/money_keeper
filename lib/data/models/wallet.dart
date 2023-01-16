@@ -1,6 +1,30 @@
-class Wallet {
-  final String? name;
-  final int? balance;
+import 'package:json_annotation/json_annotation.dart';
+import 'package:money_keeper/data/models/user.dart';
 
-  Wallet({this.name, this.balance});
+part "wallet.g.dart";
+
+@JsonSerializable(explicitToJson: true)
+class Wallet {
+  int? id;
+  String? name;
+  String? icon;
+  int? balance;
+  bool? isDefault;
+  String? type;
+  int? clonedCategoryWalletId;
+  List<User>? members;
+
+  Wallet(
+      {this.id,
+      this.name,
+      this.icon,
+      this.balance,
+      this.isDefault,
+      this.type,
+      this.clonedCategoryWalletId,
+      this.members});
+
+  factory Wallet.fromJson(Map<String, dynamic> json) => _$WalletFromJson(json);
+
+  Map<String, dynamic> toJson() => _$WalletToJson(this);
 }

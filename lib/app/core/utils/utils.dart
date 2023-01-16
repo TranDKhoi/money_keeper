@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class ConfigHelper {
   static void configLoadingBar() {
@@ -28,7 +27,7 @@ extension GetSize on BuildContext {
 }
 
 extension ApiResponseHandler on Response {
-  Map<String, dynamic> get data => body["data"];
+  get data => body["data"];
 
   String get message => body["message"];
 }
@@ -93,5 +92,11 @@ class FormatHelper {
   String dateFormat(DateTime date) {
     String formatTime = "${date.day}-${date.month}-${date.year}";
     return formatTime;
+  }
+
+  String moneyFormat(int money) {
+    return NumberFormat.simpleCurrency(
+      locale: 'vi',
+    ).format(money);
   }
 }

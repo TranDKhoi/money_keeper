@@ -5,6 +5,7 @@ import 'package:money_keeper/app/controllers/report/report_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/modules/report/widgets/report_bar_chart.dart';
 import 'package:money_keeper/app/modules/report/widgets/report_pie_chart.dart';
+import 'package:money_keeper/data/models/wallet.dart';
 
 import '../../core/values/r.dart';
 
@@ -42,7 +43,8 @@ class _ReportScreenState extends State<ReportScreen>
         title: Column(
           children: [
             Text(R.Balance.tr),
-            const Text("100.000đ"),
+            Obx(() => Text(FormatHelper()
+                .moneyFormat(_controller.selectedWallet.value.balance!))),
           ],
         ),
         bottom: PreferredSize(
@@ -50,16 +52,16 @@ class _ReportScreenState extends State<ReportScreen>
           child: Column(
             children: [
               Obx(
-                () => DropdownButton<String>(
+                () => DropdownButton<Wallet>(
                   value: _controller.selectedWallet.value,
                   icon: const Icon(Ionicons.caret_down),
-                  onChanged: (String? value) {
+                  onChanged: (Wallet? value) {
                     _controller.changeWallet(value!);
                   },
-                  items: _controller.listWallet.map((String value) {
+                  items: _controller.listWallet.map((Wallet value) {
                     return DropdownMenuItem(
                       value: value,
-                      child: Text(value),
+                      child: Text(value.name!),
                     );
                   }).toList(),
                 ),

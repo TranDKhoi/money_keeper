@@ -1,9 +1,12 @@
 import 'package:bubble_box/bubble_box.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
+import '../../../../data/models/category.dart';
+import '../../../../data/models/wallet.dart';
 import '../../../controllers/planning/budget/budget_controller.dart';
 import '../../../core/values/r.dart';
 
@@ -54,6 +57,24 @@ class _BudgetScreenState extends State<BudgetScreen>
               .toList(),
         ),
         elevation: 5,
+        actions: [
+          Obx(
+            () => DropdownButton<Wallet>(
+              value: _controller.selectedWallet.value,
+              icon: const Icon(Ionicons.caret_down),
+              onChanged: (Wallet? value) {
+                _controller.changeWallet(value!);
+              },
+              items: _controller.listWallet.map((Wallet value) {
+                return DropdownMenuItem(
+                  value: value,
+                  child: Text(value.name!),
+                );
+              }).toList(),
+            ),
+          ),
+          const SizedBox(width: 20),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -62,14 +83,16 @@ class _BudgetScreenState extends State<BudgetScreen>
             summaryCard(isVisible: true),
             const SizedBox(height: 30),
             Expanded(
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, i) => InkWell(
-                  onTap: () => Get.toNamed(budgetInfoScreen),
-                  child: indicatorBar(),
+              child: Obx(
+                () => ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, i) => InkWell(
+                    onTap: () => Get.toNamed(budgetInfoScreen),
+                    child: indicatorBar(_controller.listCateBudget[i]),
+                  ),
+                  separatorBuilder: (context, i) => const Divider(),
+                  itemCount: _controller.listCateBudget.length,
                 ),
-                separatorBuilder: (context, i) => const Divider(),
-                itemCount: 5,
               ),
             ),
           ],
@@ -78,7 +101,7 @@ class _BudgetScreenState extends State<BudgetScreen>
     );
   }
 
-  indicatorBar() {
+  indicatorBar(Category cateBudget) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -86,17 +109,20 @@ class _BudgetScreenState extends State<BudgetScreen>
         children: [
           //title and icon
           Row(
-            children: const [
-              CircleAvatar(),
-              SizedBox(width: 10),
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.transparent,
+                child: Image.asset("assets/icons/${cateBudget.icon}.png"),
+              ),
+              const SizedBox(width: 10),
               Text(
-                "Food and something",
-                style: TextStyle(
+                cateBudget.name ?? "",
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Spacer(),
-              Text(
+              const Spacer(),
+              const Text(
                 "0",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,

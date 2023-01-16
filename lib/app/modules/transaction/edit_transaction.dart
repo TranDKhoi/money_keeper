@@ -58,7 +58,7 @@ class EditTransactionScreen extends StatelessWidget {
                               return CircleAvatar(
                                 backgroundColor: Colors.transparent,
                                 child: Image.asset(
-                                    "assets/icons/${_controller.selectedCategory.value!.image}.png"),
+                                    "assets/icons/${_controller.selectedCategory.value!.icon}.png"),
                               );
                             } else {
                               return const CircleAvatar();

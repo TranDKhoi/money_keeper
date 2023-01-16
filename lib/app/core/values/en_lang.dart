@@ -118,4 +118,14 @@ const Map<String, String> enLanguagePackage = {
   R.projectedspending: "Projected spending",
   R.actualspending: "Actual spending",
   R.Overspent: "Overspent",
+  R.Groupwallet: "Group wallet",
+  R.Totalwallet: "Total wallet",
+  R.Standard: "Standard",
+  R.Categorylist: "Category list",
+  R.instructionofcategorylist: "Category list",
+  R.RequiredExpense: "Required expense",
+  R.NecessaryExpense: "Necessary expense",
+  R.Entertainment: "Entertainment",
+  R.InvestingOrDebt : "Investing or debt",
+
 };

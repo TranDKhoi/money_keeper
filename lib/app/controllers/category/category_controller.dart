@@ -1,53 +1,130 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 
 import '../../../data/models/category.dart';
+import '../../../data/models/wallet.dart';
+import '../../../data/services/category_service.dart';
 import '../../core/values/r.dart';
+import '../../modules/category/widgets/expanded_list_tile.dart';
+import '../wallet/my_wallet_controller.dart';
 
 class CategoryController extends GetxController {
   //manage screen prop
-  final List<Category> listCate = List.generate(
-      13,
-      (index) => Category(
-          name: "name $index",
-          image: index,
-          type: index % 2 == 0 ? R.Income.tr : R.Expense.tr));
-  var listCategoryUI = <Category>[].obs;
+  var listCate = <Category>[].obs;
+  var listIncome = <Category>[].obs;
+  var listExpense = <Category>[].obs;
+  var listExpenseTile = <BasicTile>[].obs;
+  var selectedWallet = Wallet().obs;
+  var listWallet = <Wallet>[].obs;
+  var currentTabIndex = 0.obs;
+
+  CategoryController() {
+    var walletController = Get.find<MyWalletController>();
+    listWallet.value = [...walletController.listWallet];
+    var standardCate = Wallet(name: R.Standard.tr, id: -1);
+    listWallet.value = [standardCate, ...walletController.listWallet];
+    selectedWallet.value = listWallet[0];
+  }
+
+  void getStandardCate() async {
+    listCate.value = [];
+    EasyLoading.show();
+    var res = await CategoryService.ins.getAllCategory();
+    if (res.isOk) {
+      for (int i = 0; i < res.data.length; i++) {
+        listCate.add(Category.fromJson(res.data[i]));
+      }
+    }
+    EasyLoading.dismiss();
+    changeListCategory(currentTabIndex.value);
+  }
+
+  void getCateByWalletId(int id) async {
+    listCate.value = [];
+    EasyLoading.show();
+    var res = await CategoryService.ins.getCategoryByWalletId(id);
+    if (res.isOk) {
+      for (int i = 0; i < res.data.length; i++) {
+        listCate.add(Category.fromJson(res.data[i]));
+      }
+    }
+    EasyLoading.dismiss();
+    changeListCategory(currentTabIndex.value);
+  }
 
   void changeListCategory(int index) {
+    currentTabIndex.value = index;
     switch (index) {
       case 0:
-        var tempCate1 =
-            Category(name: R.Loan.tr, type: R.Expense.tr, image: 21);
-        var tempCate2 =
-            Category(name: R.Debtcollection.tr, type: R.Income.tr, image: 22);
-        var tempCate3 = Category(name: R.Debt.tr, type: R.Income.tr, image: 23);
-        var tempCate4 =
-            Category(name: R.Repayment.tr, type: R.Expense.tr, image: 20);
-        listCategoryUI.value =
-            List.from([tempCate1, tempCate2, tempCate3, tempCate4]);
+        listIncome.value =
+            List.from(listCate.where((p0) => p0.type == "Income"));
         break;
       case 1:
-        listCategoryUI.value = List.generate(
-            13,
-            (index) =>
-                Category(name: "name $index", image: index, type: R.Income.tr));
-        break;
-      case 2:
-        listCategoryUI.value = List.generate(
-            5,
-            (index) => Category(
-                name: "name $index", image: index, type: R.Expense.tr));
-        break;
+        {
+          listExpense.value =
+              List.from(listCate.where((p0) => p0.type == "Expense"));
+
+          listExpenseTile.value = <BasicTile>[
+            BasicTile(
+              tileName: R.RequiredExpense.tr,
+              tiles: listExpense
+                  .where((p0) => p0.group == "RequiredExpense")
+                  .toList(),
+            ),
+            BasicTile(
+              tileName: R.NecessaryExpense.tr,
+              tiles: listExpense
+                  .where((p0) => p0.group == "NecessaryExpense")
+                  .toList(),
+            ),
+            BasicTile(
+              tileName: R.Entertainment.tr,
+              tiles: listExpense
+                  .where((p0) => p0.group == "Entertainment")
+                  .toList(),
+            ),
+            BasicTile(
+              tileName: R.InvestingOrDebt.tr,
+              tiles: listExpense
+                  .where((p0) => p0.group == "InvestingOrDebt")
+                  .toList(),
+            ),
+          ];
+          break;
+        }
     }
+  }
+
+  void changeWallet(Wallet value) {
+    selectedWallet.value = value;
+    if (value.id! == -1) {
+      getStandardCate();
+      return;
+    }
+    getCateByWalletId(value.id!);
   }
 
   //add or edit prop
   var selectedCategoryPic = Rxn<int>();
   var selectedEditCategory = Rxn<Category>();
   var selectedType = Rxn<String>();
+  var selectedGroup = 0.obs;
   var listType = [R.Income.tr, R.Expense.tr];
 
   void changeType(String val) {
     selectedType.value = val;
+  }
+
+  Future<void> deleteCategory(Category delCate) async {
+    EasyLoading.show();
+    var res = await CategoryService.ins.deleteCategoryByWalletId(delCate);
+    EasyLoading.dismiss();
+
+    if (res.isOk) {
+      getCateByWalletId(delCate.walletId!);
+    } else {
+      EasyLoading.showToast(res.message);
+    }
   }
 }

@@ -2,12 +2,18 @@ import 'package:get/get.dart';
 
 import '../../../../data/models/event.dart';
 import '../../../../data/models/wallet.dart';
+import '../../wallet/my_wallet_controller.dart';
 
 class EventController extends GetxController {
-  var selectedWallet = "Ví tổng".obs;
-  List<String> listWallet = ["Ví tổng", 'One', 'Two', 'Three', 'Four'];
+  var listWallet = <Wallet>[].obs;
+  var selectedWallet = Wallet().obs;
   var listEventFromAPI = Rxn<List<Event>>();
   var listEvent = Rxn<List<Event>>();
+
+  EventController() {
+    listWallet.value = List.from(Get.find<MyWalletController>().listWallet);
+    selectedWallet.value = listWallet[0];
+  }
 
   void getAllEvent() {
     listEventFromAPI.value = [];
@@ -25,7 +31,7 @@ class EventController extends GetxController {
         .toList());
   }
 
-  void changeWallet(String value) {
+  void changeWallet(Wallet value) {
     selectedWallet.value = value;
   }
 

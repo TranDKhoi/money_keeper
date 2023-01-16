@@ -1,17 +1,23 @@
-import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:money_keeper/app/routes/routes.dart';
+import 'package:money_keeper/data/models/wallet.dart';
 
 import '../../core/values/r.dart';
+import '../wallet/my_wallet_controller.dart';
 
 class TransactionController extends GetxController {
-  var selectedWallet = "Ví tổng".obs;
-  List<String> listWallet = ["Ví tổng", 'One', 'Two', 'Three', 'Four'];
+  var selectedWallet = Wallet().obs;
+  var listWallet = <Wallet>[].obs;
   var listTimeline = [].obs;
   var selectedTimeLine = Rxn<String>();
 
   TransactionController() {
+    var walletController = Get.find<MyWalletController>();
+    listWallet.value = [...walletController.listWallet];
+    var totalWallet =
+        Wallet(name: R.Totalwallet.tr, balance: _calculateTotalBalance());
+    listWallet.value = [totalWallet, ...walletController.listWallet];
+    selectedWallet.value = listWallet[0];
     generateTimeLine();
   }
 
@@ -23,7 +29,7 @@ class TransactionController extends GetxController {
     Get.toNamed(editTransactionRoute);
   }
 
-  void changeWallet(String value) {
+  void changeWallet(Wallet value) {
     selectedWallet.value = value;
   }
 
@@ -40,7 +46,7 @@ class TransactionController extends GetxController {
           listTimeline.add(time);
         }
       } else if (yearStep == 2) {
-        for (int i = 1; i <= DateTime.now().month+1; i++) {
+        for (int i = 1; i <= DateTime.now().month + 1; i++) {
           String time = "$i/${DateTime.now().year}";
           if (i == DateTime.now().month - 1) time = R.Lastmonth.tr;
           if (i == DateTime.now().month) time = R.Thismonth.tr;
@@ -55,5 +61,13 @@ class TransactionController extends GetxController {
         listTimeline[i - 1] = R.Lastmonth.tr;
       }
     }
+  }
+
+  _calculateTotalBalance() {
+    int total = 0;
+    for (int i = 0; i < listWallet.length; i++) {
+      total += listWallet[i].balance!;
+    }
+    return total;
   }
 }

@@ -8,7 +8,7 @@ class GetStorageService {
   final _box = GetStorage();
 
   void setUserToken(String token) async {
-    await _box.write("userToken", token);
+    await _box.write("userToken", "Bearer $token");
   }
 
   String? getUserToken() {
