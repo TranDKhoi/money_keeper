@@ -1,6 +1,9 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 import 'package:money_keeper/data/models/wallet.dart';
+import 'package:money_keeper/data/services/transaction_service.dart';
 
 import '../../core/values/r.dart';
 import '../wallet/my_wallet_controller.dart';
@@ -14,11 +17,14 @@ class TransactionController extends GetxController {
   TransactionController() {
     var walletController = Get.find<MyWalletController>();
     listWallet.value = [...walletController.listWallet];
-    var totalWallet =
-        Wallet(name: R.Totalwallet.tr, balance: _calculateTotalBalance());
+    var totalWallet = Wallet(
+        name: R.Totalwallet.tr, balance: _calculateTotalBalance(), id: -1);
     listWallet.value = [totalWallet, ...walletController.listWallet];
+    listWallet.refresh();
     selectedWallet.value = listWallet[0];
     generateTimeLine();
+    selectedTimeLine.value = listTimeline[listTimeline.length - 2];
+    getGlobalTransaction();
   }
 
   void toCreateTransactionScreen() {
@@ -31,10 +37,20 @@ class TransactionController extends GetxController {
 
   void changeWallet(Wallet value) {
     selectedWallet.value = value;
+    if (selectedWallet.value.id == -1) {
+      getGlobalTransaction();
+    } else {
+      getTransactionByWalletId();
+    }
   }
 
   void changeTimeLine(int index) {
     selectedTimeLine.value = listTimeline[index];
+    if (selectedWallet.value.id == -1) {
+      getGlobalTransaction();
+    } else {
+      getTransactionByWalletId();
+    }
   }
 
   void generateTimeLine() {
@@ -69,5 +85,19 @@ class TransactionController extends GetxController {
       total += listWallet[i].balance!;
     }
     return total;
+  }
+
+  getGlobalTransaction() {}
+
+  getTransactionByWalletId() async {
+    EasyLoading.show();
+    var res = await TransactionService.ins.getTransactionByWalletId(
+        selectedWallet.value.id!, selectedTimeLine.value!);
+    EasyLoading.dismiss();
+
+    if (res.isOk) {
+    } else {
+      EasyLoading.showToast(res.message);
+    }
   }
 }

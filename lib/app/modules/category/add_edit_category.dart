@@ -236,6 +236,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
   Future<void> createNewCate() async {
     //đang chọn gói danh mục tiêu chuẩn chứ ko phải của ví khác
     if (_controller.selectedWallet.value.id == -1) {
+      print("here");
     } else {
       //check dieu kien
       if (!isValidData()) return;

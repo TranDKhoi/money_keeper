@@ -11,9 +11,18 @@ import '../../core/values/r.dart';
 import 'add_edit_category.dart';
 
 class ManageCategoryScreen extends StatefulWidget {
-  const ManageCategoryScreen({Key? key, this.canBack = true}) : super(key: key);
+  const ManageCategoryScreen(
+      {Key? key,
+      this.canBack = true,
+      this.canChangeWallet = true,
+      this.selectedWallet})
+      : super(key: key);
 
   final bool canBack;
+  final bool canChangeWallet;
+
+  //nó sẽ bằng null khi đi từ màn hình quản lý danh mục, khác null khi đi từ màn hình tạo mới giao dịch (bắt buộc phải chọn ví rồi mới dc chọn category ví đó)
+  final Wallet? selectedWallet;
 
   @override
   State<ManageCategoryScreen> createState() => _ManageCategoryScreenState();
@@ -27,7 +36,12 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen>
 
   @override
   void initState() {
-    _controller.getStandardCate();
+    if (widget.selectedWallet != null) {
+      _controller.selectedWallet.value = widget.selectedWallet!;
+      _controller.getCateByWalletId(widget.selectedWallet!.id!);
+    } else {
+      _controller.getStandardCate();
+    }
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
@@ -44,19 +58,22 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen>
       appBar: AppBar(
         title: Text(R.ManageCategory.tr),
         actions: [
-          Obx(
-            () => DropdownButton<Wallet>(
-              value: _controller.selectedWallet.value,
-              icon: const Icon(Ionicons.caret_down),
-              onChanged: (Wallet? value) {
-                _controller.changeWallet(value!);
-              },
-              items: _controller.listWallet.map((Wallet value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value.name!),
-                );
-              }).toList(),
+          Visibility(
+            visible: widget.canChangeWallet,
+            child: Obx(
+              () => DropdownButton<Wallet>(
+                value: _controller.selectedWallet.value,
+                icon: const Icon(Ionicons.caret_down),
+                onChanged: (Wallet? value) {
+                  _controller.changeWallet(value!);
+                },
+                items: _controller.listWallet.map((Wallet value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(value.name!),
+                  );
+                }).toList(),
+              ),
             ),
           ),
           const SizedBox(width: 20),
@@ -112,7 +129,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen>
         backgroundColor: Colors.green,
         onPressed: () async {
           await showDialog(
-              context: context, builder: (context) => const AddEditCategoryScreen());
+              context: context,
+              builder: (context) => const AddEditCategoryScreen());
           _controller.selectedCategoryPic.value = null;
         },
         foregroundColor: Colors.white,

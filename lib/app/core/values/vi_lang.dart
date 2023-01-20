@@ -123,9 +123,10 @@ const Map<String, String> viLanguagePackage = {
   R.Standard: "Tiêu chuẩn",
   R.Categorylist: "Danh sách mục",
   R.instructionofcategorylist:
-      "Danh mục của ví mới này sẽ được sao chép toàn bộ từ danh mục của nhóm danh mục mà bọn chọn",
+      "Danh mục của ví mới này sẽ được sao chép toàn bộ từ danh mục của nhóm danh mục mà bạn chọn",
   R.RequiredExpense: "Chi tiêu bắt buộc",
   R.NecessaryExpense: "Chi tiêu cần thiết",
   R.Entertainment: "Vui chơi giải trí",
-  R.InvestingOrDebt : "Đầu tư & nợ",
+  R.InvestingOrDebt: "Đầu tư & nợ",
+  R.Transactioncreatedsuccessfully: "Tạo giao dịch thành công",
 };

@@ -128,5 +128,7 @@ class R {
   static const RequiredExpense = "RequiredExpense";
   static const NecessaryExpense = "NecessaryExpense";
   static const Entertainment = "Entertainment";
-  static const InvestingOrDebt  = "InvestingOrDebt ";
+  static const InvestingOrDebt = "InvestingOrDebt ";
+  static const Transactioncreatedsuccessfully =
+      "Transactioncreatedsuccessfully ";
 }

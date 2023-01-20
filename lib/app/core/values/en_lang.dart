@@ -122,10 +122,11 @@ const Map<String, String> enLanguagePackage = {
   R.Totalwallet: "Total wallet",
   R.Standard: "Standard",
   R.Categorylist: "Category list",
-  R.instructionofcategorylist: "Category list",
+  R.instructionofcategorylist:
+      "This new wallet's categories will be cloned from the list's categories has been chosen",
   R.RequiredExpense: "Required expense",
   R.NecessaryExpense: "Necessary expense",
   R.Entertainment: "Entertainment",
-  R.InvestingOrDebt : "Investing or debt",
-
+  R.InvestingOrDebt: "Investing or debt",
+  R.Transactioncreatedsuccessfully: "Transaction created successfully",
 };
