@@ -129,4 +129,5 @@ const Map<String, String> enLanguagePackage = {
   R.Entertainment: "Entertainment",
   R.InvestingOrDebt: "Investing or debt",
   R.Transactioncreatedsuccessfully: "Transaction created successfully",
+  R.Walleterror: "Wallet error",
 };

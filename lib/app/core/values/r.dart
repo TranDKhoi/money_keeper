@@ -131,4 +131,5 @@ class R {
   static const InvestingOrDebt = "InvestingOrDebt ";
   static const Transactioncreatedsuccessfully =
       "Transactioncreatedsuccessfully ";
+  static const Walleterror = "Walleterror ";
 }

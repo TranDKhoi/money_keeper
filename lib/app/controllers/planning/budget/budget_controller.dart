@@ -18,6 +18,10 @@ class BudgetController extends GetxController {
 
   BudgetController() {
     listWallet.value = List.from(Get.find<MyWalletController>().listWallet);
+    if (listWallet.isEmpty) {
+      EasyLoading.showToast(R.Walleterror);
+      return;
+    }
     selectedWallet.value = listWallet[0];
     _getListCategoryOfWallet(selectedWallet.value.id!);
     generateTimeLine();

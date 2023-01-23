@@ -129,4 +129,5 @@ const Map<String, String> viLanguagePackage = {
   R.Entertainment: "Vui chơi giải trí",
   R.InvestingOrDebt: "Đầu tư & nợ",
   R.Transactioncreatedsuccessfully: "Tạo giao dịch thành công",
+  R.Walleterror: "Ví lỗi",
 };

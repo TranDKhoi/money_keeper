@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/data/models/wallet.dart';
@@ -209,6 +210,7 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
     if (textWalletBalance.text.isEmpty ||
         textWalletName.text.isEmpty ||
         _controller.selectedCategoryPic.value == null) {
+      EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
       return;
     }
     final newWallet = Wallet(
@@ -216,10 +218,13 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
       name: textWalletName.text.trim(),
       type: "Personal",
       icon: _controller.selectedCategoryPic.value.toString(),
-      clonedCategoryWalletId: _controller.selectedCategoryGroup.value.id == -1
-          ? null
-          : _controller.selectedCategoryGroup.value.id,
     );
+
+    if (_controller.selectedCategoryGroup.value.id != -1) {
+      newWallet.clonedCategoryWalletId =
+          _controller.selectedCategoryGroup.value.id;
+    }
+
     _controller.createNewWallet(newWallet);
   }
 }
