@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
+import '../../controllers/wallet/my_wallet_controller.dart';
 import '../../core/values/r.dart';
 
 class PlanningScreen extends StatefulWidget {
@@ -13,7 +15,6 @@ class PlanningScreen extends StatefulWidget {
 }
 
 class _PlanningScreenState extends State<PlanningScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +25,15 @@ class _PlanningScreenState extends State<PlanningScreen> {
       body: ListView(
         children: [
           ListTile(
-            onTap: () => Get.toNamed(budgetScreenRoute),
+            onTap: () {
+              final currentWallets =
+                  List.from(Get.find<MyWalletController>().listWallet);
+              if (currentWallets.isEmpty) {
+                EasyLoading.showToast(R.Walleterror.tr);
+                return;
+              }
+              Get.toNamed(budgetScreenRoute);
+            },
             contentPadding: const EdgeInsets.all(20),
             leading: const Icon(
               Ionicons.pie_chart,

@@ -88,11 +88,6 @@ class AppPages {
       transition: Transition.rightToLeft,
     ),
     GetPage(
-      name: editTransactionRoute,
-      page: () => EditTransactionScreen(),
-      transition: Transition.rightToLeft,
-    ),
-    GetPage(
       name: incomeDetailRoute,
       page: () => IncomeDetail(),
       transition: Transition.rightToLeft,

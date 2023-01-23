@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 
+import '../../../data/models/transactions_by_day.dart';
+import '../../core/values/r.dart';
+import '../../modules/transaction/edit_transaction.dart';
 import 'note_transaction_item.dart';
 
 class CardTransactionItem extends StatelessWidget {
-  CardTransactionItem({Key? key, required this.onTap}) : super(key: key);
+  const CardTransactionItem({Key? key, required this.transactionsByDay})
+      : super(key: key);
 
-  final VoidCallback onTap;
-  final List<Widget> listTransaction = [
-    NoteTransactionItem(onTap: () {}),
-    NoteTransactionItem(onTap: () {}),
-    NoteTransactionItem(onTap: () {}),
-  ];
+  final TransactionsByDay transactionsByDay;
 
   @override
   Widget build(BuildContext context) {
@@ -19,24 +21,34 @@ class CardTransactionItem extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            const ListTile(
+            ListTile(
               contentPadding: EdgeInsets.zero,
               isThreeLine: true,
               leading: Text(
-                "29",
-                style: TextStyle(fontSize: 30),
+                transactionsByDay.date?.day.toString() ?? "null",
+                style: const TextStyle(fontSize: 30),
               ),
-              title: Text("Hôm nay"),
-              subtitle: Text("9/2022"),
+              title: transactionsByDay.date?.day == DateTime.now().day
+                  ? Text(R.Today.tr)
+                  : Text(DateFormat('EEEE').format(transactionsByDay.date!).tr),
+              subtitle:
+                  Text(FormatHelper().dateFormat(transactionsByDay.date!)),
               trailing: Text(
-                "100.000đ",
-                style: TextStyle(
+                FormatHelper().moneyFormat(transactionsByDay.revenue),
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             const Divider(),
-            ...listTransaction,
+            ...?transactionsByDay.transactions
+                ?.map((e) => NoteTransactionItem(
+                      onTap: () => Get.to(() => EditTransactionScreen(
+                            selectedTrans: e,
+                          )),
+                      transaction: e,
+                    ))
+                .toList()
           ],
         ),
       ),

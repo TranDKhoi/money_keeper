@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -19,8 +20,6 @@ class AddTransactionController extends GetxController {
   var selectedWallet = Rxn<Wallet>();
   final amountController = TextEditingController();
   final noteController = TextEditingController();
-
-  var listType = [R.Income.tr, R.Expense.tr];
 
   void pickedImageGallery() async {
     String? picked = await ImageHelper.ins.pickSingleImage();

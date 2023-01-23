@@ -44,7 +44,7 @@ class _TransactionScreenState extends State<TransactionScreen>
           children: [
             Text(R.Balance.tr),
             Obx(() => Text(FormatHelper()
-                .moneyFormat(_controller.selectedWallet.value.balance!))),
+                .moneyFormat(_controller.selectedWallet.value.balance))),
           ],
         ),
         bottom: PreferredSize(
@@ -106,11 +106,14 @@ class _TransactionScreenState extends State<TransactionScreen>
                           children: [
                             Text(R.Income.tr),
                             const Spacer(),
-                            const Text(
-                              "0",
-                              style: TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
+                            Obx(
+                              () => Text(
+                                FormatHelper().moneyFormat(_controller
+                                    .transactionsByTime.value.totalIncome),
+                                style: const TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
@@ -120,22 +123,32 @@ class _TransactionScreenState extends State<TransactionScreen>
                           children: [
                             Text(R.Expense.tr),
                             const Spacer(),
-                            const Text(
-                              "100.000đ",
-                              style: TextStyle(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
+                            Obx(
+                              () => Text(
+                                FormatHelper().moneyFormat(_controller
+                                    .transactionsByTime.value.totalExpense),
+                                style: const TextStyle(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
                         ),
                         const Divider(),
                         Row(
-                          children: const [
-                            Spacer(),
+                          children: [
+                            const Spacer(),
                             Text(
-                              "-100.000đ",
-                              style: TextStyle(
+                              FormatHelper().moneyFormat((_controller
+                                          .transactionsByTime
+                                          .value
+                                          .totalIncome ??
+                                      0) -
+                                  (_controller.transactionsByTime.value
+                                          .totalExpense ??
+                                      0)),
+                              style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -150,8 +163,11 @@ class _TransactionScreenState extends State<TransactionScreen>
                     ),
                   ),
                 ),
-                CardTransactionItem(onTap: () {}),
-                CardTransactionItem(onTap: () {}),
+                ...?_controller.transactionsByTime.value.details
+                    ?.map((e) => CardTransactionItem(
+                          transactionsByDay: e,
+                        ))
+                    .toList()
               ],
             );
           }

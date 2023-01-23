@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
+
+import '../../../data/models/transaction.dart';
 
 class NoteTransactionItem extends StatelessWidget {
-  const NoteTransactionItem({Key? key, required this.onTap}) : super(key: key);
+  const NoteTransactionItem(
+      {Key? key, required this.onTap, required this.transaction})
+      : super(key: key);
 
+  final Transaction transaction;
   final VoidCallback onTap;
 
   @override
@@ -13,23 +18,29 @@ class NoteTransactionItem extends StatelessWidget {
       contentPadding: EdgeInsets.zero,
       isThreeLine: true,
       dense: true,
-      leading: const Icon(Ionicons.wallet),
-      title: const Text(
-        "Ún và ăn",
-        style: TextStyle(
+      leading: CircleAvatar(
+        radius: 15,
+        backgroundColor: Colors.transparent,
+        child: Image.asset("assets/icons/${transaction.category?.icon!}.png"),
+      ),
+      title: Text(
+        transaction.category?.name ?? "Untitled category",
+        style: const TextStyle(
           fontSize: 20,
         ),
       ),
-      subtitle: const Text(
-        "this a note",
-        style: TextStyle(
+      subtitle: Text(
+        transaction.note ?? "empty note",
+        style: const TextStyle(
           fontSize: 15,
         ),
       ),
-      trailing: const Text(
-        "100.000 đ",
+      trailing: Text(
+        FormatHelper().moneyFormat(transaction.amount),
         style: TextStyle(
-          color: Colors.redAccent,
+          color: transaction.category?.type == "Expense"
+              ? Colors.redAccent
+              : Colors.green,
           fontWeight: FontWeight.bold,
         ),
       ),

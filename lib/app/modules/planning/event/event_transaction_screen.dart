@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/common/widget/card_transction_item.dart';
 
+import '../../../../data/models/transactions_by_day.dart';
 import '../../../core/values/r.dart';
 
 class EventTransactionScreen extends StatelessWidget {
@@ -91,7 +92,9 @@ class EventTransactionScreen extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               physics: const BouncingScrollPhysics(),
-              itemBuilder: (context, i) => CardTransactionItem(onTap: () {}),
+              itemBuilder: (context, i) => CardTransactionItem(
+                transactionsByDay: TransactionsByDay(),
+              ),
               itemCount: 5,
             ),
           ),

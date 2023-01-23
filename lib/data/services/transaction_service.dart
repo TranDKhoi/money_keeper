@@ -23,6 +23,15 @@ class TransactionService extends GetConnect {
         });
   }
 
+  Future<Response> updateTransaction(Transaction upTrans) async {
+    return await put(
+        "$api_url/wallets/${upTrans.walletId}/transactions/${upTrans.id}",
+        jsonEncode(upTrans),
+        headers: <String, String>{
+          'Authorization': _ac.currentUser.value!.token!,
+        });
+  }
+
   Future<Response> getTransactionByWalletId(
     int walletId,
     String timeRange,
@@ -41,6 +50,14 @@ class TransactionService extends GetConnect {
           "StartDate": _getStartDate(timeRange),
           "EndDate": _getEndDate(timeRange),
         },
+        headers: <String, String>{
+          'Authorization': _ac.currentUser.value!.token!,
+        });
+  }
+
+  Future<Response> deleteTransaction(Transaction delTrans) async {
+    return await delete(
+        "$api_url/wallets/${delTrans.walletId}/transactions/${delTrans.id}",
         headers: <String, String>{
           'Authorization': _ac.currentUser.value!.token!,
         });

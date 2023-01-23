@@ -1,6 +1,9 @@
 import 'package:get/get.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
+import '../../data/models/transaction.dart';
+import '../modules/transaction/edit_transaction.dart';
+
 class HomeController extends GetxController {
   var selectedReport = 1.obs;
 
@@ -13,6 +16,6 @@ class HomeController extends GetxController {
   }
 
   void toEditTransactionScreen() {
-    Get.toNamed(editTransactionRoute);
+    // Get.to(()=> EditTransactionScreen(selectedTrans: Transaction(),));
   }
 }

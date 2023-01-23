@@ -29,7 +29,7 @@ extension GetSize on BuildContext {
 extension ApiResponseHandler on Response {
   get data => body["data"];
 
-  String get message => body["message"];
+  String get message => body["errors"];
 }
 
 class ImageHelper {
@@ -94,7 +94,13 @@ class FormatHelper {
     return formatTime;
   }
 
-  String moneyFormat(int money) {
+  String moneyFormat(int? money) {
+    if (money == null) {
+      return NumberFormat.simpleCurrency(
+        locale: 'vi',
+      ).format(0);
+    }
+
     return NumberFormat.simpleCurrency(
       locale: 'vi',
     ).format(money);

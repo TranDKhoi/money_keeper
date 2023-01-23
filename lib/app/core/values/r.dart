@@ -131,5 +131,18 @@ class R {
   static const InvestingOrDebt = "InvestingOrDebt ";
   static const Transactioncreatedsuccessfully =
       "Transactioncreatedsuccessfully ";
-  static const Walleterror = "Walleterror ";
+  static const Walleterror = "Walleterror";
+  static const Today = "Today";
+  static const Monday = "Monday";
+  static const Tuesday = "Tuesday";
+  static const Wednesday = "Wednesday";
+  static const Thursday = "Thursday";
+  static const Friday = "Friday";
+  static const Saturday = "Saturday";
+  static const Sunday = "Sunday";
+  static const Transactioneditedsuccessfully = "Transactioneditedsuccessfully";
+  static const Deletethistransaction = "Deletethistransaction";
+  static const Deletethistransactionquesttion = "Deletethistransaction?";
+  static const Yes = "Yes";
+  static const No = "No";
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
@@ -5,7 +7,9 @@ import 'package:money_keeper/app/routes/routes.dart';
 import 'package:money_keeper/data/models/wallet.dart';
 import 'package:money_keeper/data/services/transaction_service.dart';
 
+import '../../../data/models/transactions_by_time.dart';
 import '../../core/values/r.dart';
+import '../../modules/transaction/edit_transaction.dart';
 import '../wallet/my_wallet_controller.dart';
 
 class TransactionController extends GetxController {
@@ -13,6 +17,8 @@ class TransactionController extends GetxController {
   var listWallet = <Wallet>[].obs;
   var listTimeline = [].obs;
   var selectedTimeLine = Rxn<String>();
+
+  var transactionsByTime = TransactionsByTime().obs;
 
   TransactionController() {
     var walletController = Get.find<MyWalletController>();
@@ -31,8 +37,8 @@ class TransactionController extends GetxController {
     Get.toNamed(addTransactionRoute);
   }
 
-  void toEditTransactionScreen() {
-    Get.toNamed(editTransactionRoute);
+  void toEditTransactionScreen(selected) {
+    Get.to(() => EditTransactionScreen(selectedTrans: selected));
   }
 
   void changeWallet(Wallet value) {
@@ -96,6 +102,7 @@ class TransactionController extends GetxController {
     EasyLoading.dismiss();
 
     if (res.isOk) {
+      transactionsByTime.value = TransactionsByTime.fromJson(res.data);
     } else {
       EasyLoading.showToast(res.message);
     }

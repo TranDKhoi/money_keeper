@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,14 +6,39 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/transaction/edit_transaction_controller.dart';
 
+import '../../../data/models/transaction.dart';
+import '../../controllers/wallet/my_wallet_controller.dart';
 import '../../core/utils/utils.dart';
 import '../../core/values/r.dart';
 import '../../routes/routes.dart';
+import '../category/manage_category.dart';
 
-class EditTransactionScreen extends StatelessWidget {
-  EditTransactionScreen({Key? key}) : super(key: key);
+class EditTransactionScreen extends StatefulWidget {
+  const EditTransactionScreen({Key? key, required this.selectedTrans})
+      : super(key: key);
+
+  final Transaction selectedTrans;
+
+  @override
+  State<EditTransactionScreen> createState() => _EditTransactionScreenState();
+}
+
+class _EditTransactionScreenState extends State<EditTransactionScreen> {
+  Transaction tempTrans = Transaction();
 
   final _controller = Get.put(EditTransactionController());
+
+  final walletController = Get.find<MyWalletController>();
+
+  @override
+  void initState() {
+    tempTrans =
+        Transaction.fromJson(jsonDecode(jsonEncode(widget.selectedTrans)));
+    tempTrans.wallet = walletController.listWallet
+        .where((element) => element.id == widget.selectedTrans.walletId)
+        .first;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +47,7 @@ class EditTransactionScreen extends StatelessWidget {
         title: Text(R.Edittransaction.tr),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () => _controller.updateTransaction(tempTrans),
             child: Text(R.Save.tr),
           ),
         ],
@@ -35,94 +61,139 @@ class EditTransactionScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    const TextField(
-                      style: TextStyle(
+                    TextFormField(
+                      initialValue: tempTrans.amount.toString(),
+                      onChanged: (val) => tempTrans.amount =
+                          int.parse(val.trim().isEmpty ? "0" : val.trim()),
+                      style: const TextStyle(
                         fontSize: 30,
                         color: Colors.green,
                       ),
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        hintText: "0 đ",
+                      decoration: const InputDecoration(
+                        hintText: "0",
                         hintStyle: TextStyle(
                           color: Colors.green,
                         ),
                         fillColor: Colors.transparent,
+                        suffixText: "đ",
                       ),
                     ),
                     const SizedBox(height: 10),
+                    //wallet
                     Row(
                       children: [
-                        Obx(
-                          () {
-                            if (_controller.selectedCategory.value != null) {
-                              return CircleAvatar(
-                                backgroundColor: Colors.transparent,
-                                child: Image.asset(
-                                    "assets/icons/${_controller.selectedCategory.value!.icon}.png"),
-                              );
-                            } else {
-                              return const CircleAvatar();
-                            }
-                          },
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.transparent,
+                          child: Image.asset(
+                              "assets/icons/${tempTrans.wallet!.icon}.png"),
                         ),
                         const SizedBox(width: 20),
-                        Obx(
-                          () => Expanded(
-                            child: TextField(
-                              enabled: true,
-                              onTap: () async {
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                                var res =
-                                    await Get.toNamed(manageCategoryRoute);
-                                if (res != null) {
-                                  _controller.selectedCategory.value = res;
+                        Expanded(
+                          child: TextField(
+                            enabled: true,
+                            onTap: () async {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              var res = await Get.toNamed(myWalletRoute,
+                                  arguments: true);
+                              if (res != null) {
+                                if (res.id != widget.selectedTrans.walletId) {
+                                  tempTrans.category = null;
+                                  setState(() {
+                                    tempTrans.wallet = res;
+                                  });
                                 }
-                              },
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.zero,
-                                hintText: _controller
-                                            .selectedCategory.value?.name ==
-                                        null
-                                    ? R.Selectcategory.tr
-                                    : _controller.selectedCategory.value!.name,
-                                fillColor: Colors.transparent,
-                              ),
+                              }
+                            },
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.zero,
+                              hintText: tempTrans.wallet?.name ?? "",
+                              fillColor: Colors.transparent,
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        const Icon(Ionicons.swap_horizontal),
-                        const SizedBox(width: 30),
-                        Obx(
-                          () => DropdownButton<String>(
-                            value: _controller.selectedType.value,
-                            hint: Text(R.Type.tr),
-                            icon: const Icon(Ionicons.caret_down),
-                            onChanged: (String? value) {
-                              _controller.changeType(value!);
-                            },
-                            items: _controller.listType.map((String value) {
-                              return DropdownMenuItem(
-                                value: value,
-                                child: Text(value),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ],
-                    ),
                     const SizedBox(height: 20),
+                    // //category
+                    tempTrans.category == null
+                        ? Row(
+                            children: [
+                              const CircleAvatar(
+                                backgroundColor: Colors.grey,
+                              ),
+                              const SizedBox(width: 20),
+                              Expanded(
+                                child: TextField(
+                                  onTap: () async {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    var res = await Get.to(
+                                      ManageCategoryScreen(
+                                        canChangeWallet: false,
+                                        selectedWallet: tempTrans.wallet,
+                                      ),
+                                    );
+                                    if (res != null) {
+                                      setState(() {
+                                        tempTrans.category = res;
+                                      });
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.zero,
+                                    hintText: R.Selectcategory.tr,
+                                    fillColor: Colors.transparent,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Image.asset(
+                                    "assets/icons/${tempTrans.category!.icon}.png"),
+                              ),
+                              const SizedBox(width: 20),
+                              Expanded(
+                                child: TextField(
+                                  onTap: () async {
+                                    FocusScope.of(context)
+                                        .requestFocus(FocusNode());
+                                    var res = await Get.to(
+                                      ManageCategoryScreen(
+                                        canChangeWallet: false,
+                                        selectedWallet: tempTrans.wallet,
+                                      ),
+                                    );
+                                    if (res != null) {
+                                      setState(() {
+                                        tempTrans.category = res;
+                                      });
+                                    }
+                                  },
+                                  decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.zero,
+                                    hintText: tempTrans.category!.name,
+                                    fillColor: Colors.transparent,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                    const SizedBox(height: 10),
+                    // //note
                     Row(
                       children: [
                         const Icon(Ionicons.list_outline),
                         const SizedBox(width: 30),
                         Expanded(
-                          child: TextField(
+                          child: TextFormField(
+                            onChanged: (val) => tempTrans.note = val.trim(),
+                            initialValue: tempTrans.note,
                             decoration: InputDecoration(
                               contentPadding: EdgeInsets.zero,
                               hintText: R.Note.tr,
@@ -133,6 +204,7 @@ class EditTransactionScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
+                    //date
                     Row(
                       children: [
                         const Icon(Ionicons.calendar_outline),
@@ -145,16 +217,15 @@ class EditTransactionScreen extends StatelessWidget {
                                 firstDate: DateTime(2020),
                                 lastDate: DateTime(2030));
                             if (selectedDate != null) {
-                              _controller.pickedDate.value = selectedDate;
+                              setState(() {
+                                tempTrans.createdAt = selectedDate;
+                              });
                             }
                           },
-                          child: Obx(
-                            () => Text(
-                              FormatHelper()
-                                  .dateFormat(_controller.pickedDate.value),
-                              style: const TextStyle(
-                                fontSize: 16,
-                              ),
+                          child: Text(
+                            FormatHelper().dateFormat(tempTrans.createdAt!),
+                            style: const TextStyle(
+                              fontSize: 16,
                             ),
                           ),
                         ),
@@ -195,31 +266,89 @@ class EditTransactionScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Obx(() {
-              if (_controller.pickedImage.value != null) {
-                return Stack(
-                  children: [
-                    Image.file(
-                      File(_controller.pickedImage.value!),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        _controller.deleteImage();
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Icon(
-                          Ionicons.close,
-                          size: 30,
-                          color: Colors.white,
+            Obx(
+              () {
+                if (tempTrans.image != null ||
+                    _controller.pickedImage.value != null) {
+                  return Stack(
+                    children: [
+                      Image.file(
+                        File(_controller.pickedImage.value ?? tempTrans.image!),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _controller.deleteImage();
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Icon(
+                            Ionicons.close,
+                            size: 30,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+            const SizedBox(height: 20),
+            GestureDetector(
+              onTap: () async {
+                var res = await showDialog(
+                  context: context,
+                  builder: (_) => Center(
+                    child: Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(R.Deletethistransactionquesttion.tr),
+                            const SizedBox(height: 20),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ElevatedButton(
+                                    onPressed: () => Get.back(result: false),
+                                    child: Text(R.No.tr)),
+                                const SizedBox(width: 20),
+                                ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.redAccent,
+                                    ),
+                                    onPressed: () => Get.back(result: true),
+                                    child: Text(R.Yes.tr)),
+                              ],
+                            )
+                          ],
                         ),
                       ),
                     ),
-                  ],
+                  ),
                 );
-              }
-              return const SizedBox.shrink();
-            }),
+                if (res != null && res) {
+                  _controller.deleteTransaction(tempTrans);
+                }
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Icon(
+                    Ionicons.trash,
+                    color: Colors.red,
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    R.Deletethistransaction.tr,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
