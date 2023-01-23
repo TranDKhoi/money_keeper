@@ -49,20 +49,12 @@ class EditTransactionController extends GetxController {
       editTrans.image = imageLink;
     }
 
-    editTrans.wallet = null;
-    editTrans.category = null;
-
     EasyLoading.show();
-    var res = await TransactionService.ins.updateTransaction(editTrans);
+    await TransactionService.ins.updateTransaction(editTrans);
+    Get.back();
+    Get.find<TransactionController>().getTransactionByWalletId();
     EasyLoading.dismiss();
-
-    if (res.isOk) {
-      Get.back();
-      Get.find<TransactionController>().getTransactionByWalletId();
-      EasyLoading.showToast(R.Transactioneditedsuccessfully.tr);
-    } else {
-      EasyLoading.showToast(res.statusText ?? "Error");
-    }
+    EasyLoading.showToast(R.Transactioneditedsuccessfully.tr);
   }
 
   bool isValidData(Transaction editTrans) {

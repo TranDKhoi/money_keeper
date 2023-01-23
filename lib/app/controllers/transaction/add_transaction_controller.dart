@@ -78,6 +78,7 @@ class AddTransactionController extends GetxController {
   bool isValidData() {
     return amountController.text.isNotEmpty &&
         selectedWallet.value != null &&
-        selectedCategory.value != null;
+        selectedCategory.value != null &&
+        noteController.text.trim().isNotEmpty;
   }
 }
