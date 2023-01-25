@@ -46,6 +46,7 @@ class AddBudget extends StatelessWidget {
                       onChanged: (value) =>
                           budgetController.limitAmount = int.parse(value),
                     ),
+                    const SizedBox(height: 20),
                     //category
                     Row(
                       children: [

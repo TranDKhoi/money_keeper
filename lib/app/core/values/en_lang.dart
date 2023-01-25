@@ -148,4 +148,10 @@ const Map<String, String> enLanguagePackage = {
   R.noneBudget: "No budget currently",
   R.pressPlusBudget: "Press the + button to add budget",
   R.noneTransaction: "There are currently no transactions in this budget",
+  R.Notification: "Notification",
+  R.Createbudgetsuccessfully: "Create budget successfully",
+  R.Deletethisbudgetquestion: "Delete this budget?",
+  R.Overspent: "Over spent",
+
+
 };

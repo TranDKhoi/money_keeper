@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
+import 'package:money_keeper/app/modules/planning/budget/screens/budget_info_screen.dart';
+import 'package:money_keeper/data/models/notify.dart';
 
 import '../../controllers/notification/notification_controller.dart';
 import '../../core/values/r.dart';
@@ -15,43 +18,95 @@ class NotifyScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(R.Notification.tr),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Ionicons.refresh))
+          IconButton(
+              onPressed: () => _controller.getAllNotify(),
+              icon: const Icon(Ionicons.refresh))
         ],
       ),
-      body: ListView.separated(
+      body: Obx(
+        () => ListView.separated(
           physics: const BouncingScrollPhysics(),
-          itemBuilder: (ctx, i) => _buildNotiItem(),
+          itemBuilder: (ctx, i) => _buildNotiItem(_controller.listNotify[i]),
           separatorBuilder: (_, __) => const Divider(),
-          itemCount: 10),
+          itemCount: _controller.listNotify.length,
+        ),
+      ),
     );
   }
 
-  _buildNotiItem() {
+  _buildNotiItem(Notify notify) {
+    String icon = "";
+    switch (notify.type) {
+      case "BudgetExceed":
+        icon = "assets/icons/warning.png";
+        // onTap = () => Get.to(() => BudgetInfoScreen());
+        break;
+      case "Reminder":
+        icon = "assets/icons/alarm.png";
+        break;
+      case "JoinWalletInvitation ":
+        icon = "assets/icons/invite.png";
+        break;
+    }
+
     return ListTile(
-      leading: Icon(Ionicons.albums),
+      onTap: () {
+        switch (notify.type) {
+          case "BudgetExceed":
+            Get.to(() => BudgetInfoScreen());
+            break;
+          case "Reminder":
+            icon = "assets/icons/alarm.png";
+            break;
+          case "JoinWalletInvitation ":
+            icon = "assets/icons/invite.png";
+            break;
+        }
+      },
+      leading: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        child: Image.asset(icon),
+      ),
       title: Row(
         children: [
           Expanded(
               flex: 20,
               child: Text(
-                "Orverspent 5000 on An uong Category and bla bla on something aloalao",
+                notify.description ?? "",
                 maxLines: 3,
               )),
-          Spacer(),
-          Expanded(flex: 1, child: Icon(Icons.add)),
+          const Spacer(),
+          const Expanded(
+            flex: 1,
+            child: Icon(
+              Icons.circle,
+              size: 15,
+              color: Colors.redAccent,
+            ),
+          ),
         ],
       ),
       subtitle: Row(
         children: [
           Row(
             children: [
-              Icon(Icons.account_balance_wallet),
-              SizedBox(width: 10),
-              Text("vi 1"),
+              CircleAvatar(
+                radius: 18,
+                backgroundImage:
+                    AssetImage("assets/icons/${notify.wallet?.icon}.png"),
+                backgroundColor: Colors.transparent,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                notify.wallet?.name ?? "",
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
             ],
           ),
           const Spacer(),
-          Text("3 minutes ago"),
+          Text(FormatHelper().getTimeAgo(notify.createdAt) ?? ""),
         ],
       ),
     );

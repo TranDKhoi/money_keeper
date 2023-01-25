@@ -253,7 +253,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       ),
                       const VerticalDivider(),
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           _controller.pickedImageCamera();
                         },
                         child: const Icon(
@@ -268,13 +268,11 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
             ),
             Obx(
               () {
-                if (tempTrans.image != null ||
-                    _controller.pickedImage.value != null) {
+                if (_controller.pickedImage.value != null) {
                   return Stack(
                     children: [
-                      Image.file(
-                        File(_controller.pickedImage.value ?? tempTrans.image!),
-                      ),
+                      Image.file(File(
+                          _controller.pickedImage.value ?? tempTrans.image!)),
                       GestureDetector(
                         onTap: () {
                           _controller.deleteImage();
@@ -290,7 +288,31 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                       ),
                     ],
                   );
+                } else {
+                  if (tempTrans.image != null) {
+                    return Stack(
+                      children: [
+                        Image.network(tempTrans.image!),
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              tempTrans.image == null;
+                            });
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(20.0),
+                            child: Icon(
+                              Ionicons.close,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
                 }
+
                 return const SizedBox.shrink();
               },
             ),

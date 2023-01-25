@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ConfigHelper {
   static void configLoadingBar() {
@@ -104,5 +106,15 @@ class FormatHelper {
     return NumberFormat.simpleCurrency(
       locale: 'vi',
     ).format(money);
+  }
+
+  String? getTimeAgo(DateTime? time) {
+    if (time == null) {
+      return null;
+    }
+    timeago.setLocaleMessages("vi", timeago.ViMessages());
+    return timeago.format(
+        time.add(DateTime.parse(time.toString()).timeZoneOffset),
+        locale: Get.locale?.languageCode ?? "en");
   }
 }

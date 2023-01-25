@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import 'package:money_keeper/app/core/values/strings.dart';
 import 'package:money_keeper/data/models/create_budget.dart';
 
@@ -78,6 +77,18 @@ class BudgetService extends GetConnect {
       required int year}) async {
     return await get(
       "$api_url/wallets/$walletId/budgets/$budgetId/transactions?month=$month&year=$year",
+      headers: <String, String>{
+        'Authorization': _ac.currentUser.value!.token!,
+      },
+    );
+  }
+
+  Future<Response> deleteBudget({
+    required int budgetId,
+    required int walletId,
+  }) async {
+    return await delete(
+      "$api_url/wallets/$walletId/budgets/$budgetId",
       headers: <String, String>{
         'Authorization': _ac.currentUser.value!.token!,
       },

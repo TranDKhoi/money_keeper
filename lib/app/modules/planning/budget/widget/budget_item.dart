@@ -9,6 +9,7 @@ import '../../../../core/values/r.dart';
 
 class BudgetItem extends StatelessWidget {
   const BudgetItem({super.key, required this.budget});
+
   final Budget budget;
 
   @override
@@ -21,6 +22,8 @@ class BudgetItem extends StatelessWidget {
         (budgetController.selectedDateTime.year < DateTime.now().year ||
             budgetController.selectedDateTime.month < DateTime.now().month);
 
+    double percentage =
+        (spentAmount / limitAmount) > 1 ? 1 : spentAmount / limitAmount;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -68,24 +71,27 @@ class BudgetItem extends StatelessWidget {
               Positioned(
                 left: 20,
                 child: LinearPercentIndicator(
-                    padding: EdgeInsets.zero,
-                    width: 300,
-                    lineHeight: 10.0,
-                    percent: (spentAmount / limitAmount),
-                    barRadius: const Radius.circular(50),
-                    backgroundColor: Colors.grey,
-                    progressColor: Colors.green //or red if 100%,
-                    ),
+                  padding: EdgeInsets.zero,
+                  width: 300,
+                  lineHeight: 10.0,
+                  percent: percentage.toDouble(),
+                  barRadius: const Radius.circular(50),
+                  backgroundColor: Colors.grey,
+                  progressColor:
+                      percentage > (budgetController.cursorPosition / 300)
+                          ? Colors.red
+                          : Colors.green, //or red if 100%,
+                ),
               ),
               Visibility(
                 visible: !isPast,
                 child: Positioned(
-                  left: budgetController.cursorPosition, // from 0 to 290
+                  left: budgetController.cursorPosition, // from 0 to 300
                   child: Column(
                     children: [
                       //this is the red cursor
                       Container(
-                        color: Colors.red,
+                        color: Colors.green,
                         width: 1,
                         height: 10,
                       ),

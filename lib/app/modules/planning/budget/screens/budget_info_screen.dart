@@ -29,6 +29,11 @@ class BudgetInfoScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(R.Budget.tr),
+        actions: [
+          IconButton(
+              onPressed: () => confirmDeleteBudget(context),
+              icon: const Icon(Ionicons.trash))
+        ],
       ),
       //////
       body: SingleChildScrollView(
@@ -229,6 +234,45 @@ class BudgetInfoScreen extends StatelessWidget {
       return "${diff.inDays} ${R.days.tr} ${R.left.tr}";
     } else {
       return "${diff.inHours} ${R.hour.tr} ${R.left.tr}";
+    }
+  }
+
+  confirmDeleteBudget(context) async {
+    var res = await showDialog(
+      context: context,
+      builder: (_) => Center(
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(R.Deletethisbudgetquestion.tr),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () => Get.back(result: false),
+                        child: Text(R.No.tr)),
+                    const SizedBox(width: 20),
+                    ElevatedButton(
+                      onPressed: () => Get.back(result: true),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.redAccent,
+                      ),
+                      child: Text(R.Yes.tr),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    if (res == true) {
+      budgetController.deleteBudget();
     }
   }
 }

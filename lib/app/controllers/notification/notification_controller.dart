@@ -6,6 +6,7 @@ import 'package:money_keeper/app/core/utils/utils.dart';
 import '../../../data/models/notify.dart';
 import '../../../data/services/notify_service.dart';
 import '../../../data/services/socket_service.dart';
+import '../../core/values/r.dart';
 
 class NotificationController extends GetxController {
   var listNotify = <Notify>[].obs;
@@ -21,8 +22,12 @@ class NotificationController extends GetxController {
     SocketService.ins.onListenMethod(
         methodName: _notiMethodChannel,
         callBack: (notifyItem) {
-          //listNotify.add(Notify.fromJson(notifyItem[0]));
-          PushService.ins.showNotification(title: "title ne", body: "Body ne");
+          Notify newNoti = Notify.fromJson(notifyItem[0]);
+          if (!listNotify.contains(newNoti)) {
+            listNotify.add(Notify.fromJson(notifyItem[0]));
+          }
+          PushService.ins
+              .showNotification(title: R.Overspent.tr, body: newNoti.description);
         });
   }
 
@@ -37,7 +42,7 @@ class NotificationController extends GetxController {
         listNotify.add(Notify.fromJson(res.data[i]));
       }
     } else {
-      print("Error");
+      EasyLoading.showToast(res.message);
     }
   }
 }

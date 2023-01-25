@@ -21,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final _controller = Get.put(HomeController());
   final BottomBarController _bottomController = Get.find();
-  final _walletController = Get.find<MyWalletController>();
+  final _walletController = Get.find<MyWalletController>()..getAllWallet();
 
   @override
   Widget build(BuildContext context) {

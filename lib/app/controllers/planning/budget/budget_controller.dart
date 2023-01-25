@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:in_date_utils/in_date_utils.dart';
@@ -25,6 +24,7 @@ class BudgetController extends GetxController {
   RxList<Budget> budgets = <Budget>[].obs;
   DateTime selectedDateTime = DateTime.now();
   Rxn<BudgetSummary> budgetSummary = Rxn<BudgetSummary>();
+
   // add budget screen prop
   Rxn<Category> category = Rxn<Category>();
   late int limitAmount;
@@ -127,20 +127,37 @@ class BudgetController extends GetxController {
 
   // add budget screen method
   Future<void> createBudget() async {
-    EasyLoading.show();
-    Budget? newBudget = await getNewBudget();
-    EasyLoading.dismiss();
-    String message;
-    if (newBudget == null) {
-      message = "Server error";
-    } else {
-      message = "Add budget sucessfully";
+    if (limitAmount <= 0 || category.value == null) {
+      EasyLoading.showToast(R.Pleaseenteralltheinformation);
+      return;
     }
-    await Get.defaultDialog(
-      title: "Notification",
-      content: Text(message),
-    );
-    Get.back();
+
+    try {
+      CreateBudget createBudget = CreateBudget(
+        limitAmount: limitAmount,
+        month: selectedDateTime.month,
+        year: selectedDateTime.year,
+        categoryId: category.value?.id,
+        walletId: selectedWallet.value.id,
+      );
+
+      EasyLoading.show();
+      var res = await BudgetService.ins.createBudget(
+        walletId: selectedWallet.value.id as int,
+        createBudget: createBudget,
+      );
+      EasyLoading.dismiss();
+
+      if (res.isOk) {
+        Get.back();
+        EasyLoading.showToast(R.Createbudgetsuccessfully.tr);
+      } else {
+        EasyLoading.showToast(res.message);
+      }
+    } catch (e) {
+      log("create budget error: $e");
+      EasyLoading.dismiss();
+    }
   }
 
   // budget info screen method
@@ -249,33 +266,6 @@ class BudgetController extends GetxController {
     }
   }
 
-  Future<Budget?> getNewBudget() async {
-    try {
-      EasyLoading.show();
-      CreateBudget createBudget = CreateBudget(
-        limitAmount: limitAmount,
-        month: selectedDateTime.month,
-        year: selectedDateTime.year,
-        categoryId: category.value?.id,
-        walletId: selectedWallet.value.id,
-      );
-      var res = await BudgetService.ins.createBudget(
-        walletId: selectedWallet.value.id as int,
-        createBudget: createBudget,
-      );
-      EasyLoading.dismiss();
-      if (res.isOk) {
-        Budget result = Budget.fromJson(res.data);
-        log(res.body["message"]);
-        return result;
-      }
-    } catch (e) {
-      log("create budget error: $e");
-      EasyLoading.dismiss();
-    }
-    return null;
-  }
-
   Future<BudgetSummary?> getBudgetSummaryInMonth() async {
     try {
       EasyLoading.show();
@@ -296,5 +286,18 @@ class BudgetController extends GetxController {
       EasyLoading.dismiss();
     }
     return null;
+  }
+
+  deleteBudget() async {
+    EasyLoading.show();
+    var res = await BudgetService.ins
+        .deleteBudget(budgetId: budget.id!, walletId: selectedWallet.value.id!);
+    EasyLoading.dismiss();
+
+    if (res.isOk) {
+      Get.back();
+    } else {
+      EasyLoading.showToast(res.message);
+    }
   }
 }

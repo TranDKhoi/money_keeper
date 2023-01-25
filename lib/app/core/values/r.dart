@@ -151,4 +151,8 @@ class R {
   static const pressPlusBudget = "Press the + button to add budget";
   static const noneTransaction =
       "There are currently no transactions in this budget";
+  static const Notification = "Notification";
+  static const Createbudgetsuccessfully = "Createbudgetsuccessfully";
+  static const Deletethisbudgetquestion = "Delete this budget question?";
+  static const Overspent = "Overspent";
 }
