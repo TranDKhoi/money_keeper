@@ -146,7 +146,7 @@ const Map<String, String> viLanguagePackage = {
   R.remaining: "Còn lại",
   R.newBudget: "Ngân sách mới",
   R.noneBudget: "Hiện không có ngân sách nào",
-  R.pressPlusBudget: "Chạm nút + phíad dưới để thêm ngân sách",
+  R.pressPlusBudget: "Chạm nút + phía dưới để thêm ngân sách",
   R.noneTransaction: "Hiện tại không có giao dịch nào trong ngân sách này",
   R.Notification: "Thông báo",
   R.Createbudgetsuccessfully: "Tạo ngân sách thành công",

@@ -24,13 +24,12 @@ class _TransactionScreenState extends State<TransactionScreen>
   void initState() {
     _tabController =
         TabController(length: _controller.listTimeline.length, vsync: this);
+    _tabController.index = _controller.listTimeline.length - 2;
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         _controller.changeTimeLine(_tabController.index);
       }
     });
-    _tabController.index = _controller.listTimeline.length - 2;
-    _controller.changeTimeLine(_tabController.index);
     super.initState();
   }
 
@@ -44,28 +43,26 @@ class _TransactionScreenState extends State<TransactionScreen>
           children: [
             Text(R.Balance.tr),
             Obx(() => Text(FormatHelper()
-                .moneyFormat(_controller.selectedWallet.value.balance))),
+                .moneyFormat(_controller.selectedWallet.value.balance!))),
           ],
         ),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(context.screenSize.height * 0.1),
           child: Column(
             children: [
-              Obx(
-                () => DropdownButton<Wallet>(
-                  value: _controller.selectedWallet.value,
-                  icon: const Icon(Ionicons.caret_down),
-                  onChanged: (Wallet? value) {
-                    _controller.changeWallet(value!);
-                  },
-                  items: _controller.listWallet.map((Wallet value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(value.name!),
-                    );
-                  }).toList(),
-                ),
-              ),
+              Obx(() => DropdownButton<Wallet>(
+                    value: _controller.selectedWallet.value,
+                    icon: const Icon(Ionicons.caret_down),
+                    onChanged: (Wallet? value) {
+                      _controller.changeWallet(value!);
+                    },
+                    items: _controller.listWallet.map((Wallet value) {
+                      return DropdownMenuItem(
+                        value: value,
+                        child: Text(value.name!),
+                      );
+                    }).toList(),
+                  )),
               TabBar(
                 controller: _tabController,
                 isScrollable: true,

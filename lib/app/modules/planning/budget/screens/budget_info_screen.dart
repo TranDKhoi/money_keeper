@@ -127,6 +127,12 @@ class BudgetInfoScreen extends StatelessWidget {
   }
 
   indicatorBar() {
+    double percentage = (budgetDetailSummary.totalSpentAmount as int) /
+                (budgetDetailSummary.totalBudget as int) >
+            1
+        ? 1
+        : (budgetDetailSummary.totalSpentAmount as int) /
+            (budgetDetailSummary.totalBudget as int);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -188,23 +194,25 @@ class BudgetInfoScreen extends StatelessWidget {
               Positioned(
                 left: 20,
                 child: LinearPercentIndicator(
-                    padding: EdgeInsets.zero,
-                    width: 300,
-                    lineHeight: 10.0,
-                    percent: (budgetDetailSummary.totalSpentAmount as int) /
-                        (budgetDetailSummary.totalBudget as int),
-                    barRadius: const Radius.circular(50),
-                    backgroundColor: Colors.grey,
-                    progressColor: Colors.green //or red if 100%,
-                    ),
+                  padding: EdgeInsets.zero,
+                  width: 300,
+                  lineHeight: 10.0,
+                  percent: percentage,
+                  barRadius: const Radius.circular(50),
+                  backgroundColor: Colors.grey,
+                  progressColor:
+                      percentage > (budgetController.cursorPosition / 300)
+                          ? Colors.red
+                          : Colors.green, //or red if 100%,
+                ),
               ),
               Positioned(
-                left: budgetController.cursorPosition, // from 0 to 290
+                left: budgetController.cursorPosition, // from 0 to 300
                 child: Column(
                   children: [
                     //this is the red cursor
                     Container(
-                      color: Colors.red,
+                      color: Colors.green,
                       width: 1,
                       height: 10,
                     ),

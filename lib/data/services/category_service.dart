@@ -9,7 +9,9 @@ import '../models/category.dart';
 class CategoryService extends GetConnect {
   final AccountController _ac = Get.find();
 
-  CategoryService._();
+  CategoryService._(){
+    timeout = const Duration(seconds: 10);
+  }
 
   static final ins = CategoryService._();
 

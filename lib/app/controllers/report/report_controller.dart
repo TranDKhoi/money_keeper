@@ -15,7 +15,7 @@ class ReportController extends GetxController {
     var walletController = Get.find<MyWalletController>();
     listWallet.value = [...walletController.listWallet];
     var totalWallet =
-        Wallet(name: R.Totalwallet.tr, balance: _calculateTotalBalance());
+        Wallet(name: R.Totalwallet.tr, balance: _calculateTotalBalance(),id: -1);
     listWallet.value = [totalWallet, ...walletController.listWallet];
     selectedWallet.value = listWallet[0];
 

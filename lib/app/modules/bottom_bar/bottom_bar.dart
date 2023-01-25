@@ -16,7 +16,7 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   final _controller = Get.put(BottomBarController());
-  final _walletController = Get.put(MyWalletController())..getAllWallet();
+  final _walletController = Get.put(MyWalletController());
   final _notificationController = Get.put(NotificationController());
 
   @override
