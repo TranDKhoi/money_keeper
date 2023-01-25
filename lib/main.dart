@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:money_keeper/app/controllers/account/account_controller.dart';
+import 'package:money_keeper/app/core/utils/push_service.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 
 import 'app/app.dart';
@@ -15,6 +16,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await GetStorage.init();
+  await PushService.ins.init();
   ConfigHelper.configLoadingBar();
   _getUserToken();
   _getAppTheme();

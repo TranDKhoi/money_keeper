@@ -13,7 +13,9 @@ class TransactionService extends GetConnect {
 
   static final TransactionService ins = TransactionService._();
 
-  TransactionService._();
+  TransactionService._() {
+    timeout = const Duration(seconds: 10);
+  }
 
   Future<Response> createNewTransaction(Transaction newTrans) async {
     return await post("$api_url/wallets/${newTrans.walletId}/transactions",

@@ -145,4 +145,5 @@ class R {
   static const Deletethistransactionquesttion = "Deletethistransaction?";
   static const Yes = "Yes";
   static const No = "No";
+  static const Notification = "Notification";
 }

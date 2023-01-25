@@ -9,6 +9,7 @@ import 'package:money_keeper/app/modules/home/widgets/home_chart_bar.dart';
 import '../../common/widget/home_transaction_item.dart';
 import '../../core/utils/utils.dart';
 import '../../core/values/r.dart';
+import '../notification/notify_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -51,7 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     const Spacer(),
-                    const Icon(Ionicons.notifications)
+                    GestureDetector(
+                      onTap: () => Get.to(() => NotifyScreen()),
+                      child: const Icon(Ionicons.notifications),
+                    )
                   ],
                 ),
                 // my wallets

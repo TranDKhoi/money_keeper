@@ -39,7 +39,7 @@ class LoginController extends GetxController {
         //save to local
         GetStorageService.ins.setUserToken(ac.currentUser.value!.token!);
 
-        Get.toNamed(bottomBarRoute);
+        Get.offAllNamed(bottomBarRoute);
       } else {
         EasyLoading.showToast(res.message);
       }

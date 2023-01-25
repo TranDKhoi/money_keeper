@@ -143,4 +143,6 @@ const Map<String, String> enLanguagePackage = {
   R.Deletethistransactionquesttion: "Delete this transaction?",
   R.Yes: "Yes",
   R.No: "No",
+  R.Notification: "Notification",
+
 };

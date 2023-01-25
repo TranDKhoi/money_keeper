@@ -143,4 +143,5 @@ const Map<String, String> viLanguagePackage = {
   R.Deletethistransactionquesttion: "Xoá giao dịch này?",
   R.Yes: "Có",
   R.No: "Không",
+  R.Notification: "Thông báo",
 };

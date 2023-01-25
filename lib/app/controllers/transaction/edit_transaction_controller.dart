@@ -50,11 +50,14 @@ class EditTransactionController extends GetxController {
     }
 
     EasyLoading.show();
-    await TransactionService.ins.updateTransaction(editTrans);
-    Get.back();
-    Get.find<TransactionController>().getTransactionByWalletId();
+    var res = await TransactionService.ins.updateTransaction(editTrans);
     EasyLoading.dismiss();
-    EasyLoading.showToast(R.Transactioneditedsuccessfully.tr);
+
+    if (res.isOk) {
+      Get.back();
+      Get.find<TransactionController>().getTransactionByWalletId();
+      EasyLoading.showToast(R.Transactioneditedsuccessfully.tr);
+    }
   }
 
   bool isValidData(Transaction editTrans) {
