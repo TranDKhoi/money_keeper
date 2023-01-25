@@ -42,8 +42,4 @@ class GetStorageService {
   void clearAppLanguage() {
     _box.remove("isVN");
   }
-
-  void clearAll() {
-     _box.erase();
-  }
 }

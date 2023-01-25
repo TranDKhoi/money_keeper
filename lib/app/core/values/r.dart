@@ -119,7 +119,7 @@ class R {
   static const recommendeddaily = "Recommended daily spending";
   static const projectedspending = "Projected spending";
   static const actualspending = "Actual spending";
-  static const Overspent = "Overspent";
+  static const canSpent = "Amount you can spent";
   static const Groupwallet = "Groupwallet";
   static const Totalwallet = "Totalwallet";
   static const Standard = "Standard";
@@ -145,5 +145,10 @@ class R {
   static const Deletethistransactionquesttion = "Deletethistransaction?";
   static const Yes = "Yes";
   static const No = "No";
-  static const Notification = "Notification";
+  static const remaining = "Remaining";
+  static const newBudget = "New budget";
+  static const noneBudget = "No budget currently";
+  static const pressPlusBudget = "Press the + button to add budget";
+  static const noneTransaction =
+      "There are currently no transactions in this budget";
 }

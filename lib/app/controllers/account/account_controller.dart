@@ -4,7 +4,6 @@ import 'package:money_keeper/app/core/utils/localization_service.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
 import '../../../data/models/user.dart';
-import '../../../data/services/socket_service.dart';
 import '../../core/utils/utils.dart';
 import '../../core/values/theme.dart';
 import '../../modules/category/manage_category.dart';
@@ -31,7 +30,6 @@ class AccountController extends GetxController {
   }
 
   void toLoginScreen() {
-    SocketService.ins.disconnectHubConnection();
     GetStorageService.ins.clearUserToken();
     Get.offAllNamed(mainAuthScreenRoute);
   }

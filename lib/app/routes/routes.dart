@@ -21,3 +21,5 @@ const String eventInfoScreenRoute = "/event_info_screen";
 const String eventTransactionScreenRoute = "/event_transaction_screen";
 const String budgetScreenRoute = "/budget_screen";
 const String budgetInfoScreen = "/budget_info_screen";
+const String addBudgetScreenRoute = "/add_budget_screen";
+const String budgetTransactionScreenRoute = "/budget_transaction_screen";

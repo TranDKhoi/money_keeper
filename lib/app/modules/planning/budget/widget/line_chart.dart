@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:in_date_utils/in_date_utils.dart';
+import 'package:money_keeper/app/controllers/planning/budget/budget_controller.dart';
 
 class LineChartWidget extends StatefulWidget {
   const LineChartWidget({super.key});
@@ -10,6 +12,7 @@ class LineChartWidget extends StatefulWidget {
 }
 
 class _LineChartState extends State<LineChartWidget> {
+  final budgetController = Get.find<BudgetController>();
   List<Color> gradientColors = [
     const Color(0xff23b6e6),
     const Color(0xff02d39a),
@@ -26,55 +29,34 @@ class _LineChartState extends State<LineChartWidget> {
   }
 
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      child: Text(value.toInt().toString()),
-    );
+    if (value == 1 ||
+        value ==
+            DTU
+                .getDaysInMonth(DateTime.now().year, DateTime.now().month)
+                .toDouble()) {
+      return SideTitleWidget(
+        axisSide: meta.axisSide,
+        child: Text(value.toInt().toString()),
+      );
+    }
+    return const SizedBox.shrink();
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    String text;
-    switch (value.toInt()) {
-      case 0:
-        text = '0K';
-        break;
-      case 1:
-        text = '10K';
-        break;
-      case 2:
-        text = '20k';
-        break;
-      case 3:
-        text = '30k';
-        break;
-      case 4:
-        text = '40k';
-        break;
-      case 5:
-        text = '50k';
-        break;
-      default:
-        return Container();
-    }
-    return Text(text, textAlign: TextAlign.left);
+    if (value > 5) return const SizedBox.shrink();
+    return Text(budgetController.dy[value.round()].toStringAsFixed(1),
+        textAlign: TextAlign.left);
   }
 
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
         show: true,
-        drawVerticalLine: true,
-        horizontalInterval: 1,
-        verticalInterval: 5,
+        drawHorizontalLine: true,
+        horizontalInterval: null,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: Colors.grey.withOpacity(0.5),
-            strokeWidth: 1,
-          );
-        },
-        getDrawingVerticalLine: (value) {
-          return FlLine(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.black,
             strokeWidth: 1,
           );
         },
@@ -96,11 +78,14 @@ class _LineChartState extends State<LineChartWidget> {
           ),
         ),
         leftTitles: AxisTitles(
+          axisNameSize: 3,
           sideTitles: SideTitles(
             showTitles: true,
-            interval: 1,
-            getTitlesWidget: leftTitleWidgets,
-            reservedSize: 40,
+            interval: (budgetController.dy[5] / 5 == 0)
+                ? 1
+                : (budgetController.dy[5] / 5),
+            // getTitlesWidget: leftTitleWidgets,
+            reservedSize: 50,
           ),
         ),
       ),
@@ -113,20 +98,15 @@ class _LineChartState extends State<LineChartWidget> {
           .getDaysInMonth(DateTime.now().year, DateTime.now().month)
           .toDouble(),
       minY: 0,
-      maxY: 5,
+      maxY: budgetController.dy[5],
       // this is total of this budget
       lineBarsData: [
         //this is where we put the data in start from day 1
         LineChartBarData(
-          spots: const [
-            FlSpot(1, 2),
-            FlSpot(2, 2),
-            FlSpot(4, 5),
-            FlSpot(6, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9, 3),
-            FlSpot(11, 4),
-          ],
+          spots: budgetController.statistics
+              .map((e) => FlSpot(e.date?.day.toDouble() as double,
+                  e.expenseAmount!.toDouble()))
+              .toList(),
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,

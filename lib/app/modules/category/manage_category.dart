@@ -15,11 +15,14 @@ class ManageCategoryScreen extends StatefulWidget {
       {Key? key,
       this.canBack = true,
       this.canChangeWallet = true,
+      this.onlyExpense = false,
       this.selectedWallet})
       : super(key: key);
 
   final bool canBack;
   final bool canChangeWallet;
+  // nếu bằng true thì chỉ hiện expense
+  final bool onlyExpense;
 
   //nó sẽ bằng null khi đi từ màn hình quản lý danh mục, khác null khi đi từ màn hình tạo mới giao dịch (bắt buộc phải chọn ví rồi mới dc chọn category ví đó)
   final Wallet? selectedWallet;
@@ -48,7 +51,12 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen>
         _controller.changeListCategory(_tabController.index);
       }
     });
+
     _controller.changeListCategory(0);
+    if (widget.onlyExpense) {
+      _tabController.index = 1;
+      _controller.currentTabIndex.value = 1;
+    }
     super.initState();
   }
 
@@ -86,14 +94,18 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen>
             fontWeight: FontWeight.bold,
           ),
           tabs: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(R.Income.tr),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(R.Expense.tr),
-            ),
+            (widget.onlyExpense)
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(R.Income.tr),
+                  ),
+            (widget.onlyExpense)
+                ? const SizedBox.shrink()
+                : Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(R.Expense.tr),
+                  ),
           ],
         ),
       ),

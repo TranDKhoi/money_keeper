@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/controllers/account/account_controller.dart';
+import 'package:money_keeper/app/modules/bottom_bar/bottom_bar.dart';
 import 'package:money_keeper/app/routes/pages.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 

@@ -117,7 +117,7 @@ const Map<String, String> enLanguagePackage = {
   R.recommendeddaily: "Recommended daily spending",
   R.projectedspending: "Projected spending",
   R.actualspending: "Actual spending",
-  R.Overspent: "Overspent",
+  R.canSpent: "Amount you can spent",
   R.Groupwallet: "Group wallet",
   R.Totalwallet: "Total wallet",
   R.Standard: "Standard",
@@ -143,6 +143,9 @@ const Map<String, String> enLanguagePackage = {
   R.Deletethistransactionquesttion: "Delete this transaction?",
   R.Yes: "Yes",
   R.No: "No",
-  R.Notification: "Notification",
-
+  R.remaining: "Remaining",
+  R.newBudget: "New budget",
+  R.noneBudget: "No budget currently",
+  R.pressPlusBudget: "Press the + button to add budget",
+  R.noneTransaction: "There are currently no transactions in this budget",
 };
