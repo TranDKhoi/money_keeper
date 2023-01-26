@@ -158,4 +158,8 @@ class R {
   static const Summary = "Summary";
   static const editBudget = "Edit budget";
   static const editBudgetsuccessfully = "Edit budget successfully";
+  static const invitation = "Invitation";
+  static const Youhavenewinvite = "Youhavenewinvite";
+  static const Accept = "Accept";
+  static const Decline = "Decline";
 }

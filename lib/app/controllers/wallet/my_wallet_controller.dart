@@ -22,16 +22,18 @@ class MyWalletController extends GetxController {
     selectedCategoryGroup.value = categoryGroupList[0];
   }
 
-  void getAllWallet() async {
+  Future<void> getAllWallet() async {
     listWallet.value = [];
     EasyLoading.show();
     var res = await WalletService.ins.getAllWallet();
+    EasyLoading.dismiss();
     if (res.isOk) {
       for (int i = 0; i < res.data.length; i++) {
         listWallet.add(Wallet.fromJson(res.data[i]));
       }
+    }else{
+      EasyLoading.showToast(res.message);
     }
-    EasyLoading.dismiss();
   }
 
   void toEditWallet(Wallet selectedWallet) {

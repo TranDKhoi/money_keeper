@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/account/account_controller.dart';
 
-import '../../core/values/R.dart';
+import '../../core/values/r.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -30,9 +30,15 @@ class _AccountScreenState extends State<AccountScreen> {
                   onTap: () {
                     _controller.pickAvatar();
                   },
-                  child: const CircleAvatar(
-                    radius: 50,
-                    backgroundColor: Colors.green,
+                  child: Obx(
+                    () => CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: NetworkImage(
+                        _controller.currentUser.value?.avatar ??
+                            "https://d2v9ipibika81v.cloudfront.net/uploads/sites/210/Profile-Icon.png",
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -56,6 +62,14 @@ class _AccountScreenState extends State<AccountScreen> {
                   },
                   leading: const Icon(Ionicons.file_tray_full_outline),
                   title: Text(R.ManageCategory.tr),
+                  trailing: const Icon(Ionicons.chevron_forward),
+                ),
+                ListTile(
+                  onTap: () {
+                    _controller.toManageInvitationScreen();
+                  },
+                  leading: const Icon(Ionicons.people_outline),
+                  title: Text(R.invitation.tr),
                   trailing: const Icon(Ionicons.chevron_forward),
                 ),
                 //setting

@@ -6,10 +6,16 @@ import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 import '../../core/utils/utils.dart';
 import '../../core/values/r.dart';
 
-class MyWalletScreen extends StatelessWidget {
+class MyWalletScreen extends StatefulWidget {
   MyWalletScreen({Key? key}) : super(key: key);
 
+  @override
+  State<MyWalletScreen> createState() => _MyWalletScreenState();
+}
+
+class _MyWalletScreenState extends State<MyWalletScreen> {
   final _controller = Get.find<MyWalletController>();
+
   final bool isFromTransactionScreen = Get.arguments ?? false;
 
   @override
@@ -19,7 +25,10 @@ class MyWalletScreen extends StatelessWidget {
         title: Text(R.Mywallet.tr),
         actions: [
           IconButton(
-            onPressed: () => _controller.getAllWallet(),
+            onPressed: () async {
+              await _controller.getAllWallet();
+              setState(() {});
+            },
             icon: const Icon(Ionicons.refresh),
           )
         ],

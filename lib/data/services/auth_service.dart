@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:get/get_connect/connect.dart';
 
 import '../../app/core/values/strings.dart';
@@ -53,5 +54,12 @@ class AuthService extends GetConnect {
       "$api_url/auth/reset-password",
       jsonEncode({"token": token, "password": password}),
     );
+  }
+
+  Future<Response> updateAvatar(String avatar, String s) async {
+    return await put("$api_url/account/info", jsonEncode({"avatar": avatar}),
+        headers: <String, String>{
+          "Authorization": s,
+        });
   }
 }

@@ -18,6 +18,7 @@ import '../modules/auth/forgot/reset_pass_screen.dart';
 import '../modules/auth/forgot/verify_forgot.dart';
 import '../modules/auth/login/login_screen.dart';
 import '../modules/category/manage_category.dart';
+import '../modules/invitation/manage_invitation_screen.dart';
 import '../modules/planning/budget/screens/budget_info_screen.dart';
 import '../modules/planning/budget/screens/budget_screen.dart';
 import '../modules/planning/event/add_edit_event.dart';
@@ -54,5 +55,6 @@ class AppPages {
     GetPage(name: budgetInfoScreen,page: () => BudgetInfoScreen(),transition: Transition.rightToLeft),
     GetPage(name: addBudgetScreenRoute,page: () => const AddBudget(),transition: Transition.rightToLeft),
     GetPage(name: budgetTransactionScreenRoute,page: () => const BudgetTransactionScreen(),transition: Transition.rightToLeft),
+    GetPage(name: manageInvitationRoute,page: () => ManageInvitationScreen(),transition: Transition.rightToLeft),
   ];
 }

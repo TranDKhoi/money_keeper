@@ -155,4 +155,8 @@ const Map<String, String> enLanguagePackage = {
   R.Summary: "Summary",
   R.editBudget: "Edit budget",
   R.editBudgetsuccessfully: "Edit budget successfully",
+  R.invitation: "Invitation",
+  R.Youhavenewinvite: "You have an new invitation to the group wallet",
+  R.Accept: "Accept",
+  R.Decline: "Decline",
 };

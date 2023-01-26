@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/core/utils/get_storage_service.dart';
 import 'package:money_keeper/app/core/utils/localization_service.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
 import '../../../data/models/user.dart';
+import '../../../data/services/auth_service.dart';
+import '../../../data/services/storage_service.dart';
 import '../../core/utils/utils.dart';
 import '../../core/values/theme.dart';
 import '../../modules/category/manage_category.dart';
@@ -15,6 +20,20 @@ class AccountController extends GetxController {
 
   void pickAvatar() async {
     String? picked = await ImageHelper.ins.pickAvatar();
+    if (picked != null) {
+      EasyLoading.show();
+      var res = await StorageService.ins.uploadImageToStorage(File(picked));
+      EasyLoading.dismiss();
+      if (res != null) {
+        EasyLoading.show();
+        var result =
+            await AuthService.ins.updateAvatar(res, currentUser.value!.token!);
+        EasyLoading.dismiss();
+        if (result.isOk) {
+          currentUser.value?.avatar = res;
+        }
+      }
+    }
   }
 
   void toMyWalletScreen() {
@@ -23,6 +42,10 @@ class AccountController extends GetxController {
 
   void toManageCategoryScreen() {
     Get.to(() => ManageCategoryScreen(canBack: false));
+  }
+
+  void toManageInvitationScreen() {
+    Get.toNamed(manageInvitationRoute);
   }
 
   void toSettingScreen() {

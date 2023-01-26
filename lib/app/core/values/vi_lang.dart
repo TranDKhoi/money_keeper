@@ -155,4 +155,8 @@ const Map<String, String> viLanguagePackage = {
   R.Summary: "Tổng kết",
   R.editBudget: "Sửa ngân sách",
   R.editBudgetsuccessfully: "Sửa ngân sách thành công",
+  R.invitation: "Lời mời",
+  R.Youhavenewinvite: "Bạn có một lời mời vào ví nhóm",
+  R.Accept: "Đồng ý",
+  R.Decline: "Từ chối",
 };
