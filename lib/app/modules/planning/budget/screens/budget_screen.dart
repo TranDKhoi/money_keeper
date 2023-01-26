@@ -130,7 +130,7 @@ class _BudgetScreenState extends State<BudgetScreen>
           size: 20,
         ),
         onPressed: () async {
-          await Get.toNamed(addBudgetScreenRoute);
+          await Get.toNamed(addBudgetScreenRoute,arguments: false);
           budgetController.resetData();
         },
       ),

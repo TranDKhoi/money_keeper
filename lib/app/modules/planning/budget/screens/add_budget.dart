@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/controllers/planning/budget/budget_controller.dart';
 
-import '../../../../core/values/R.dart';
+import '../../../../core/values/r.dart';
 import '../../../category/manage_category.dart';
 
 class AddBudget extends StatelessWidget {
@@ -11,13 +11,13 @@ class AddBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final budgetController = Get.find<BudgetController>();
-    final bool? isEdit = Get.arguments[0];
+    final bool isEdit = Get.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text((isEdit != null) ? R.editBudget.tr : R.newBudget.tr),
+        title: Text((isEdit) ? R.editBudget.tr : R.newBudget.tr),
         actions: [
           TextButton(
-            onPressed: () => (isEdit != null)
+            onPressed: () => (isEdit)
                 ? budgetController.editBudget()
                 : budgetController.createBudget(),
             child: Text(R.Save.tr),

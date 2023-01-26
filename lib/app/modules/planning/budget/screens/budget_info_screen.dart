@@ -41,7 +41,7 @@ class _BudgetInfoScreenState extends State<BudgetInfoScreen> {
           actions: [
             IconButton(
               onPressed: () async {
-                await Get.toNamed(addBudgetScreenRoute, arguments: [true]);
+                await Get.toNamed(addBudgetScreenRoute, arguments: true);
                 await budgetController.initBudgetInfoScreenData(
                     budgetId: budget.id as int);
                 setState(() {});
