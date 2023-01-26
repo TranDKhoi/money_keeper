@@ -152,4 +152,5 @@ const Map<String, String> viLanguagePackage = {
   R.Createbudgetsuccessfully: "Tạo ngân sách thành công",
   R.Deletethisbudgetquestion: "Xoá ngân sách này?",
   R.Overspent: "Chi tiêu quá mức",
+  R.Summary: "Tổng kết",
 };

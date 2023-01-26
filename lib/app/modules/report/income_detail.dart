@@ -1,21 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/modules/report/widgets/report_pie_chart.dart';
 
 import '../../common/widget/in_ex_item.dart';
+import '../../controllers/report/report_controller.dart';
 import '../../core/values/r.dart';
 
 class IncomeDetail extends StatelessWidget {
   IncomeDetail({Key? key}) : super(key: key);
 
-  final List<Widget> listIncome = [
-    const InExItem(),
-    const InExItem(),
-    const InExItem(),
-    const InExItem(),
-    const InExItem(),
-    const InExItem(),
-  ];
+  final _controller = Get.find<ReportController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +29,24 @@ class IncomeDetail extends StatelessWidget {
                 R.Totalincome.tr,
                 style: const TextStyle(fontSize: 30),
               ),
-              const Text(
-                "200.000 đ",
-                style: TextStyle(
+              Text(
+                FormatHelper().moneyFormat(_controller.incomeSummary.value),
+                style: const TextStyle(
                   fontSize: 20,
                   color: Colors.green,
                 ),
               ),
               Row(
-                children: const [Expanded(child: ReportPieChart())],
+                children: [
+                  Expanded(
+                      child: ReportPieChart(
+                    pieData: _controller.incomePie,
+                    type: "Income",
+                  ))
+                ],
               ),
               const Divider(thickness: 1),
-              ...listIncome,
+              ..._controller.incomePie.map((e) => InExItem(e)).toList(),
             ],
           ),
         ),

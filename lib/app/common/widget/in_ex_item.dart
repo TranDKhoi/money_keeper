@@ -1,17 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
+
+import '../../../data/models/pie_report.dart';
 
 class InExItem extends StatelessWidget {
-  const InExItem({Key? key}) : super(key: key);
+  const InExItem(this.e, {Key? key}) : super(key: key);
+  final PieReport e;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      isThreeLine: true,
-      leading: Icon(Ionicons.wallet),
-      title: Text("Ăn và ún nè"),
-      subtitle: Text("25/9/2022"),
-      trailing: Text("25.000đ"),
+      leading: CircleAvatar(
+        backgroundColor: Colors.transparent,
+        child: Image.asset(
+          "assets/icons/${e.category.icon}.png",
+        ),
+      ),
+      title: Text(e.category.name ?? ""),
+      trailing: Text(FormatHelper().moneyFormat(e.amount)),
     );
   }
 }

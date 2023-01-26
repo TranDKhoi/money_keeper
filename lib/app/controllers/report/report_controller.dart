@@ -1,6 +1,11 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/routes/routes.dart';
+import 'package:money_keeper/data/models/daily_report.dart';
+import 'package:money_keeper/data/services/report_service.dart';
 
+import '../../../data/models/pie_report.dart';
 import '../../../data/models/wallet.dart';
 import '../../core/values/r.dart';
 import '../wallet/my_wallet_controller.dart';
@@ -11,23 +16,42 @@ class ReportController extends GetxController {
   var listTimeline = [].obs;
   var selectedTimeLine = Rxn<String>();
 
+  var dailyReport = RxList<DailyReport>();
+  var incomePie = RxList<PieReport>();
+  var expensePie = RxList<PieReport>();
+  var summary = 0.obs;
+  var incomeSummary = 0.obs;
+  var expenseSummary = 0.obs;
+
+  var dy = RxList<double>(); // cột dọc biểu đồ
+
   ReportController() {
     var walletController = Get.find<MyWalletController>();
     listWallet.value = [...walletController.listWallet];
-    var totalWallet =
-        Wallet(name: R.Totalwallet.tr, balance: _calculateTotalBalance(),id: -1);
+    var totalWallet = Wallet(
+        name: R.Totalwallet.tr, balance: _calculateTotalBalance(), id: -1);
     listWallet.value = [totalWallet, ...walletController.listWallet];
     selectedWallet.value = listWallet[0];
-
     generateTimeLine();
+    selectedTimeLine.value = listTimeline[listTimeline.length - 2];
+
+    getReportData();
+  }
+
+  getReportData() async {
+    _getLineData();
+    _getIncomeData();
+    _getExpenseData();
   }
 
   void changeWallet(Wallet value) {
     selectedWallet.value = value;
+    getReportData();
   }
 
   void changeTimeLine(int index) {
     selectedTimeLine.value = listTimeline[index];
+    getReportData();
   }
 
   void toIncomeDetailsScreen() {
@@ -70,5 +94,78 @@ class ReportController extends GetxController {
       total += listWallet[i].balance!;
     }
     return total;
+  }
+
+  Future<void> _getLineData() async {
+    EasyLoading.show();
+    var res = await ReportService.ins.getDailyReport(
+        walletId: selectedWallet.value.id!, timeRange: selectedTimeLine.value!);
+    EasyLoading.dismiss();
+    if (res.isOk) {
+      dailyReport.value = [];
+      dy.value = [];
+      summary.value = res.data["netIncome"];
+      for (int i = 0; i < res.data["dailyReports"].length; i++) {
+        dailyReport.add(DailyReport.fromJson(res.data["dailyReports"][i]));
+      }
+      int maxIncome = dailyReport[0].income ?? 0;
+      int maxExpense = dailyReport[0].expense ?? 0;
+
+      for (int i = 0; i < dailyReport.length; i++) {
+        if (maxIncome <= dailyReport[i].income!) {
+          maxIncome = dailyReport[i].income!;
+        }
+        if (maxExpense <= dailyReport[i].expense!) {
+          maxExpense = dailyReport[i].expense!;
+        }
+      }
+      final int maxDy =
+          (maxIncome > maxExpense ? maxIncome : maxExpense).ceil();
+
+      dy.add(0);
+      for (int i = 0; i <= 5; i++) {
+        final value = maxDy / 5 * i;
+        dy.add(value);
+      }
+      dy.add(dy[dy.length - 1] * 1.3);
+    } else {
+      EasyLoading.showToast(res.message);
+    }
+  }
+
+  void _getIncomeData() {
+    ReportService.ins
+        .getIncomeReport(
+            walletId: selectedWallet.value.id!,
+            timeRange: selectedTimeLine.value!)
+        .then((res) {
+      if (res.isOk) {
+        incomePie.value = [];
+        incomeSummary.value = res.data["totalAmount"];
+        for (int i = 0; i < res.data["details"].length; i++) {
+          incomePie.add(PieReport.fromJson(res.data["details"][i]));
+        }
+      } else {
+        EasyLoading.showToast(res.message);
+      }
+    });
+  }
+
+  void _getExpenseData() {
+    ReportService.ins
+        .getExpenseReport(
+            walletId: selectedWallet.value.id!,
+            timeRange: selectedTimeLine.value!)
+        .then((res) {
+      if (res.isOk) {
+        expensePie.value = [];
+        expenseSummary.value = res.data["totalAmount"];
+        for (int i = 0; i < res.data["details"].length; i++) {
+          expensePie.add(PieReport.fromJson(res.data["details"][i]));
+        }
+      } else {
+        EasyLoading.showToast(res.message);
+      }
+    });
   }
 }

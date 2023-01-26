@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/report/report_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
-import 'package:money_keeper/app/modules/report/widgets/report_bar_chart.dart';
+import 'package:money_keeper/app/modules/report/widgets/report_line_chart.dart';
 import 'package:money_keeper/app/modules/report/widgets/report_pie_chart.dart';
 import 'package:money_keeper/data/models/wallet.dart';
 
@@ -100,13 +100,38 @@ class _ReportScreenState extends State<ReportScreen>
                 ),
               ),
               const SizedBox(height: 10),
-              Text(R.Totalleft.tr),
-              const Text(
-                "50.000đ",
-                style: TextStyle(fontSize: 25),
+              Text(R.Summary.tr),
+              Obx(
+                () => Text(
+                  FormatHelper().moneyFormat(_controller.summary.value),
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: _controller.summary.value < 0
+                        ? Colors.red
+                        : Colors.green,
+                  ),
+                ),
               ),
               const SizedBox(height: 10),
-              const ReportBarChart(),
+              //line chart here
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                child: SizedBox(
+                  height: 320,
+                  width: 750,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: Obx(() {
+                      if (_controller.dy.isNotEmpty) {
+                        return ReportLineChart();
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    }),
+                  ),
+                ),
+              ),
               //income pie
               const SizedBox(height: 10),
               Row(
@@ -133,18 +158,27 @@ class _ReportScreenState extends State<ReportScreen>
                   ),
                 ],
               ),
-              const Text(
-                "100.000 đ",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green),
+              Obx(
+                () => Text(
+                  FormatHelper().moneyFormat(_controller.incomeSummary.value),
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green),
+                ),
               ),
-              Row(
-                children: const [
-                  Expanded(child: ReportPieChart()),
-                ],
-              ),
+              Obx(() {
+                if (_controller.incomeSummary.value != 0) {
+                  return Row(
+                    children: [
+                      Expanded(
+                          child: ReportPieChart(
+                              pieData: _controller.incomePie, type: "Income")),
+                    ],
+                  );
+                }
+                return const SizedBox.shrink();
+              }),
               //expense pie
               const SizedBox(height: 10),
               Row(
@@ -171,17 +205,30 @@ class _ReportScreenState extends State<ReportScreen>
                   ),
                 ],
               ),
-              const Text(
-                "20.000 đ",
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red),
+              Obx(
+                () => Text(
+                  FormatHelper().moneyFormat(_controller.expenseSummary.value),
+                  style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.red),
+                ),
               ),
-              Row(
-                children: const [
-                  Expanded(child: ReportPieChart()),
-                ],
+              Obx(
+                () {
+                  if (_controller.expenseSummary.value != 0) {
+                    return Row(
+                      children: [
+                        Expanded(
+                            child: ReportPieChart(
+                                pieData: _controller.expensePie,
+                                type: "Expense")),
+                      ],
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                },
               )
             ],
           ),

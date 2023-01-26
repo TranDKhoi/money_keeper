@@ -155,4 +155,5 @@ class R {
   static const Createbudgetsuccessfully = "Createbudgetsuccessfully";
   static const Deletethisbudgetquestion = "Delete this budget question?";
   static const Overspent = "Overspent";
+  static const Summary = "Summary";
 }

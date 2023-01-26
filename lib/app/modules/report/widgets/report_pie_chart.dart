@@ -1,9 +1,16 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'indicator.dart';
+import 'package:get/get.dart';
+
+import '../../../../data/models/pie_report.dart';
+import '../../../controllers/report/report_controller.dart';
 
 class ReportPieChart extends StatefulWidget {
-  const ReportPieChart({Key? key}) : super(key: key);
+  const ReportPieChart({Key? key, required this.pieData, required this.type})
+      : super(key: key);
+
+  final List<PieReport> pieData;
+  final String type;
 
   @override
   State<ReportPieChart> createState() => _ReportPieChartState();
@@ -11,123 +18,123 @@ class ReportPieChart extends StatefulWidget {
 
 class _ReportPieChartState extends State<ReportPieChart> {
   int touchedIndex = -1;
+  final _controller = Get.find<ReportController>();
+
+  final List<Color> listPieColor = const [
+    Color(0xff0293ee),
+    Color(0xfff8b250),
+    Color(0xff845bef),
+    Color(0xff13d38e),
+    Color(0xff158000),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: AspectRatio(
-            aspectRatio: 1.5,
-            child: PieChart(
-              PieChartData(
-                  pieTouchData: PieTouchData(
-                      touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                    setState(() {
-                      if (!event.isInterestedForInteractions ||
-                          pieTouchResponse == null ||
-                          pieTouchResponse.touchedSection == null) {
-                        touchedIndex = -1;
-                        return;
-                      }
-                      touchedIndex =
-                          pieTouchResponse.touchedSection!.touchedSectionIndex;
-                    });
-                  }),
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  sectionsSpace: 0,
-                  centerSpaceRadius: 40,
-                  sections: showingSections()),
+    return AspectRatio(
+      aspectRatio: 1.3,
+      child: Card(
+        child: AspectRatio(
+          aspectRatio: 1,
+          child: PieChart(
+            PieChartData(
+              pieTouchData: PieTouchData(
+                touchCallback: (FlTouchEvent event, pieTouchResponse) {
+                  setState(() {
+                    if (!event.isInterestedForInteractions ||
+                        pieTouchResponse == null ||
+                        pieTouchResponse.touchedSection == null) {
+                      touchedIndex = -1;
+                      return;
+                    }
+                    touchedIndex =
+                        pieTouchResponse.touchedSection!.touchedSectionIndex;
+                  });
+                },
+              ),
+              borderData: FlBorderData(
+                show: false,
+              ),
+              sectionsSpace: 0,
+              centerSpaceRadius: 0,
+              sections: showingSections(),
             ),
           ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Indicator(
-              color: Color(0xff0293ee),
-              text: 'First',
-              isSquare: true,
-            ),
-            SizedBox(height: 4),
-            Indicator(
-              color: Color(0xfff8b250),
-              text: 'Second',
-              isSquare: true,
-            ),
-            SizedBox(height: 4),
-            Indicator(
-              color: Color(0xff845bef),
-              text: 'Third',
-              isSquare: true,
-            ),
-            SizedBox(height: 4),
-            Indicator(
-              color: Color(0xff13d38e),
-              text: 'Fourth',
-              isSquare: true,
-            ),
-          ],
-        ),
-      ],
+      ),
     );
   }
 
   List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
+    return List.generate(widget.pieData.length, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 16.0 : 10.0;
-      final radius = isTouched ? 45.0 : 35.0;
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: const Color(0xff0293ee),
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 1:
-          return PieChartSectionData(
-            color: const Color(0xfff8b250),
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 2:
-          return PieChartSectionData(
-            color: const Color(0xff845bef),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: const Color(0xff13d38e),
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        default:
-          throw Error();
-      }
+      final fontSize = isTouched ? 20.0 : 16.0;
+      final radius = isTouched ? 110.0 : 100.0;
+      final widgetSize = isTouched ? 55.0 : 40.0;
+      final color = listPieColor[i % 5];
+
+      return PieChartSectionData(
+        color: color,
+        value: widget.pieData[i].amount /
+            (widget.type == "Income"
+                ? _controller.incomeSummary.value
+                : _controller.expenseSummary.value),
+        title:
+            "${num.parse((widget.pieData[i].amount / (widget.type == "Income" ? _controller.incomeSummary.value : _controller.expenseSummary.value) * 100).toStringAsFixed(2))} %",
+        radius: radius,
+        titleStyle: TextStyle(
+          fontSize: fontSize,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        badgeWidget: _Badge(
+          'assets/icons/${widget.pieData[i].category.icon}.png',
+          size: widgetSize,
+          borderColor: color,
+        ),
+        badgePositionPercentageOffset: .98,
+      );
     });
+  }
+}
+
+class _Badge extends StatelessWidget {
+  const _Badge(
+    this.svgAsset, {
+    required this.size,
+    required this.borderColor,
+  });
+
+  final String svgAsset;
+  final double size;
+  final Color borderColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: PieChart.defaultDuration,
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: borderColor,
+          width: 2,
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black.withOpacity(.5),
+            offset: const Offset(3, 3),
+            blurRadius: 3,
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(size * .15),
+      child: Center(
+        child: Image.asset(
+          svgAsset,
+        ),
+      ),
+    );
   }
 }

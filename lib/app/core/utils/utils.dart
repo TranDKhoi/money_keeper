@@ -31,7 +31,7 @@ extension GetSize on BuildContext {
 extension ApiResponseHandler on Response {
   get data => body["data"];
 
-  String get message => body["errors"][0];
+  String get message => body?["errors"][0]??"";
 }
 
 class ImageHelper {
