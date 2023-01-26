@@ -156,4 +156,6 @@ class R {
   static const Deletethisbudgetquestion = "Delete this budget question?";
   static const Overspent = "Overspent";
   static const Summary = "Summary";
+  static const editBudget = "Edit budget";
+  static const editBudgetsuccessfully = "Edit budget successfully";
 }

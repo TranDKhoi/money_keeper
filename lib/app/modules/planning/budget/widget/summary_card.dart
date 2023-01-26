@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 
 import '../../../../controllers/planning/budget/budget_controller.dart';
 import '../../../../core/values/r.dart';
@@ -30,8 +31,8 @@ class SummaryCard extends StatelessWidget {
                           ),
                           const Spacer(),
                           Text(
-                            budgetController.budgetSummary.value!.totalBudget
-                                .toString(),
+                            FormatHelper().moneyFormat(budgetController
+                                .budgetSummary.value!.totalBudget),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -49,9 +50,8 @@ class SummaryCard extends StatelessWidget {
                           Text(R.Spent.tr),
                           const Spacer(),
                           Text(
-                            budgetController
-                                .budgetSummary.value!.totalSpentAmount
-                                .toString(),
+                            FormatHelper().moneyFormat(budgetController
+                                .budgetSummary.value!.totalSpentAmount),
                             style: const TextStyle(color: Colors.red),
                           ),
                         ],
@@ -61,8 +61,10 @@ class SummaryCard extends StatelessWidget {
                         children: [
                           Text(R.canSpent.tr),
                           const Spacer(),
-                          Text(
-                              "${(budgetController.budgetSummary.value!.totalBudget as int) - (budgetController.budgetSummary.value!.totalSpentAmount as int)}"),
+                          Text(FormatHelper().moneyFormat((budgetController
+                                  .budgetSummary.value!.totalBudget as int) -
+                              (budgetController.budgetSummary.value!
+                                  .totalSpentAmount as int))),
                         ],
                       ),
                     ],

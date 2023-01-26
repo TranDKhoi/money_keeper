@@ -153,5 +153,6 @@ const Map<String, String> enLanguagePackage = {
   R.Deletethisbudgetquestion: "Delete this budget?",
   R.Overspent: "Over spent",
   R.Summary: "Summary",
-
+  R.editBudget: "Edit budget",
+  R.editBudgetsuccessfully: "Edit budget successfully",
 };

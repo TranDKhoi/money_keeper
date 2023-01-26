@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_date_utils/in_date_utils.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/modules/planning/budget/widget/line_chart.dart';
 import 'package:money_keeper/data/models/budget_detail_summary.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -12,10 +13,16 @@ import '../../../../controllers/planning/budget/budget_controller.dart';
 import '../../../../core/values/r.dart';
 import '../../../../routes/routes.dart';
 
-class BudgetInfoScreen extends StatelessWidget {
-  BudgetInfoScreen({Key? key}) : super(key: key);
+class BudgetInfoScreen extends StatefulWidget {
+  const BudgetInfoScreen({Key? key}) : super(key: key);
 
+  @override
+  State<BudgetInfoScreen> createState() => _BudgetInfoScreenState();
+}
+
+class _BudgetInfoScreenState extends State<BudgetInfoScreen> {
   final budgetController = Get.find<BudgetController>();
+
   late Budget budget;
   late BudgetDetailSummary budgetDetailSummary;
   late int totalLeft;
@@ -26,100 +33,113 @@ class BudgetInfoScreen extends StatelessWidget {
     budgetDetailSummary = budgetController.budgetDetailSummary.value!;
     totalLeft = (budgetDetailSummary.totalBudget as int) -
         (budgetDetailSummary.totalSpentAmount as int);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(R.Budget.tr),
-        actions: [
-          IconButton(
+    return WillPopScope(
+      onWillPop: () => budgetController.resetData(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(R.Budget.tr),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                await Get.toNamed(addBudgetScreenRoute, arguments: [true]);
+                await budgetController.initBudgetInfoScreenData(
+                    budgetId: budget.id as int);
+                setState(() {});
+              },
+              icon: const Icon(Icons.edit),
+            ),
+            IconButton(
               onPressed: () => confirmDeleteBudget(context),
-              icon: const Icon(Ionicons.trash))
-        ],
-      ),
-      //////
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              indicatorBar(),
-              //time left
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: const Icon(
-                  Ionicons.calendar_outline,
+              icon: const Icon(Ionicons.trash),
+            ),
+          ],
+        ),
+        //////
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                indicatorBar(),
+                //time left
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: const Icon(
+                    Ionicons.calendar_outline,
+                  ),
+                  title: const Text(R.Thismonth),
+                  subtitle: Text(_calculateTimeLeft()),
                 ),
-                title: const Text(R.Thismonth),
-                subtitle: Text(_calculateTimeLeft()),
-              ),
-              //current Wallet
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.transparent,
-                  child:
-                      Image.asset("assets/icons/${budget.category?.icon}.png"),
+                //current Wallet
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: CircleAvatar(
+                    radius: 20,
+                    backgroundColor: Colors.transparent,
+                    child: Image.asset(
+                        "assets/icons/${budget.category?.icon}.png"),
+                  ),
+                  title: Text(
+                      budgetController.selectedWallet.value.name as String),
                 ),
-                title:
-                    Text(budgetController.selectedWallet.value.name as String),
-              ),
-              const SizedBox(height: 30),
-              //line chart
-              const SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                child: SizedBox(
-                  height: 220,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 8),
-                    child: LineChartWidget(),
+                const SizedBox(height: 30),
+                //line chart
+                const SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  child: SizedBox(
+                    height: 220,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 8),
+                      child: LineChartWidget(),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              //recommended spending area
-              Row(
-                children: [
-                  Column(
-                    children: [
-                      Text(R.recommendeddaily.tr),
-                      Text(budgetDetailSummary.recommendedDailyExpense!
-                          .toStringAsFixed(2)),
-                    ],
-                  ),
-                  const Spacer(),
-                  Column(
-                    children: [
-                      Text(R.projectedspending.tr),
-                      Text(budgetDetailSummary.expectedExpense!
-                          .toStringAsFixed(2)),
-                    ],
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    children: [
-                      Text(R.actualspending.tr),
-                      Text(budgetDetailSummary.realDailyExpense!
-                          .toStringAsFixed(2)),
-                    ],
-                  )
-                ],
-              ),
-              // transaction list
-              ElevatedButton(
-                onPressed: () async {
-                  await budgetController.initBudgetTransactionScreenData();
-                  Get.toNamed(budgetTransactionScreenRoute);
-                },
-                child: Text(R.Listoftransaction.tr),
-              )
-            ],
+                const SizedBox(height: 10),
+                //recommended spending area
+                Row(
+                  children: [
+                    Column(
+                      children: [
+                        Text(R.recommendeddaily.tr),
+                        Text(budgetDetailSummary.recommendedDailyExpense!
+                            .toStringAsFixed(2)),
+                      ],
+                    ),
+                    const Spacer(),
+                    Column(
+                      children: [
+                        Text(R.projectedspending.tr),
+                        Text(budgetDetailSummary.expectedExpense!
+                            .toStringAsFixed(2)),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Column(
+                      children: [
+                        Text(R.actualspending.tr),
+                        Text(budgetDetailSummary.realDailyExpense!
+                            .toStringAsFixed(2)),
+                      ],
+                    )
+                  ],
+                ),
+                // transaction list
+                ElevatedButton(
+                  onPressed: () async {
+                    await budgetController.initBudgetTransactionScreenData();
+                    Get.toNamed(budgetTransactionScreenRoute);
+                  },
+                  child: Text(R.Listoftransaction.tr),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -163,7 +183,7 @@ class BudgetInfoScreen extends StatelessWidget {
           children: [
             Text(R.Totalbudget.tr),
             const Spacer(),
-            Text(budgetDetailSummary.totalBudget.toString()),
+            Text(FormatHelper().moneyFormat(budgetDetailSummary.totalBudget)),
           ],
         ),
         const SizedBox(height: 5),
@@ -172,7 +192,8 @@ class BudgetInfoScreen extends StatelessWidget {
           children: [
             Text(R.Totalexpense.tr),
             const Spacer(),
-            Text(budgetDetailSummary.totalSpentAmount.toString()),
+            Text(FormatHelper()
+                .moneyFormat(budgetDetailSummary.totalSpentAmount)),
           ],
         ),
         const Divider(),
@@ -180,7 +201,7 @@ class BudgetInfoScreen extends StatelessWidget {
           children: [
             Text(R.Totalleft.tr),
             const Spacer(),
-            Text(totalLeft.toString()),
+            Text(FormatHelper().moneyFormat(totalLeft)),
           ],
         ),
         const SizedBox(height: 15),

@@ -30,7 +30,7 @@ class BudgetController extends GetxController {
   late int limitAmount;
 
   // budget detail screen
-  late Budget budget;
+  Budget budget = Budget();
   Rxn<BudgetDetailSummary> budgetDetailSummary = Rxn<BudgetDetailSummary>();
   late List<BudgetDetailStatistic> statistics;
   List<double> dy = []; // cột dọc biểu đồ
@@ -99,15 +99,16 @@ class BudgetController extends GetxController {
     _cursorPosition *= diffPercentage;
   }
 
-  void resetData() {
+  Future<bool> resetData() async {
     category.value = null;
     dy.clear();
     EasyLoading.show();
-    Future.wait([
+    await Future.wait([
       getBudgetsInMonth(),
       initBudgetSummaryData(),
     ]);
     EasyLoading.dismiss();
+    return true;
   }
 
   void selectMonth(int value) {
@@ -160,11 +161,48 @@ class BudgetController extends GetxController {
     }
   }
 
+  // edit budget method
+  Future<void> editBudget() async {
+    if (limitAmount <= 0 || category.value == null) {
+      EasyLoading.showToast(R.Pleaseenteralltheinformation);
+      return;
+    }
+
+    try {
+      CreateBudget createBudget = CreateBudget(
+        limitAmount: limitAmount,
+        month: selectedDateTime.month,
+        year: selectedDateTime.year,
+        categoryId: category.value?.id,
+        walletId: selectedWallet.value.id,
+      );
+
+      EasyLoading.show();
+      var res = await BudgetService.ins.editBudget(
+        budgetId: budget.id as int,
+        walletId: selectedWallet.value.id as int,
+        editBudget: createBudget,
+      );
+      EasyLoading.dismiss();
+
+      if (res.isOk) {
+        Get.back();
+        EasyLoading.showToast(R.editBudgetsuccessfully.tr);
+      } else {
+        EasyLoading.showToast(res.message);
+      }
+    } catch (e) {
+      log("edit budget error: $e");
+      EasyLoading.dismiss();
+    }
+  }
+
   // budget info screen method
 
-  Future<void> initBudgetInfoScreenData({required Budget budget}) async {
-    this.budget = budget;
+  Future<void> initBudgetInfoScreenData({required int budgetId}) async {
     EasyLoading.show();
+    await getBudgetById(budgetId: budgetId);
+    category.value = budget.category;
     await Future.wait([
       getBudgetDetailSummary(),
       getBudgetStatistic(),
@@ -286,6 +324,16 @@ class BudgetController extends GetxController {
       EasyLoading.dismiss();
     }
     return null;
+  }
+
+  Future<void> getBudgetById({required int budgetId}) async {
+    await getBudgetsInMonth();
+    for (var i = 0; i < budgets.length; i++) {
+      if (budgets[i].id == budgetId) {
+        budget = budgets[i];
+        break;
+      }
+    }
   }
 
   deleteBudget() async {

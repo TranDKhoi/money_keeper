@@ -11,12 +11,15 @@ class AddBudget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final budgetController = Get.find<BudgetController>();
+    final bool? isEdit = Get.arguments[0];
     return Scaffold(
       appBar: AppBar(
-        title: Text(R.Newtransaction.tr),
+        title: Text((isEdit != null) ? R.editBudget.tr : R.newBudget.tr),
         actions: [
           TextButton(
-            onPressed: () => budgetController.createBudget(),
+            onPressed: () => (isEdit != null)
+                ? budgetController.editBudget()
+                : budgetController.createBudget(),
             child: Text(R.Save.tr),
           ),
         ],

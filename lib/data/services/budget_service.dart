@@ -83,6 +83,19 @@ class BudgetService extends GetConnect {
     );
   }
 
+  Future<Response> editBudget(
+      {required int budgetId,
+      required int walletId,
+      required CreateBudget editBudget}) async {
+    return await put(
+      "$api_url/wallets/$walletId/budgets/$budgetId",
+      editBudget.toJson(),
+      headers: <String, String>{
+        'Authorization': _ac.currentUser.value!.token!,
+      },
+    );
+  }
+
   Future<Response> deleteBudget({
     required int budgetId,
     required int walletId,

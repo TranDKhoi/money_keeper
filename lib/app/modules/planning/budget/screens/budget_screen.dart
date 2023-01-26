@@ -84,9 +84,9 @@ class _BudgetScreenState extends State<BudgetScreen>
                         itemBuilder: (context, i) => InkWell(
                           onTap: () async {
                             await budgetController.initBudgetInfoScreenData(
-                                budget: budgetController.budgets[i]);
-                            await Get.toNamed(budgetInfoScreen);
-                            budgetController.resetData();
+                                budgetId:
+                                    budgetController.budgets[i].id as int);
+                            Get.toNamed(budgetInfoScreen);
                           },
                           child:
                               BudgetItem(budget: budgetController.budgets[i]),

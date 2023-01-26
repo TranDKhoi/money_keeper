@@ -2,6 +2,7 @@ import 'package:bubble_box/bubble_box.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/controllers/planning/budget/budget_controller.dart';
+import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/data/models/budget.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -49,12 +50,13 @@ class BudgetItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  "$limitAmount",
+                  FormatHelper().moneyFormat(limitAmount),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("${R.remaining.tr}: $remainingAmount"),
+                Text(
+                    "${R.remaining.tr}: ${FormatHelper().moneyFormat(remainingAmount)}"),
               ],
             ),
           ],

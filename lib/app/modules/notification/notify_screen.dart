@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:money_keeper/app/controllers/planning/budget/budget_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
-import 'package:money_keeper/app/modules/planning/budget/screens/budget_info_screen.dart';
+import 'package:money_keeper/app/routes/routes.dart';
 import 'package:money_keeper/data/models/notify.dart';
 
 import '../../controllers/notification/notification_controller.dart';
@@ -50,10 +51,12 @@ class NotifyScreen extends StatelessWidget {
     }
 
     return ListTile(
-      onTap: () {
+      onTap: () async {
         switch (notify.type) {
           case "BudgetExceed":
-            Get.to(() => BudgetInfoScreen());
+            await Get.put(BudgetController())
+                .initBudgetInfoScreenData(budgetId: notify.budgetId as int);
+            await Get.toNamed(budgetInfoScreen);
             break;
           case "Reminder":
             icon = "assets/icons/alarm.png";
