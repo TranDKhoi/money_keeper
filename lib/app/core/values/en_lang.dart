@@ -159,4 +159,14 @@ const Map<String, String> enLanguagePackage = {
   R.Youhavenewinvite: "You have an new invitation to the group wallet",
   R.Accept: "Accept",
   R.Decline: "Decline",
+  R.Addgroupwallet: 'Add group wallet',
+  R.editgroupwallet: 'Edit group wallet',
+  R.Addmembers: "Enter the email you want to add to the wallet group",
+  R.memberGroup: "The members in your wallet group",
+  R.Personal: "Personal",
+  R.Group: "Group",
+  R.Therearecurrentlynoevents: "There are currently no events",
+  R.Togglesuccess: "Successfully marked",
+  R.Deletethisevent: "Delete this event?",
+
 };

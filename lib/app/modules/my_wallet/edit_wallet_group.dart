@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
-
+import 'package:money_keeper/app/core/utils/utils.dart';
+import 'package:textfield_tags/textfield_tags.dart';
 import '../../../data/models/wallet.dart';
 import '../../core/values/r.dart';
 import '../category/widgets/category_icon_modal.dart';
 
-class EditWalletScreen extends StatelessWidget {
-  EditWalletScreen({Key? key}) : super(key: key);
+class EditWalletGroupScreen extends StatelessWidget {
+  EditWalletGroupScreen({Key? key}) : super(key: key);
 
   final MyWalletController _controller = Get.find();
   final selectedWallet = Get.arguments as Wallet;
+  final TextfieldTagsController _tagController = TextfieldTagsController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(R.Editwallet.tr),
+        title: Text(R.editgroupwallet.tr),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -35,7 +37,7 @@ class EditWalletScreen extends StatelessWidget {
                           var res = await showModalBottomSheet<int>(
                               context: context,
                               builder: (BuildContext context) =>
-                                  const IconModalBottomSheet());
+                              const IconModalBottomSheet());
 
                           if (res != null) {
                             _controller.selectedCategoryPic.value = res;
@@ -106,6 +108,92 @@ class EditWalletScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.groups,
+                        size: 30,
+                      ),
+                      const SizedBox(width: 20),
+                      Text(R.memberGroup.tr, style: const TextStyle(fontSize: 13),)
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  TextFieldTags(
+                    textfieldTagsController: _tagController,
+                    initialTags: ['20521743@gm.uit.edu.vn', '20520594@gm.uit.edu.vn'],
+                    inputfieldBuilder: (context, tec, fn, error, onChanged, onSubmitted) {
+                      return ((context, sc, tags, onTagDelete) {
+                        return TextField(
+                          controller: tec,
+                          focusNode: fn,
+                          decoration: InputDecoration(
+                            isDense: true,
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 1.0,
+                              ),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                width: 1.0,
+                              ),
+                            ),
+                            hintText: _tagController.hasTags ? '' : "Enter email...",
+                            errorText: error,
+                            prefixIcon: tags.isNotEmpty
+                                ? SingleChildScrollView(
+                              controller: sc,
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: tags.map((String tag) {
+                                  return Container(
+                                    decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20.0),
+                                      ),
+                                      color: Colors.green,
+                                    ),
+                                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                    padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        InkWell(
+                                          child: Text(
+                                            '#$tag',
+                                            style: const TextStyle(color: Colors.white),
+                                          ),
+                                          onTap: () {
+                                            print("$tag selected");
+                                          },
+                                        ),
+                                        const SizedBox(width: 4.0),
+                                        InkWell(
+                                          child: const Icon(
+                                            Icons.cancel,
+                                            size: 14.0,
+                                            color: Colors.white,
+                                          ),
+                                          onTap: () {
+                                            onTagDelete(tag);
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            )
+                                : null,
+                          ),
+                          onChanged: onChanged,
+                          onSubmitted: onSubmitted,
+                        );
+                      });
+                    },
+                  ),
                 ],
               ),
             ),
@@ -116,47 +204,11 @@ class EditWalletScreen extends StatelessWidget {
             isThreeLine: true,
             title: Text(R.Notincludeintotalbalance.tr),
             subtitle:
-                Text(R.Createanewwalletanddonotincludeitintototalbalance.tr),
+            Text(R.Createanewwalletanddonotincludeitintototalbalance.tr),
           ),
           const SizedBox(height: 30),
           GestureDetector(
-            onTap: () async{
-              var res = await showDialog(
-                context: context,
-                builder: (_) => Center(
-                  child: Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(R.DELETETHISWALLETFOREVER.tr),
-                          const SizedBox(height: 20),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () => Get.back(result: false),
-                                  child: Text(R.No.tr)),
-                              const SizedBox(width: 20),
-                              ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.redAccent,
-                                  ),
-                                  onPressed: () => Get.back(result: true),
-                                  child: Text(R.Yes.tr)),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              );
-              if (res != null && res) {
-                _controller.deleteWallet(selectedWallet.id);
-              }
-            },
+            onTap: () {},
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,

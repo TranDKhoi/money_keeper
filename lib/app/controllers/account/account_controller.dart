@@ -25,12 +25,15 @@ class AccountController extends GetxController {
       var res = await StorageService.ins.uploadImageToStorage(File(picked));
       EasyLoading.dismiss();
       if (res != null) {
+        print(res);
         EasyLoading.show();
-        var result =
-            await AuthService.ins.updateAvatar(res, currentUser.value!.token!);
+        var result = await AuthService.ins.updateAvatar(res);
         EasyLoading.dismiss();
         if (result.isOk) {
           currentUser.value?.avatar = res;
+          print(result.isOk);
+        } else {
+          print(result.statusText);
         }
       }
     }

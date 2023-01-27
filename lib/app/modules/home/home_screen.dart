@@ -19,9 +19,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _controller = Get.put(HomeController());
+  final _controller = Get.put(HomeController())..getSummaryData();
   final BottomBarController _bottomController = Get.find();
-  final _walletController = Get.find<MyWalletController>()..getAllWallet();
+  final _walletController = Get.find<MyWalletController>();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Obx(
                           () => Text(
-                            _calculateTotalBalance(),
+                            _walletController.calculateTotalBalance(),
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 35,
@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Spacer(),
                             Obx(
                               () => Text(
-                                _calculateTotalBalance(),
+                                _walletController.calculateTotalBalance(),
                                 style: const TextStyle(fontSize: 20),
                               ),
                             ),
@@ -313,13 +313,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  String _calculateTotalBalance() {
-    int total = 0;
-    for (int i = 0; i < _walletController.listWallet.length; i++) {
-      total += _walletController.listWallet[i].balance!;
-    }
-    return FormatHelper().moneyFormat(total);
   }
 }

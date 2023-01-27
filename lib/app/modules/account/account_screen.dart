@@ -31,12 +31,14 @@ class _AccountScreenState extends State<AccountScreen> {
                     _controller.pickAvatar();
                   },
                   child: Obx(
-                    () => CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(
-                        _controller.currentUser.value?.avatar ??
-                            "https://d2v9ipibika81v.cloudfront.net/uploads/sites/210/Profile-Icon.png",
+                    () => Center(
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: NetworkImage(
+                          _controller.currentUser.value?.avatar ??
+                              "https://d2v9ipibika81v.cloudfront.net/uploads/sites/210/Profile-Icon.png",
+                        ),
                       ),
                     ),
                   ),

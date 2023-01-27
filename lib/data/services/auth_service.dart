@@ -3,13 +3,17 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:get/get_connect/connect.dart';
 
+import '../../app/controllers/account/account_controller.dart';
 import '../../app/core/values/strings.dart';
 import '../models/user.dart';
 
 class AuthService extends GetConnect {
-  AuthService._();
+  AuthService._() {
+    timeout = const Duration(seconds: 10);
+  }
 
   static final ins = AuthService._();
+  final AccountController _ac = Get.find();
 
   Future<Response> login({required User user}) async {
     return await post(
@@ -56,10 +60,21 @@ class AuthService extends GetConnect {
     );
   }
 
-  Future<Response> updateAvatar(String avatar, String s) async {
-    return await put("$api_url/account/info", jsonEncode({"avatar": avatar}),
-        headers: <String, String>{
-          "Authorization": s,
-        });
+  Future<Response> updateAvatar(String avatar) {
+    return put(
+      "$api_url/account/info",
+      {
+        "avatar": avatar,
+      },
+      headers: <String, String>{
+        'Authorization': _ac.currentUser.value!.token!,
+      },
+    );
+  }
+
+  Future<Response> getUserData() async {
+    return await get("$api_url/auth", headers: <String, String>{
+      'Authorization': _ac.currentUser.value!.token!,
+    });
   }
 }

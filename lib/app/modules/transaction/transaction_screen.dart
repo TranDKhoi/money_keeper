@@ -17,7 +17,7 @@ class TransactionScreen extends StatefulWidget {
 
 class _TransactionScreenState extends State<TransactionScreen>
     with SingleTickerProviderStateMixin {
-  final _controller = Get.put(TransactionController());
+  final _controller = Get.find<TransactionController>()..initData();
   late TabController _tabController;
 
   @override
@@ -152,10 +152,10 @@ class _TransactionScreenState extends State<TransactionScreen>
                           ],
                         ),
                         const SizedBox(height: 5),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: Text(R.Viewreportofthisperiod.tr),
-                        )
+                        // ElevatedButton(
+                        //   onPressed: () {},
+                        //   child: Text(R.Viewreportofthisperiod.tr),
+                        // ),
                       ],
                     ),
                   ),

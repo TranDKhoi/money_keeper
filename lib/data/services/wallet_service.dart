@@ -31,4 +31,13 @@ class WalletService extends GetConnect {
       },
     );
   }
+
+  Future<Response> deleteWallet(int walletId) async {
+    return await delete(
+      "$api_url/wallets/$walletId",
+      headers: <String, String>{
+        'Authorization': _ac.currentUser.value!.token!,
+      },
+    );
+  }
 }

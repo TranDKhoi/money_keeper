@@ -19,12 +19,24 @@ class AddEditEventScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (selectedEvent != null) {
       _controller.setSelectedEditEvent(selectedEvent!);
+      _controller.applyData();
     }
 
     return Scaffold(
       appBar: AppBar(
         title: Text(selectedEvent == null ? R.Addevent.tr : R.Editevent.tr),
-        actions: [TextButton(onPressed: () {}, child: Text(R.Save.tr))],
+        actions: [
+          TextButton(
+            onPressed: () {
+              if (selectedEvent == null) {
+                _controller.createNewEvent();
+              } else {
+                _controller.editEvent();
+              }
+            },
+            child: Text(R.Save.tr),
+          ),
+        ],
       ),
       /////
       body: Card(
@@ -63,8 +75,7 @@ class AddEditEventScreen extends StatelessWidget {
                   const SizedBox(width: 20),
                   Expanded(
                     child: TextFormField(
-                      initialValue: _controller.eventName.value,
-                      onChanged: (s) => _controller.eventName.value = s,
+                      controller: _controller.eventName,
                       decoration: InputDecoration(
                         contentPadding: EdgeInsets.zero,
                         hintText: R.Eventname.tr,
@@ -115,8 +126,15 @@ class AddEditEventScreen extends StatelessWidget {
               //wallet
               Row(
                 children: [
-                  const SizedBox(width: 5),
-                  const Icon(Ionicons.cash),
+                  Obx(
+                    () => _controller.selectedWallet.value == null
+                        ? const CircleAvatar()
+                        : CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            backgroundImage: AssetImage(
+                                "assets/icons/${_controller.selectedWallet.value!.icon!}.png"),
+                          ),
+                  ),
                   const SizedBox(width: 30),
                   Obx(
                     () => Expanded(

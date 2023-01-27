@@ -162,4 +162,14 @@ class R {
   static const Youhavenewinvite = "Youhavenewinvite";
   static const Accept = "Accept";
   static const Decline = "Decline";
+  static const Addgroupwallet = "Add group wallet";
+  static const editgroupwallet = "Edit group wallet";
+  static const Addmembers =
+      "Enter the email you want to add to the wallet group";
+  static const memberGroup = "The members in your wallet group";
+  static const Personal = "Personal";
+  static const Group = "Group";
+  static const Therearecurrentlynoevents = "There are currently no events";
+  static const Togglesuccess = "Togglesuccess";
+  static const Deletethisevent = "Deletethisevent";
 }

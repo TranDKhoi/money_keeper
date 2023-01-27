@@ -12,7 +12,7 @@ class StorageService {
 
   final _store = FirebaseStorage.instance;
 
-  uploadImageToStorage(File file) async {
+  Future<String?> uploadImageToStorage(File file) async {
     final ac = Get.find<AccountController>();
 
     try {
@@ -21,10 +21,10 @@ class StorageService {
           .child("transaction/${ac.currentUser.value?.token}/image.png");
       final UploadTask uploadTask = ref.putFile(file);
       final TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() {});
-      final url = await taskSnapshot.ref.getDownloadURL();
-      return url;
+      return await taskSnapshot.ref.getDownloadURL();
     } catch (e) {
       EasyLoading.showToast(e.toString());
     }
+    return null;
   }
 }

@@ -18,7 +18,8 @@ class TransactionController extends GetxController {
 
   var transactionsByTime = TransactionsByTime().obs;
 
-  TransactionController() {
+
+  initData() async {
     var walletController = Get.find<MyWalletController>();
     listWallet.value = [...walletController.listWallet];
     var totalWallet = Wallet(

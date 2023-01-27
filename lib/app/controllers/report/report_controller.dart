@@ -25,8 +25,9 @@ class ReportController extends GetxController {
 
   var dy = RxList<double>(); // cột dọc biểu đồ
 
-  ReportController() {
+  initData()async{
     var walletController = Get.find<MyWalletController>();
+    await walletController.getAllWallet();
     listWallet.value = [...walletController.listWallet];
     var totalWallet = Wallet(
         name: R.Totalwallet.tr, balance: _calculateTotalBalance(), id: -1);

@@ -159,4 +159,13 @@ const Map<String, String> viLanguagePackage = {
   R.Youhavenewinvite: "Bạn có một lời mời vào ví nhóm",
   R.Accept: "Đồng ý",
   R.Decline: "Từ chối",
+  R.Addgroupwallet: 'Thêm ví nhóm mới',
+  R.editgroupwallet: 'Chỉnh sửa ví nhóm mới',
+  R.Addmembers: "Nhập email mà bạn muốn thêm vào ví nhóm",
+  R.memberGroup: "Các thành viên trong ví nhóm của bạn",
+  R.Personal: "Cá nhân",
+  R.Group: "Nhóm",
+  R.Therearecurrentlynoevents: "Hiện tại không có sự kiện nào",
+  R.Togglesuccess: "Đánh dấu thành công",
+  R.Deletethisevent: "Xoá sự kiện này?",
 };

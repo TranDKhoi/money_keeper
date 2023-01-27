@@ -9,6 +9,7 @@ import '../../core/values/r.dart';
 
 class MyWalletController extends GetxController {
   var listWallet = <Wallet>[].obs;
+  var listGroupWallet = <Wallet>[].obs;
   var categoryGroupList = <Wallet>[].obs;
   var selectedCategoryGroup = Wallet().obs;
   var selectedCategoryPic = Rxn<int>();
@@ -24,14 +25,19 @@ class MyWalletController extends GetxController {
 
   Future<void> getAllWallet() async {
     listWallet.value = [];
+    listGroupWallet.value = [];
     EasyLoading.show();
     var res = await WalletService.ins.getAllWallet();
     EasyLoading.dismiss();
     if (res.isOk) {
       for (int i = 0; i < res.data.length; i++) {
-        listWallet.add(Wallet.fromJson(res.data[i]));
+        if (res.data[i]["type"] == "Personal") {
+          listWallet.add(Wallet.fromJson(res.data[i]));
+        } else {
+          listGroupWallet.add(Wallet.fromJson(res.data[i]));
+        }
       }
-    }else{
+    } else {
       EasyLoading.showToast(res.message);
     }
   }
@@ -54,5 +60,28 @@ class MyWalletController extends GetxController {
       EasyLoading.showToast(res.message);
     }
     EasyLoading.dismiss();
+  }
+
+  String calculateTotalBalance() {
+    double total = 0;
+    for (int i = 0; i < listWallet.length; i++) {
+      total += listWallet[i].balance!;
+    }
+    for (int i = 0; i < listGroupWallet.length; i++) {
+      total += listGroupWallet[i].balance!;
+    }
+    return FormatHelper().moneyFormat(total.toInt());
+  }
+
+  void deleteWallet(int? id) async {
+    EasyLoading.show();
+    var res = await WalletService.ins.deleteWallet(id!);
+    EasyLoading.dismiss();
+
+    if (res.isOk) {
+      Get.back();
+    } else {
+      EasyLoading.showToast(res.message);
+    }
   }
 }

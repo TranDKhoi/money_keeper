@@ -6,6 +6,7 @@ import 'package:money_keeper/app/modules/auth/signup/verify_signup.dart';
 import 'package:money_keeper/app/modules/bottom_bar/bottom_bar.dart';
 import 'package:money_keeper/app/modules/my_wallet/add_wallet.dart';
 import 'package:money_keeper/app/modules/my_wallet/edit_wallet.dart';
+import 'package:money_keeper/app/modules/my_wallet/edit_wallet_group.dart';
 import 'package:money_keeper/app/modules/my_wallet/my_wallet_screen.dart';
 import 'package:money_keeper/app/modules/planning/budget/screens/add_budget.dart';
 import 'package:money_keeper/app/modules/planning/budget/screens/budget_transaction_screen.dart';
@@ -56,5 +57,6 @@ class AppPages {
     GetPage(name: addBudgetScreenRoute,page: () => const AddBudget(),transition: Transition.rightToLeft),
     GetPage(name: budgetTransactionScreenRoute,page: () => const BudgetTransactionScreen(),transition: Transition.rightToLeft),
     GetPage(name: manageInvitationRoute,page: () => ManageInvitationScreen(),transition: Transition.rightToLeft),
+    GetPage(name: editWalletGroupRoute,page: () => EditWalletGroupScreen(),transition: Transition.rightToLeft),
   ];
 }

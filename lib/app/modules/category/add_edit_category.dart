@@ -66,22 +66,20 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
                 },
                 child: Obx(
                   () {
-                    if (_controller.selectedEditCategory.value != null) {
-                      _controller.selectedCategoryPic.value = int.parse(
-                          _controller.selectedEditCategory.value!.icon!);
-                      return CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.transparent,
-                        child: Image.asset(
-                            "assets/icons/${_controller.selectedEditCategory.value!.icon}.png"),
-                      );
-                    }
                     if (_controller.selectedCategoryPic.value != null) {
                       return CircleAvatar(
                         radius: 20,
                         backgroundColor: Colors.transparent,
                         child: Image.asset(
                             "assets/icons/${_controller.selectedCategoryPic.value}.png"),
+                      );
+                    }
+                    if (_controller.selectedEditCategory.value != null) {
+                      return CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.transparent,
+                        child: Image.asset(
+                            "assets/icons/${_controller.selectedEditCategory.value!.icon}.png"),
                       );
                     }
                     return const CircleAvatar(

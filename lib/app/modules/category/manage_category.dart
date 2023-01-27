@@ -21,6 +21,7 @@ class ManageCategoryScreen extends StatefulWidget {
 
   final bool canBack;
   final bool canChangeWallet;
+
   // nếu bằng true thì chỉ hiện expense
   final bool onlyExpense;
 
@@ -160,6 +161,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen>
           SlidableAction(
             onPressed: (context) async {
               _controller.selectedEditCategory.value = cate;
+              _controller.selectedCategoryPic.value =
+                  int.parse(_controller.selectedEditCategory.value!.icon!);
               await showDialog(
                   context: context,
                   builder: (context) => const AddEditCategoryScreen());

@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:money_keeper/app/controllers/account/account_controller.dart';
 import 'package:money_keeper/app/core/utils/push_service.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
+import 'package:money_keeper/data/services/auth_service.dart';
 
 import 'app/app.dart';
 import 'app/core/utils/get_storage_service.dart';
@@ -23,12 +24,17 @@ void main() async {
   runApp(const App());
 }
 
-void _getUserToken() {
+void _getUserToken() async {
   final ac = Get.put(AccountController());
   var token = GetStorageService.ins.getUserToken();
   if (token != null) {
     //get user by id
     ac.currentUser.value = User(token: token);
+    var res = await AuthService.ins.getUserData();
+    if (res.isOk) {
+      ac.currentUser.value = User.fromJson(res.data);
+      ac.currentUser.value?.token = token;
+    }
   }
 }
 

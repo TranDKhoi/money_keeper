@@ -18,7 +18,7 @@ class ReportScreen extends StatefulWidget {
 
 class _ReportScreenState extends State<ReportScreen>
     with SingleTickerProviderStateMixin {
-  final _controller = Get.put(ReportController());
+  final _controller = Get.find<ReportController>();
   late TabController _tabController;
 
   @override

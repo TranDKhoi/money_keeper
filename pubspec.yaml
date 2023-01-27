@@ -30,11 +30,12 @@ dependencies:
   percent_indicator: ^4.2.2
   bubble_box: ^0.5.3
   in_date_utils: ^1.1.0
-  firebase_storage: ^11.0.10
   firebase_core: ^2.4.1
+  firebase_storage: ^11.0.10
   signalr_netcore: ^1.3.3
-  flutter_local_notifications: ^13.0.0
   timeago: ^3.3.0
+  flutter_local_notifications: ^13.0.0
+  textfield_tags: ^2.0.1
 
 dev_dependencies:
   flutter_test:

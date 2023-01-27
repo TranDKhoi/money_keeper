@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../controllers/category/category_controller.dart';
-
 class IconModalBottomSheet extends StatelessWidget {
   const IconModalBottomSheet({Key? key}) : super(key: key);
 
@@ -14,7 +12,7 @@ class IconModalBottomSheet extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: Wrap(
           children: List.generate(
-            21,
+            24,
             (index) => Container(
               margin: const EdgeInsets.all(15),
               child: GestureDetector(

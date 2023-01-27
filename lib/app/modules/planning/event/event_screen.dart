@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/routes/routes.dart';
+import 'package:money_keeper/data/models/event.dart';
 
 import '../../../../data/models/wallet.dart';
 import '../../../controllers/planning/event/event_controller.dart';
+import '../../../core/utils/utils.dart';
 import '../../../core/values/r.dart';
 
 class EventScreen extends StatefulWidget {
@@ -16,7 +18,7 @@ class EventScreen extends StatefulWidget {
 
 class _EventScreenState extends State<EventScreen>
     with SingleTickerProviderStateMixin {
-  final _controller = Get.put(EventController());
+  final _controller = Get.put(EventController())..getAllEvent();
 
   late TabController _tabController;
 
@@ -78,66 +80,75 @@ class _EventScreenState extends State<EventScreen>
             ]),
       ),
       //////////////
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Obx(
-          () => Column(
-            children: _controller.listEvent.value!
-                .map(
-                  (e) => Card(
-                    child: InkWell(
-                      onTap: () =>
-                          Get.toNamed(eventInfoScreenRoute, arguments: e)?.then(
-                              (value) => _controller
-                                  .changeEventTabBar(_tabController.index)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              child: Image.asset("assets/icons/${e.icon}.png"),
-                            ),
-                            const SizedBox(width: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  e.name!,
-                                  style: const TextStyle(fontSize: 20),
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      R.Spent.tr,
-                                      style: const TextStyle(fontSize: 15),
-                                    ),
-                                    const Text(
-                                      ": 100.000d",
-                                      style: TextStyle(fontSize: 15),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
-      ),
+      body: Obx(() {
+        if (_controller.listEvent.isEmpty) {
+          return Center(
+            child: Text(
+              R.Therearecurrentlynoevents.tr,
+              style: const TextStyle(fontSize: 20),
+            ),
+          );
+        } else {
+          return ListView.separated(
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (BuildContext context, int index) =>
+                _buildEventItem(_controller.listEvent[index]),
+            separatorBuilder: (BuildContext context, int index) =>
+                const Divider(),
+            itemCount: _controller.listEvent.length,
+          );
+        }
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => Get.toNamed(addEventScreenRoute),
         backgroundColor: Colors.green,
         child: const Icon(
           Ionicons.add,
           color: Colors.white,
+        ),
+      ),
+    );
+  }
+
+  _buildEventItem(Event e) {
+    return Card(
+      child: InkWell(
+        onTap: () => Get.toNamed(eventInfoScreenRoute, arguments: e)?.then(
+            (value) => _controller.changeEventTabBar(_tabController.index)),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.transparent,
+                child: Image.asset("assets/icons/${e.icon}.png"),
+              ),
+              const SizedBox(width: 20),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    e.name!,
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "${R.Spent.tr}: ",
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                      Text(
+                        FormatHelper().moneyFormat(e.spent),
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

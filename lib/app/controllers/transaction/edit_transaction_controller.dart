@@ -55,7 +55,7 @@ class EditTransactionController extends GetxController {
 
     if(res.isOk){
       Get.back();
-      Get.find<TransactionController>().getTransactionByWalletId();
+      Get.find<TransactionController>().initData();
       EasyLoading.showToast(R.Transactioneditedsuccessfully.tr);
     }else{
       EasyLoading.showToast(res.message);
@@ -74,7 +74,7 @@ class EditTransactionController extends GetxController {
     EasyLoading.dismiss();
     if (res.isOk) {
       Get.back();
-      Get.find<TransactionController>().getTransactionByWalletId();
+      Get.find<TransactionController>().initData();
     } else {
       EasyLoading.showToast(res.statusText!);
     }

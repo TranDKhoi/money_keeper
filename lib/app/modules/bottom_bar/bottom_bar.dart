@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/bottombar_controller.dart';
+import 'package:money_keeper/app/controllers/report/report_controller.dart';
 
 import '../../controllers/notification/notification_controller.dart';
+import '../../controllers/transaction/transaction_controller.dart';
 import '../../controllers/wallet/my_wallet_controller.dart';
 import '../../core/values/r.dart';
 
@@ -18,6 +20,8 @@ class _BottomBarState extends State<BottomBar> {
   final _controller = Get.put(BottomBarController());
   final _walletController = Get.put(MyWalletController());
   final _notificationController = Get.put(NotificationController());
+  final _transactionController = Get.put(TransactionController())..initData();
+  final _reportController = Get.put(ReportController())..initData();
 
   @override
   Widget build(BuildContext context) {

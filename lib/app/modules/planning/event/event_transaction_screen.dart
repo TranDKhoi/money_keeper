@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/common/widget/card_transction_item.dart';
 
+import '../../../../data/models/event.dart';
 import '../../../../data/models/transactions_by_day.dart';
+import '../../../core/utils/utils.dart';
 import '../../../core/values/r.dart';
 
 class EventTransactionScreen extends StatelessWidget {
@@ -10,6 +12,8 @@ class EventTransactionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Event selectedEvent = Get.arguments as Event;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(R.Listoftransaction.tr),
@@ -25,7 +29,7 @@ class EventTransactionScreen extends StatelessWidget {
                 children: [
                   //number of result
                   Text(
-                    "1 ${R.result.tr}",
+                    "${selectedEvent.transactions?.length ?? 0} ${R.result.tr}",
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
@@ -34,17 +38,17 @@ class EventTransactionScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   //income
                   Row(
-                    children: const [
+                    children: [
                       Text(
-                        R.Income,
-                        style: TextStyle(
+                        R.Income.tr,
+                        style: const TextStyle(
                           color: Colors.grey,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
-                        "0 đ",
-                        style: TextStyle(
+                        FormatHelper().moneyFormat(_calculateIncome()),
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.blue,
                         ),
@@ -53,17 +57,17 @@ class EventTransactionScreen extends StatelessWidget {
                   ),
                   //expense
                   Row(
-                    children: const [
+                    children: [
                       Text(
-                        R.Expense,
-                        style: TextStyle(
+                        R.Expense.tr,
+                        style: const TextStyle(
                           color: Colors.grey,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
-                        "0 đ",
-                        style: TextStyle(
+                        FormatHelper().moneyFormat(_calculateExpense()),
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.red,
                         ),
@@ -74,11 +78,12 @@ class EventTransactionScreen extends StatelessWidget {
                     color: Colors.grey,
                   ),
                   Row(
-                    children: const [
-                      Spacer(),
+                    children: [
+                      const Spacer(),
                       Text(
-                        "0",
-                        style: TextStyle(
+                        FormatHelper().moneyFormat(
+                            _calculateIncome() - _calculateExpense()),
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                       )
@@ -95,11 +100,19 @@ class EventTransactionScreen extends StatelessWidget {
               itemBuilder: (context, i) => CardTransactionItem(
                 transactionsByDay: TransactionsByDay(),
               ),
-              itemCount: 5,
+              itemCount: selectedEvent.transactions?.length,
             ),
           ),
         ],
       ),
     );
+  }
+
+  int _calculateIncome() {
+    return 0;
+  }
+
+  int _calculateExpense() {
+    return 0;
   }
 }

@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/controllers/transaction/transaction_controller.dart';
 import 'package:money_keeper/data/models/transaction.dart';
 
 import '../../../data/models/category.dart';
@@ -69,6 +70,7 @@ class AddTransactionController extends GetxController {
 
     if (res.isOk) {
       Get.back();
+      Get.find<TransactionController>().initData();
       EasyLoading.showToast(R.Transactioncreatedsuccessfully.tr);
     } else {
       EasyLoading.showToast(res.message);
