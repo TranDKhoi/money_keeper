@@ -49,6 +49,7 @@ class CategoryService extends GetConnect {
   }
 
   Future<Response> deleteCategoryByWalletId(Category delCate) async {
+    print(delCate.id);
     return await delete(
       "$api_url/wallets/${delCate.walletId}/categories/${delCate.id}",
       headers: <String, String>{

@@ -21,15 +21,11 @@ class TransactionController extends GetxController {
 
   initData() async {
     var walletController = Get.find<MyWalletController>();
-    listWallet.value = [...walletController.listWallet];
-    var totalWallet = Wallet(
-        name: R.Totalwallet.tr, balance: _calculateTotalBalance(), id: -1);
-    listWallet.value = [totalWallet, ...walletController.listWallet];
-    listWallet.refresh();
+    listWallet.value = [...walletController.listWallet,...walletController.listGroupWallet];
     selectedWallet.value = listWallet[0];
     generateTimeLine();
     selectedTimeLine.value = listTimeline[listTimeline.length - 2];
-    getGlobalTransaction();
+    getTransactionByWalletId();
   }
 
   void toCreateTransactionScreen() {
@@ -103,7 +99,7 @@ class TransactionController extends GetxController {
     if (res.isOk) {
       transactionsByTime.value = TransactionsByTime.fromJson(res.data);
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 }

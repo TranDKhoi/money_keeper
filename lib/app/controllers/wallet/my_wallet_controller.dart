@@ -2,14 +2,17 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/routes/routes.dart';
+import 'package:money_keeper/data/services/services.dart';
 import 'package:money_keeper/data/services/wallet_service.dart';
 
+import '../../../data/models/user.dart';
 import '../../../data/models/wallet.dart';
 import '../../core/values/r.dart';
 
 class MyWalletController extends GetxController {
   var listWallet = <Wallet>[].obs;
   var listGroupWallet = <Wallet>[].obs;
+  var listMember = <User>[];
   var categoryGroupList = <Wallet>[].obs;
   var selectedCategoryGroup = Wallet().obs;
   var selectedCategoryPic = Rxn<int>();
@@ -38,7 +41,18 @@ class MyWalletController extends GetxController {
         }
       }
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
+    }
+  }
+
+  Future<bool> checkAlreadyUser({required String email}) async {
+    EasyLoading.show();
+    var res = await UserService.ins.checkAlreadyUser(email: email);
+    EasyLoading.dismiss();
+    if (res.isOk) {
+      return true;
+    }else{
+      return false;
     }
   }
 
@@ -57,7 +71,7 @@ class MyWalletController extends GetxController {
       Get.back();
       getAllWallet();
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
     EasyLoading.dismiss();
   }
@@ -77,11 +91,23 @@ class MyWalletController extends GetxController {
     EasyLoading.show();
     var res = await WalletService.ins.deleteWallet(id!);
     EasyLoading.dismiss();
-
+  if (res.isOk) {
+      Get.back();
+      getAllWallet();
+    } else {
+      EasyLoading.showToast(res.errorMessage);
+    }
+  }
+  void updateWallet(Wallet wallet) async {
+    EasyLoading.show();
+    var res = await WalletService.ins.updateWallet(wallet: wallet);
+    EasyLoading.dismiss();
     if (res.isOk) {
       Get.back();
+      getAllWallet();
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
+  
   }
 }

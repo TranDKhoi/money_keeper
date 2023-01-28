@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:money_keeper/data/models/event.dart';
 
 import 'category.dart';
 import 'wallet.dart';
@@ -15,6 +16,7 @@ class Transaction {
   Wallet? wallet;
   Category? category;
   int? eventId;
+  Event? event;
   String? image;
   DateTime? createdAt;
 
@@ -27,6 +29,7 @@ class Transaction {
       this.wallet,
       this.category,
       this.eventId,
+      this.event,
       this.image,
       this.createdAt});
 

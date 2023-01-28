@@ -124,7 +124,7 @@ class CategoryController extends GetxController {
     if (res.isOk) {
       getCateByWalletId(delCate.walletId!);
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 }

@@ -34,82 +34,78 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
           )
         ],
       ),
-      body: Column(
-        children: [
-          const Divider(thickness: 1),
-          ListTile(
-            isThreeLine: true,
-            dense: true,
-            leading: const Icon(
-              Ionicons.earth,
-              size: 40,
-            ),
-            title: Text(
-              R.All.tr,
-              style: const TextStyle(
-                fontSize: 25,
-              ),
-            ),
-            subtitle: Text(
-              _calculateTotalBalance(),
-              style: const TextStyle(
-                fontSize: 15,
-              ),
-            ),
-          ),
-          const Divider(thickness: 1),
-          const SizedBox(height: 20),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, bottom: 10),
-              child: Text(
-                R.Personal.tr,
-                style: const TextStyle(
-                  fontSize: 20,
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: SizedBox(
+          height: context.screenSize.height,
+          child: Column(
+            children: [
+              const Divider(thickness: 1),
+              ListTile(
+                isThreeLine: true,
+                dense: true,
+                leading: const Icon(
+                  Ionicons.earth,
+                  size: 40,
+                ),
+                title: Text(
+                  R.All.tr,
+                  style: const TextStyle(
+                    fontSize: 25,
+                  ),
+                ),
+                subtitle: Obx(
+                  () => Text(
+                    _controller.calculateTotalBalance(),
+                    style: const TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Obx(
-            () => Expanded(
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context1, index1) =>
-                    _buildWalletItem(_controller.listWallet[index1]),
-                separatorBuilder: (context2, index2) {
-                  return const Divider(thickness: 1);
-                },
-                itemCount: _controller.listWallet.length,
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, bottom: 10),
-              child: Text(
-                R.Group.tr,
-                style: const TextStyle(
-                  fontSize: 20,
+              const Divider(thickness: 1),
+              const SizedBox(height: 20),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, bottom: 10),
+                  child: Text(
+                    R.Personal.tr,
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
-          Obx(
-            () => Expanded(
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context1, index1) =>
-                    _buildWalletItem(_controller.listGroupWallet[index1]),
-                separatorBuilder: (context2, index2) {
-                  return const Divider(thickness: 1);
-                },
-                itemCount: _controller.listGroupWallet.length,
+              Obx(
+                () => Column(
+                  children: _controller.listWallet
+                      .map((element) => _buildWalletItem(element))
+                      .toList(),
+                ),
               ),
-            ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, bottom: 10),
+                  child: Text(
+                    R.Group.tr,
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              Obx(
+                () => Column(
+                  children: _controller.listGroupWallet
+                      .map((element) => _buildWalletItem(element))
+                      .toList(),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -124,15 +120,7 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
     );
   }
 
-  String _calculateTotalBalance() {
-    int total = 0;
-    for (int i = 0; i < _controller.listWallet.length; i++) {
-      total += _controller.listWallet[i].balance!;
-    }
-    return FormatHelper().moneyFormat(total);
-  }
-
-  _buildWalletItem(Wallet listWallet) {
+  Widget _buildWalletItem(Wallet listWallet) {
     return ListTile(
       onTap: () {
         if (isFromTransactionScreen) {

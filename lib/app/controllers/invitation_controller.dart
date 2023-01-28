@@ -19,7 +19,7 @@ class InvitationController extends GetxController {
         listInvite.add(Invitation.fromJson(res.data[i]));
       }
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 
@@ -31,7 +31,7 @@ class InvitationController extends GetxController {
     if (res.isOk) {
       getAllInvitation();
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 }

@@ -19,6 +19,9 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
           ? null
           : Category.fromJson(json['category'] as Map<String, dynamic>),
       eventId: json['eventId'] as int?,
+      event: json['event'] == null
+          ? null
+          : Event.fromJson(json['event'] as Map<String, dynamic>),
       image: json['image'] as String?,
       createdAt: json['createdAt'] == null
           ? null
@@ -35,6 +38,7 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'wallet': instance.wallet?.toJson(),
       'category': instance.category?.toJson(),
       'eventId': instance.eventId,
+      'event': instance.event?.toJson(),
       'image': instance.image,
       'createdAt': instance.createdAt?.toIso8601String(),
     };

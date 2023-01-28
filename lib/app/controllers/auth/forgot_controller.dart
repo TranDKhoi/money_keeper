@@ -27,7 +27,7 @@ class ForgotPassController extends GetxController {
       if (res.isOk) {
         Get.toNamed(verifyForgotRoute);
       } else {
-        EasyLoading.showToast(res.message);
+        EasyLoading.showToast(res.errorMessage);
       }
     } else {
       EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
@@ -69,7 +69,7 @@ class ForgotPassController extends GetxController {
           Get.offAllNamed(loginScreenRoute);
           resetPassToken = null;
         } else {
-          EasyLoading.showToast(res.message);
+          EasyLoading.showToast(res.errorMessage);
         }
       } else {
         EasyLoading.showToast(R.Incorectpassword.tr);

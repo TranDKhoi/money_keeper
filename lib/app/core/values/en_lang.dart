@@ -168,5 +168,8 @@ const Map<String, String> enLanguagePackage = {
   R.Therearecurrentlynoevents: "There are currently no events",
   R.Togglesuccess: "Successfully marked",
   R.Deletethisevent: "Delete this event?",
+  R.Oftheevent: "Of the event?",
+  R.Email: "Email",
+  R.Earned: "Earned",
 
 };

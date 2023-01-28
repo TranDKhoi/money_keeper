@@ -38,8 +38,8 @@ class _LoginScreenState extends State<LoginScreen> {
             TextField(
               controller: _controller.emailTextController,
               keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                hintText: "Email",
+              decoration: InputDecoration(
+                hintText: R.Email.tr,
               ),
             ),
             const SizedBox(height: 20),

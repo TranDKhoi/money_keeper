@@ -172,4 +172,7 @@ class R {
   static const Therearecurrentlynoevents = "There are currently no events";
   static const Togglesuccess = "Togglesuccess";
   static const Deletethisevent = "Deletethisevent";
+  static const Oftheevent = "Oftheevent?";
+  static const Email = "Email";
+  static const Earned = "Earned";
 }

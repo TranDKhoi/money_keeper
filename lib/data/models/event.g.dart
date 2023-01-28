@@ -16,18 +16,12 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
           : DateTime.parse(json['endDate'] as String),
       name: json['name'] as String?,
       icon: json['icon'] as String?,
-      spent: json['spent'] as int?,
+      spentAmount: json['spentAmount'] as int?,
       wallet: json['wallet'] == null
           ? null
           : Wallet.fromJson(json['wallet'] as Map<String, dynamic>),
       isFinished: json['isFinished'] as bool?,
-      transactions: (json['transactions'] as List<dynamic>?)
-          ?.map((e) => Transaction.fromJson(e as Map<String, dynamic>))
-          .toList(),
       walletId: json['walletId'] as int?,
-      transactionsByDay: (json['transactionsByDay'] as List<dynamic>?)
-          ?.map((e) => TransactionsByDay.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
@@ -36,10 +30,8 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'endDate': instance.endDate?.toIso8601String(),
       'name': instance.name,
       'icon': instance.icon,
-      'spent': instance.spent,
+      'spentAmount': instance.spentAmount,
       'wallet': instance.wallet,
       'walletId': instance.walletId,
       'isFinished': instance.isFinished,
-      'transactions': instance.transactions,
-      'transactionsByDay': instance.transactionsByDay,
     };

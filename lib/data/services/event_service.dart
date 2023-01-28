@@ -52,7 +52,7 @@ class EventService extends GetConnect {
 
   Future<Response> toggleEvent(int i) async {
     return await get(
-      "$api_url/events/toggle-finished?id=$i",
+      "$api_url/events/$i/toggle-finished",
       headers: <String, String>{
         'Authorization': _ac.currentUser.value!.token!,
       },

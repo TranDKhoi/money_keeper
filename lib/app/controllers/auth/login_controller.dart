@@ -41,7 +41,7 @@ class LoginController extends GetxController {
 
         Get.toNamed(bottomBarRoute);
       } else {
-        EasyLoading.showToast(res.message);
+        EasyLoading.showToast(res.errorMessage);
       }
     } else {
       EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);

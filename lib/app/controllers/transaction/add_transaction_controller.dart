@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'package:money_keeper/app/controllers/transaction/transaction_controller.
 import 'package:money_keeper/data/models/transaction.dart';
 
 import '../../../data/models/category.dart';
+import '../../../data/models/event.dart';
 import '../../../data/models/wallet.dart';
 import '../../../data/services/storage_service.dart';
 import '../../../data/services/transaction_service.dart';
@@ -19,6 +19,7 @@ class AddTransactionController extends GetxController {
   var pickedDate = DateTime.now().obs;
   var selectedCategory = Rxn<Category>();
   var selectedWallet = Rxn<Wallet>();
+  var selectedEvent = Rxn<Event>();
   final amountController = TextEditingController();
   final noteController = TextEditingController();
 
@@ -63,7 +64,9 @@ class AddTransactionController extends GetxController {
     if (imageLink != null) {
       newTran.image = imageLink;
     }
-
+    if (selectedEvent.value != null) {
+      newTran.eventId = selectedEvent.value?.id;
+    }
     EasyLoading.show();
     var res = await TransactionService.ins.createNewTransaction(newTran);
     EasyLoading.dismiss();
@@ -73,7 +76,7 @@ class AddTransactionController extends GetxController {
       Get.find<TransactionController>().initData();
       EasyLoading.showToast(R.Transactioncreatedsuccessfully.tr);
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 

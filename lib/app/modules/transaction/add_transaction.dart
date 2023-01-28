@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/transaction/add_transaction_controller.dart';
+import 'package:money_keeper/app/modules/planning/event/event_screen.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
 import '../../core/utils/utils.dart';
@@ -43,8 +45,12 @@ class AddTransactionScreen extends StatelessWidget {
                         color: Colors.green,
                       ),
                       keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
                       decoration: const InputDecoration(
-                        hintText: "0 đ",
+                        suffixText: "đ",
+                        hintText: "\$",
                         hintStyle: TextStyle(
                           color: Colors.green,
                         ),
@@ -192,6 +198,56 @@ class AddTransactionScreen extends StatelessWidget {
                                   .dateFormat(_controller.pickedDate.value),
                               style: const TextStyle(
                                 fontSize: 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    //of event?
+                    Row(
+                      children: [
+                        Obx(
+                          () {
+                            if (_controller.selectedEvent.value != null) {
+                              return CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Image.asset(
+                                    "assets/icons/${_controller.selectedEvent.value!.icon}.png"),
+                              );
+                            } else {
+                              return const CircleAvatar();
+                            }
+                          },
+                        ),
+                        const SizedBox(width: 20),
+                        Obx(
+                          () => Expanded(
+                            child: TextField(
+                              enabled:  _controller.selectedWallet.value != null
+                                  ? true
+                                  : false,
+                              onTap: () async {
+                                FocusScope.of(context)
+                                    .requestFocus(FocusNode());
+                                var res = await Get.to(() => EventScreen(
+                                      canChangeWallet: false,
+                                      selectedWallet:
+                                          _controller.selectedWallet.value,
+                                    ));
+                                if (res != null) {
+                                  _controller.selectedEvent.value = res;
+                                }
+                              },
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.zero,
+                                hintText: _controller
+                                            .selectedEvent.value?.name ==
+                                        null
+                                    ? R.Oftheevent.tr
+                                    : _controller.selectedEvent.value!.name,
+                                fillColor: Colors.transparent,
                               ),
                             ),
                           ),

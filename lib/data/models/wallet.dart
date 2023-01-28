@@ -13,6 +13,7 @@ class Wallet {
   String? type;
   int? clonedCategoryWalletId;
   List<User>? members;
+  List<int>? memberIds;
 
   Wallet(
       {this.id,
@@ -22,7 +23,8 @@ class Wallet {
       this.isDefault,
       this.type,
       this.clonedCategoryWalletId,
-      this.members});
+      this.members,
+      this.memberIds});
 
   factory Wallet.fromJson(Map<String, dynamic> json) => _$WalletFromJson(json);
 

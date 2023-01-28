@@ -74,7 +74,7 @@ const Map<String, String> viLanguagePackage = {
   R.Save: "Lưu",
   R.Selectcategory: "Chọn danh mục",
   R.Note: "Ghi chú",
-  R.Edittransaction: "Sửa khoản chi",
+  R.Edittransaction: "Sửa giao dịch",
   R.Viewreportofthisperiod: "Xem thống kê kỳ này",
   R.Pleaseenteralltheinformation: "Vui lòng điền đủ thông tin",
   R.Incorectcode: "Mã không hợp lệ",
@@ -168,4 +168,7 @@ const Map<String, String> viLanguagePackage = {
   R.Therearecurrentlynoevents: "Hiện tại không có sự kiện nào",
   R.Togglesuccess: "Đánh dấu thành công",
   R.Deletethisevent: "Xoá sự kiện này?",
+  R.Oftheevent: "Thuộc sự kiện?",
+  R.Email: "Tài khoản",
+  R.Earned: "Thu được",
 };

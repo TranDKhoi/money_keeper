@@ -42,7 +42,7 @@ class NotificationController extends GetxController {
         listNotify.add(Notify.fromJson(res.data[i]));
       }
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 }

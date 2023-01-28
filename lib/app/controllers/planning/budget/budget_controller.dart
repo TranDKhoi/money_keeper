@@ -153,7 +153,7 @@ class BudgetController extends GetxController {
         Get.back();
         EasyLoading.showToast(R.Createbudgetsuccessfully.tr);
       } else {
-        EasyLoading.showToast(res.message);
+        EasyLoading.showToast(res.errorMessage);
       }
     } catch (e) {
       log("create budget error: $e");
@@ -189,7 +189,7 @@ class BudgetController extends GetxController {
         Get.back();
         EasyLoading.showToast(R.editBudgetsuccessfully.tr);
       } else {
-        EasyLoading.showToast(res.message);
+        EasyLoading.showToast(res.errorMessage);
       }
     } catch (e) {
       log("edit budget error: $e");
@@ -345,7 +345,7 @@ class BudgetController extends GetxController {
     if (res.isOk) {
       Get.back();
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 }

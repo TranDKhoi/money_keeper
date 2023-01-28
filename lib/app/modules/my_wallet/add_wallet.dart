@@ -3,11 +3,10 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/data/models/wallet.dart';
-
+import 'package:textfield_tags/textfield_tags.dart';
 import '../../controllers/wallet/my_wallet_controller.dart';
 import '../../core/values/r.dart';
 import '../category/widgets/category_icon_modal.dart';
-import 'add_wallet_group.dart';
 
 class AddWalletScreen extends StatefulWidget {
   const AddWalletScreen({Key? key}) : super(key: key);
@@ -18,10 +17,19 @@ class AddWalletScreen extends StatefulWidget {
 
 class _AddWalletScreenState extends State<AddWalletScreen> {
   final MyWalletController _controller = Get.find()..getAllCategoryGroup();
-
+  final TextfieldTagsController _tagController = TextfieldTagsController();
   bool isGroupWallet = false;
   final textWalletName = TextEditingController();
   final textWalletBalance = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _tagController.dispose();
+    textWalletName.dispose();
+    textWalletBalance.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,23 +45,16 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
               Switch(
                   value: isGroupWallet,
                   onChanged: (val) {
+                    _controller.listMember.clear();
                     setState(() {
                       isGroupWallet = val;
-                      textWalletName.clear();
-                      textWalletBalance.clear();
                     });
                   }),
             ],
           ),
         ],
       ),
-      body: isGroupWallet
-          ? AddWalletGroup(
-              controller: _controller,
-              textWalletName: textWalletName,
-              textWalletBalance: textWalletBalance,
-            )
-          : Column(
+      body: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Card(
@@ -184,6 +185,107 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
                             ),
                           ],
                         ),
+                        Visibility(
+                          visible: isGroupWallet,
+                          child: Column(children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.groups,
+                                size: 30,
+                              ),
+                              const SizedBox(width: 20),
+                              Text(R.Addmembers.tr, style: const TextStyle(fontSize: 13),)
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          TextFieldTags(
+                            textfieldTagsController: _tagController,
+                            inputfieldBuilder: (context, tec, fn, error, onChanged, onSubmitted) {
+                              return ((context, sc, tags, onTagDelete) {
+                                return TextField(
+                                  controller: tec,
+                                  focusNode: fn,
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    border: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    focusedBorder: const OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        width: 1.0,
+                                      ),
+                                    ),
+                                    hintText: _tagController.hasTags ? '' : "Enter email...",
+                                    errorText: error,
+                                    prefixIcon: tags.isNotEmpty
+                                        ? SingleChildScrollView(
+                                      controller: sc,
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: tags.map((String tag) {
+                                          return Container(
+                                            decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(20.0),
+                                              ),
+                                              color: Colors.green,
+                                            ),
+                                            margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                            padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                                            child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                InkWell(
+                                                  child: Text(
+                                                    tag,
+                                                    style: const TextStyle(color: Colors.white),
+                                                  ),
+                                                  onTap: () {
+                                                    print("$tag selected");
+                                                  },
+                                                ),
+                                                const SizedBox(width: 4.0),
+                                                InkWell(
+                                                  child: const Icon(
+                                                    Icons.cancel,
+                                                    size: 14.0,
+                                                    color: Colors.white,
+                                                  ),
+                                                  onTap: () {
+                                                    _controller.listMember.removeWhere((element) => element.email == tag);
+                                                    onTagDelete(tag);
+                                                  },
+                                                )
+                                              ],
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    )
+                                        : null,
+                                  ),
+                                  onChanged: onChanged,
+                                  onSubmitted: (result) async {
+                                    await _controller.checkAlreadyUser(email: result).then((value) {
+                                      if (value == false) {
+                                        EasyLoading.showToast('User does not exist');
+                                        tec.clear();
+                                        return null;
+                                      } else if (_tagController.getTags!.contains(result)) {
+                                        EasyLoading.showToast('You already entered that');
+                                        return null;
+                                      }
+                                      onSubmitted?.call(result);
+                                    });
+                                  },
+                                );
+                              });
+                            },
+                          ),
+                        ],),),
                       ],
                     ),
                   ),
@@ -212,21 +314,41 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
   }
 
   _createNewWallet() {
-    if (textWalletBalance.text.isEmpty || textWalletName.text.isEmpty || _controller.selectedCategoryPic.value == null) {
-      EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
-      return;
-    }
-    final newWallet = Wallet(
-      balance: int.parse(textWalletBalance.text),
-      name: textWalletName.text.trim(),
-      type: "Personal",
-      icon: _controller.selectedCategoryPic.value.toString(),
-    );
+    if(isGroupWallet) {
+      if (textWalletBalance.text.isEmpty || textWalletName.text.isEmpty || _controller.selectedCategoryPic.value == null || _controller.listMember.isEmpty) {
+        EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
+        return;
+      }
+      final newWallet = Wallet(
+        balance: int.parse(textWalletBalance.text),
+        name: textWalletName.text.trim(),
+        type: "Group",
+        icon: _controller.selectedCategoryPic.value.toString(),
+        memberIds: []
+      );
+      for (var element in _controller.listMember) {
+        newWallet.memberIds?.add(element.id!);
+      }
 
-    if (_controller.selectedCategoryGroup.value.id != -1) {
-      newWallet.clonedCategoryWalletId = _controller.selectedCategoryGroup.value.id;
+      if (_controller.selectedCategoryGroup.value.id != -1) {
+        newWallet.clonedCategoryWalletId = _controller.selectedCategoryGroup.value.id;
+      }
+      _controller.createNewWallet(newWallet);
+    } else {
+      if (textWalletBalance.text.isEmpty || textWalletName.text.isEmpty || _controller.selectedCategoryPic.value == null) {
+        EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
+        return;
+      }
+      final newWallet = Wallet(
+        balance: int.parse(textWalletBalance.text),
+        name: textWalletName.text.trim(),
+        type: "Personal",
+        icon: _controller.selectedCategoryPic.value.toString(),
+      );
+      if (_controller.selectedCategoryGroup.value.id != -1) {
+        newWallet.clonedCategoryWalletId = _controller.selectedCategoryGroup.value.id;
+      }
+      _controller.createNewWallet(newWallet);
     }
-
-    _controller.createNewWallet(newWallet);
   }
 }

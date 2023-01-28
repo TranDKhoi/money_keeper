@@ -10,7 +10,12 @@ import '../../../core/utils/utils.dart';
 import '../../../core/values/r.dart';
 
 class EventScreen extends StatefulWidget {
-  const EventScreen({Key? key}) : super(key: key);
+  const EventScreen(
+      {Key? key, this.canChangeWallet = true, this.selectedWallet})
+      : super(key: key);
+
+  final bool canChangeWallet;
+  final Wallet? selectedWallet;
 
   @override
   State<EventScreen> createState() => _EventScreenState();
@@ -18,12 +23,15 @@ class EventScreen extends StatefulWidget {
 
 class _EventScreenState extends State<EventScreen>
     with SingleTickerProviderStateMixin {
-  final _controller = Get.put(EventController())..getAllEvent();
+  final _controller = Get.put(EventController());
 
   late TabController _tabController;
 
   @override
   void initState() {
+    if (widget.selectedWallet != null) {
+      _controller.selectedWallet.value = widget.selectedWallet!;
+    }
     _controller.getAllEvent();
 
     _tabController = TabController(length: 2, vsync: this);
@@ -44,19 +52,22 @@ class _EventScreenState extends State<EventScreen>
         elevation: 5,
         title: Text(R.Event.tr),
         actions: [
-          Obx(
-            () => DropdownButton<Wallet>(
-              value: _controller.selectedWallet.value,
-              icon: const Icon(Ionicons.caret_down),
-              onChanged: (Wallet? value) {
-                _controller.changeWallet(value!);
-              },
-              items: _controller.listWallet.map((Wallet value) {
-                return DropdownMenuItem(
-                  value: value,
-                  child: Text(value.name!),
-                );
-              }).toList(),
+          Visibility(
+            visible: widget.selectedWallet == null,
+            child: Obx(
+              () => DropdownButton<Wallet>(
+                value: _controller.selectedWallet.value,
+                icon: const Icon(Ionicons.caret_down),
+                onChanged: (Wallet? value) {
+                  _controller.changeWallet(value!);
+                },
+                items: _controller.listWallet.map((Wallet value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(value.name!),
+                  );
+                }).toList(),
+              ),
             ),
           ),
           const SizedBox(width: 20),
@@ -73,9 +84,12 @@ class _EventScreenState extends State<EventScreen>
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Text(R.Running.tr),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: Text(R.Finished.tr),
+              Visibility(
+                visible: widget.selectedWallet == null ? true : false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Text(R.Finished.tr),
+                ),
               )
             ]),
       ),
@@ -113,8 +127,14 @@ class _EventScreenState extends State<EventScreen>
   _buildEventItem(Event e) {
     return Card(
       child: InkWell(
-        onTap: () => Get.toNamed(eventInfoScreenRoute, arguments: e)?.then(
-            (value) => _controller.changeEventTabBar(_tabController.index)),
+        onTap: () {
+          if (widget.selectedWallet == null) {
+            Get.toNamed(eventInfoScreenRoute, arguments: e)?.then(
+                (value) => _controller.changeEventTabBar(_tabController.index));
+          } else {
+            Get.back(result: e);
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Row(
@@ -136,11 +156,11 @@ class _EventScreenState extends State<EventScreen>
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "${R.Spent.tr}: ",
+                        e.spentAmount! <= 0? "${R.Spent.tr}: ":"${R.Earned.tr}: ",
                         style: const TextStyle(fontSize: 15),
                       ),
                       Text(
-                        FormatHelper().moneyFormat(e.spent),
+                        FormatHelper().moneyFormat(e.spentAmount!.abs()),
                         style: const TextStyle(fontSize: 15),
                       ),
                     ],

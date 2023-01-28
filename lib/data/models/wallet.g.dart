@@ -17,6 +17,8 @@ Wallet _$WalletFromJson(Map<String, dynamic> json) => Wallet(
       members: (json['members'] as List<dynamic>?)
           ?.map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
+      memberIds:
+          (json['memberIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
     );
 
 Map<String, dynamic> _$WalletToJson(Wallet instance) => <String, dynamic>{
@@ -28,4 +30,5 @@ Map<String, dynamic> _$WalletToJson(Wallet instance) => <String, dynamic>{
       'type': instance.type,
       'clonedCategoryWalletId': instance.clonedCategoryWalletId,
       'members': instance.members?.map((e) => e.toJson()).toList(),
+      'memberIds': instance.memberIds,
     };

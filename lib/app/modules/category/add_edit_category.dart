@@ -226,7 +226,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
         Get.back();
         _controller.getCateByWalletId(editCate.walletId!);
       } else {
-        EasyLoading.showToast(res.message);
+        EasyLoading.showToast(res.errorMessage);
       }
     }
   }
@@ -274,7 +274,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
         Get.back();
         _controller.getCateByWalletId(newCate.walletId!);
       } else {
-        EasyLoading.showToast(res.message);
+        EasyLoading.showToast(res.errorMessage);
       }
     }
   }

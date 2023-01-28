@@ -39,33 +39,33 @@ class EditTransactionController extends GetxController {
           .uploadImageToStorage(File(pickedImage.value!));
     }
 
-    final newTran = Transaction();
     editTrans.walletId = editTrans.wallet!.id;
     editTrans.categoryId = editTrans.category!.id;
-    if (editTrans.note?.trim().isEmpty ?? true) {
-      newTran.note = null;
-    }
+    editTrans.categoryId = editTrans.category!.id;
     if (imageLink != null) {
       editTrans.image = imageLink;
+    }
+    if (editTrans.event != null) {
+      editTrans.eventId = editTrans.event!.id;
     }
 
     EasyLoading.show();
     var res = await TransactionService.ins.updateTransaction(editTrans);
     EasyLoading.dismiss();
 
-    if(res.isOk){
+    if (res.isOk) {
       Get.back();
       Get.find<TransactionController>().initData();
       EasyLoading.showToast(R.Transactioneditedsuccessfully.tr);
-    }else{
-      EasyLoading.showToast(res.message);
+    } else {
+      EasyLoading.showToast(res.errorMessage);
     }
-
   }
 
   bool isValidData(Transaction editTrans) {
     return editTrans.amount.toString().trim().isNotEmpty &&
-        (editTrans.note != null || editTrans.note!.trim().isNotEmpty);
+        (editTrans.note != null || editTrans.note!.trim().isNotEmpty) &&
+        editTrans.category != null;
   }
 
   deleteTransaction(Transaction tempTrans) async {

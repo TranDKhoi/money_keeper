@@ -31,6 +31,7 @@ class EventController extends GetxController {
       for (int i = 0; i < res.data.length; i++) {
         listEventFromAPI.add(Event.fromJson(res.data[i]));
       }
+
       if (_currentIndex == 0) {
         listEvent.value = [];
         listEvent.value = List.from(listEventFromAPI
@@ -44,7 +45,7 @@ class EventController extends GetxController {
       }
     } else {
       print(res.statusText);
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 
@@ -78,7 +79,7 @@ class EventController extends GetxController {
       Get.back();
       getAllEvent();
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 
@@ -91,7 +92,7 @@ class EventController extends GetxController {
       Get.back();
       getAllEvent();
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 }

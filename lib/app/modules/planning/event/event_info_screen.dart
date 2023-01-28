@@ -155,7 +155,7 @@ class _EventInfoScreenState extends State<EventInfoScreen> {
                 const Spacer(),
                 ElevatedButton(
                     onPressed: () => Get.toNamed(eventTransactionScreenRoute,
-                        arguments: selectedEvent),
+                        arguments: [selectedEvent,_controller.selectedWallet.value.id]),
                     child: Text(R.Listoftransaction.tr)),
               ],
             ),

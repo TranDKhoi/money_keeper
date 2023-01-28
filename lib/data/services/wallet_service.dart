@@ -40,4 +40,14 @@ class WalletService extends GetConnect {
       },
     );
   }
+  
+  Future<Response> updateWallet({required Wallet wallet}) async {
+    return await put(
+      "$api_url/wallets/${wallet.id}",
+      wallet.toJson(),
+      headers: <String, String>{
+        'Authorization': _ac.currentUser.value!.token!,
+      },
+    );
+  }
 }

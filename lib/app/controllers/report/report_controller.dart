@@ -28,10 +28,7 @@ class ReportController extends GetxController {
   initData()async{
     var walletController = Get.find<MyWalletController>();
     await walletController.getAllWallet();
-    listWallet.value = [...walletController.listWallet];
-    var totalWallet = Wallet(
-        name: R.Totalwallet.tr, balance: _calculateTotalBalance(), id: -1);
-    listWallet.value = [totalWallet, ...walletController.listWallet];
+    listWallet.value = [...walletController.listWallet,...walletController.listGroupWallet];
     selectedWallet.value = listWallet[0];
     generateTimeLine();
     selectedTimeLine.value = listTimeline[listTimeline.length - 2];
@@ -130,7 +127,7 @@ class ReportController extends GetxController {
       }
       dy.add(dy[dy.length - 1] * 1.3);
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 
@@ -147,7 +144,7 @@ class ReportController extends GetxController {
           incomePie.add(PieReport.fromJson(res.data["details"][i]));
         }
       } else {
-        EasyLoading.showToast(res.message);
+        EasyLoading.showToast(res.errorMessage);
       }
     });
   }
@@ -165,7 +162,7 @@ class ReportController extends GetxController {
           expensePie.add(PieReport.fromJson(res.data["details"][i]));
         }
       } else {
-        EasyLoading.showToast(res.message);
+        EasyLoading.showToast(res.errorMessage);
       }
     });
   }

@@ -41,7 +41,7 @@ class AddEditEventController extends GetxController {
       Get.back();
       Get.find<EventController>().getAllEvent();
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 
@@ -68,7 +68,7 @@ class AddEditEventController extends GetxController {
       Get.back();
       Get.find<EventController>().getAllEvent();
     } else {
-      EasyLoading.showToast(res.message);
+      EasyLoading.showToast(res.errorMessage);
     }
   }
 

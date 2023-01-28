@@ -12,6 +12,7 @@ import '../../core/utils/utils.dart';
 import '../../core/values/r.dart';
 import '../../routes/routes.dart';
 import '../category/manage_category.dart';
+import '../planning/event/event_screen.dart';
 
 class EditTransactionScreen extends StatefulWidget {
   const EditTransactionScreen({Key? key, required this.selectedTrans})
@@ -226,6 +227,43 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                             FormatHelper().dateFormat(tempTrans.createdAt!),
                             style: const TextStyle(
                               fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    //of event?
+                    Row(
+                      children: [
+                        tempTrans.event != null
+                            ? CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                child: Image.asset(
+                                    "assets/icons/${tempTrans.event?.icon}.png"),
+                              )
+                            : const CircleAvatar(),
+                        const SizedBox(width: 20),
+                        Expanded(
+                          child: TextField(
+                            enabled: tempTrans.wallet != null ? true : false,
+                            onTap: () async {
+                              FocusScope.of(context).requestFocus(FocusNode());
+                              var res = await Get.to(() => EventScreen(
+                                    canChangeWallet: false,
+                                    selectedWallet: tempTrans.wallet,
+                                  ));
+                              if (res != null) {
+                                setState(() {
+                                  tempTrans.event = res;
+                                });
+                              }
+                            },
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.zero,
+                              hintText:
+                                  tempTrans.event?.name ?? R.Oftheevent.tr,
+                              fillColor: Colors.transparent,
                             ),
                           ),
                         ),
