@@ -32,7 +32,7 @@ class SummaryCard extends StatelessWidget {
                           const Spacer(),
                           Text(
                             FormatHelper().moneyFormat(budgetController
-                                .budgetSummary.value!.totalBudget),
+                                .budgetSummary.value!.totalBudget?.toDouble()),
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -51,7 +51,7 @@ class SummaryCard extends StatelessWidget {
                           const Spacer(),
                           Text(
                             FormatHelper().moneyFormat(budgetController
-                                .budgetSummary.value!.totalSpentAmount),
+                                .budgetSummary.value!.totalSpentAmount?.toDouble()),
                             style: const TextStyle(color: Colors.red),
                           ),
                         ],
@@ -61,10 +61,8 @@ class SummaryCard extends StatelessWidget {
                         children: [
                           Text(R.canSpent.tr),
                           const Spacer(),
-                          Text(FormatHelper().moneyFormat((budgetController
-                                  .budgetSummary.value!.totalBudget as int) -
-                              (budgetController.budgetSummary.value!
-                                  .totalSpentAmount as int))),
+                          Text(FormatHelper().moneyFormat(
+                              ( budgetController.budgetSummary.value!.totalBudget! - int.parse(budgetController.budgetSummary.value!.totalSpentAmount!.toString())).toDouble())),
                         ],
                       ),
                     ],

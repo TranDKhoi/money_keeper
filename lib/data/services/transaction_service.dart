@@ -73,13 +73,7 @@ class TransactionService extends GetConnect {
         });
   }
 
-  Future<Response> getRecentlyTrans() async{
-    return await get(
-        "$api_url/global-wallets/transactions/recently?Take=5",
-        headers: <String, String>{
-          'Authorization': _ac.currentUser.value!.token!,
-        });
-  }
+
 
 
   _getEndDate(String timeRange) {

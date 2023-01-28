@@ -17,7 +17,7 @@ class InExItem extends StatelessWidget {
         ),
       ),
       title: Text(e.category.name ?? ""),
-      trailing: Text(FormatHelper().moneyFormat(e.amount)),
+      trailing: Text(FormatHelper().moneyFormat(e.amount.toDouble())),
     );
   }
 }

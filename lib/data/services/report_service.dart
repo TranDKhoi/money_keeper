@@ -13,7 +13,7 @@ class ReportService extends GetConnect {
   final AccountController _ac = Get.find();
 
 
-  Future<Response> getDailyReport(
+  Future<Response> getDailyReportByWalletId(
       {required int walletId, required String timeRange}) async {
     if (timeRange == R.Lastmonth.tr) {
       timeRange =
@@ -36,7 +36,7 @@ class ReportService extends GetConnect {
     );
   }
 
-  Future<Response> getIncomeReport(
+  Future<Response> getIncomeReportByWalletId(
       {required int walletId, required String timeRange}) async {
     if (timeRange == R.Lastmonth.tr) {
       timeRange =
@@ -59,7 +59,7 @@ class ReportService extends GetConnect {
     );
   }
 
-  Future<Response> getExpenseReport(
+  Future<Response> getExpenseReportByWalletId(
       {required int walletId, required String timeRange}) async {
     if (timeRange == R.Lastmonth.tr) {
       timeRange =

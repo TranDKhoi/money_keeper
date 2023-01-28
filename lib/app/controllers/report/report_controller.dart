@@ -96,7 +96,7 @@ class ReportController extends GetxController {
 
   Future<void> _getLineData() async {
     EasyLoading.show();
-    var res = await ReportService.ins.getDailyReport(
+    var res = await ReportService.ins.getDailyReportByWalletId(
         walletId: selectedWallet.value.id!, timeRange: selectedTimeLine.value!);
     EasyLoading.dismiss();
     if (res.isOk) {
@@ -133,7 +133,7 @@ class ReportController extends GetxController {
 
   void _getIncomeData() {
     ReportService.ins
-        .getIncomeReport(
+        .getIncomeReportByWalletId(
             walletId: selectedWallet.value.id!,
             timeRange: selectedTimeLine.value!)
         .then((res) {
@@ -151,7 +151,7 @@ class ReportController extends GetxController {
 
   void _getExpenseData() {
     ReportService.ins
-        .getExpenseReport(
+        .getExpenseReportByWalletId(
             walletId: selectedWallet.value.id!,
             timeRange: selectedTimeLine.value!)
         .then((res) {

@@ -44,7 +44,7 @@ class _ReportScreenState extends State<ReportScreen>
           children: [
             Text(R.Balance.tr),
             Obx(() => Text(FormatHelper()
-                .moneyFormat(_controller.selectedWallet.value.balance!))),
+                .moneyFormat(_controller.selectedWallet.value.balance?.toDouble()))),
           ],
         ),
         bottom: PreferredSize(
@@ -103,7 +103,7 @@ class _ReportScreenState extends State<ReportScreen>
               Text(R.Summary.tr),
               Obx(
                 () => Text(
-                  FormatHelper().moneyFormat(_controller.summary.value),
+                  FormatHelper().moneyFormat(_controller.summary.value.toDouble()),
                   style: TextStyle(
                     fontSize: 25,
                     color: _controller.summary.value < 0
@@ -160,7 +160,7 @@ class _ReportScreenState extends State<ReportScreen>
               ),
               Obx(
                 () => Text(
-                  FormatHelper().moneyFormat(_controller.incomeSummary.value),
+                  FormatHelper().moneyFormat(_controller.incomeSummary.value.toDouble()),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -207,7 +207,7 @@ class _ReportScreenState extends State<ReportScreen>
               ),
               Obx(
                 () => Text(
-                  FormatHelper().moneyFormat(_controller.expenseSummary.value),
+                  FormatHelper().moneyFormat(_controller.expenseSummary.value.toDouble()),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

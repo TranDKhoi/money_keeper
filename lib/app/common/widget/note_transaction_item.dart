@@ -36,7 +36,7 @@ class NoteTransactionItem extends StatelessWidget {
         ),
       ),
       trailing: Text(
-        FormatHelper().moneyFormat(transaction.amount),
+        FormatHelper().moneyFormat(transaction.amount?.toDouble()),
         style: TextStyle(
           color: transaction.category?.type == "Expense"
               ? Colors.redAccent

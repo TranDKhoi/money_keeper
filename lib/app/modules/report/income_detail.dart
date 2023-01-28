@@ -30,7 +30,7 @@ class IncomeDetail extends StatelessWidget {
                 style: const TextStyle(fontSize: 30),
               ),
               Text(
-                FormatHelper().moneyFormat(_controller.incomeSummary.value),
+                FormatHelper().moneyFormat(_controller.incomeSummary.value.toDouble()),
                 style: const TextStyle(
                   fontSize: 20,
                   color: Colors.green,

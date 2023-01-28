@@ -34,7 +34,7 @@ class CardTransactionItem extends StatelessWidget {
               subtitle:
                   Text(FormatHelper().dateFormat(transactionsByDay.date!)),
               trailing: Text(
-                FormatHelper().moneyFormat(transactionsByDay.revenue),
+                FormatHelper().moneyFormat(transactionsByDay.revenue?.toDouble()),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                 ),

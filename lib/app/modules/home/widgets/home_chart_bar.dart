@@ -6,9 +6,11 @@ import 'package:money_keeper/app/controllers/home_controller.dart';
 import '../../../core/values/r.dart';
 
 class HomeChartBar extends StatelessWidget {
-  HomeChartBar({Key? key}) : super(key: key);
+  HomeChartBar(this.leftData, this.rightData, {Key? key}) : super(key: key);
 
   final HomeController _controller = Get.find();
+  final int leftData;
+  final int rightData;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +64,7 @@ class HomeChartBar extends StatelessWidget {
                 x: 0,
                 barRods: [
                   BarChartRodData(
-                    toY: 8,
+                    toY: leftData.toDouble(),
                     width: 50,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(5),
@@ -75,7 +77,7 @@ class HomeChartBar extends StatelessWidget {
                 x: 1,
                 barRods: [
                   BarChartRodData(
-                    toY: 10,
+                    toY: rightData.toDouble(),
                     width: 50,
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(5),

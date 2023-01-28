@@ -141,7 +141,7 @@ class _MyWalletScreenState extends State<MyWalletScreen> {
         style: const TextStyle(fontSize: 25),
       ),
       subtitle: Text(
-        FormatHelper().moneyFormat(listWallet.balance!),
+        FormatHelper().moneyFormat(listWallet.balance?.toDouble()),
         style: const TextStyle(fontSize: 15),
       ),
     );

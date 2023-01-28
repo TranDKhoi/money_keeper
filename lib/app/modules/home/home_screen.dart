@@ -7,6 +7,7 @@ import 'package:money_keeper/app/controllers/wallet/my_wallet_controller.dart';
 import 'package:money_keeper/app/modules/home/widgets/home_chart_bar.dart';
 
 import '../../common/widget/home_transaction_item.dart';
+import '../../core/utils/utils.dart';
 import '../../core/values/r.dart';
 import '../notification/notify_screen.dart';
 
@@ -218,64 +219,74 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           //total spent
                           const SizedBox(height: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          Row(
                             children: [
-                              const Text(
-                                "100.000 đ",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
-                                ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    FormatHelper().moneyFormat(
+                                        _controller.barChartData[1].toDouble()),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30,
+                                    ),
+                                  ),
+                                  Obx(
+                                    () => Text(
+                                      _controller.selectedReport.value == 0
+                                          ? R.Totalexpenseofthisweek.tr
+                                          : R.Totalexpenseofthismonth.tr,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Obx(
-                                () => Text(
-                                  _controller.selectedReport.value == 0
-                                      ? R.Totalexpenseofthisweek.tr
-                                      : R.Totalexpenseofthismonth.tr,
-                                ),
-                              ),
+                              const Spacer(),
+                              InkWell(
+                                  onTap: () => _controller.getSummaryData(),
+                                  child: const Icon(Ionicons.refresh_outline))
                             ],
                           ),
                           //charts
                           const SizedBox(height: 30),
-                          HomeChartBar(),
+                          Obx(() => HomeChartBar(_controller.barChartData[0],
+                              _controller.barChartData[1])),
                           //most spent
                           const SizedBox(height: 10),
-                          Text(
-                            R.Mostexpense.tr,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          ListTile(
-                            onTap: () {},
-                            contentPadding: EdgeInsets.zero,
-                            isThreeLine: true,
-                            dense: true,
-                            leading: const Icon(Ionicons.wallet),
-                            title: const Text(
-                              "Ăn và ún",
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                            subtitle: const Text(
-                              "100.000 đ",
-                              style: TextStyle(
-                                fontSize: 15,
-                              ),
-                            ),
-                            trailing: const Text(
-                              "100%",
-                              style: TextStyle(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                          // Text(
+                          //   R.Mostexpense.tr,
+                          //   style: const TextStyle(
+                          //     fontSize: 18,
+                          //     fontWeight: FontWeight.bold,
+                          //   ),
+                          // ),
+                          // const SizedBox(height: 10),
+                          // ListTile(
+                          //   onTap: () {},
+                          //   contentPadding: EdgeInsets.zero,
+                          //   isThreeLine: true,
+                          //   dense: true,
+                          //   leading: const Icon(Ionicons.wallet),
+                          //   title: const Text(
+                          //     "Ăn và ún",
+                          //     style: TextStyle(
+                          //       fontSize: 20,
+                          //     ),
+                          //   ),
+                          //   subtitle: const Text(
+                          //     "100.000 đ",
+                          //     style: TextStyle(
+                          //       fontSize: 15,
+                          //     ),
+                          //   ),
+                          //   trailing: const Text(
+                          //     "100%",
+                          //     style: TextStyle(
+                          //       color: Colors.redAccent,
+                          //       fontWeight: FontWeight.bold,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -312,10 +323,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Obx(
                         () => Column(
                           children: _controller.transactions
-                              .map((element) => HomeTransactionItem(
-                                    onTap: _controller.toEditTransactionScreen,
-                                    transaction: element,
-                                  ))
+                              .map((element) =>
+                                  HomeTransactionItem(transaction: element))
                               .toList(),
                         ),
                       ),

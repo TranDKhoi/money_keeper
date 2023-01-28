@@ -50,13 +50,13 @@ class BudgetItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  FormatHelper().moneyFormat(limitAmount),
+                  FormatHelper().moneyFormat(limitAmount.toDouble()),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                    "${R.remaining.tr}: ${FormatHelper().moneyFormat(remainingAmount)}"),
+                    "${R.remaining.tr}: ${FormatHelper().moneyFormat(remainingAmount.toDouble())}"),
               ],
             ),
           ],

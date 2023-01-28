@@ -43,7 +43,7 @@ class _TransactionScreenState extends State<TransactionScreen>
           children: [
             Text(R.Balance.tr),
             Obx(() => Text(FormatHelper()
-                .moneyFormat(_controller.selectedWallet.value.balance!))),
+                .moneyFormat(_controller.selectedWallet.value.balance?.toDouble()))),
           ],
         ),
         bottom: PreferredSize(
@@ -106,7 +106,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                             Obx(
                               () => Text(
                                 FormatHelper().moneyFormat(_controller
-                                    .transactionsByTime.value.totalIncome),
+                                    .transactionsByTime.value.totalIncome?.toDouble()),
                                 style: const TextStyle(
                                   color: Colors.green,
                                   fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                             Obx(
                               () => Text(
                                 FormatHelper().moneyFormat(_controller
-                                    .transactionsByTime.value.totalExpense),
+                                    .transactionsByTime.value.totalExpense?.toDouble()),
                                 style: const TextStyle(
                                   color: Colors.redAccent,
                                   fontWeight: FontWeight.bold,
@@ -144,7 +144,7 @@ class _TransactionScreenState extends State<TransactionScreen>
                                       0) -
                                   (_controller.transactionsByTime.value
                                           .totalExpense ??
-                                      0)),
+                                      0).toDouble()),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                               ),

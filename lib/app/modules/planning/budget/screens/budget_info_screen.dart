@@ -103,16 +103,17 @@ class _BudgetInfoScreenState extends State<BudgetInfoScreen> {
                     Column(
                       children: [
                         Text(R.recommendeddaily.tr),
-                        Text(budgetDetailSummary.recommendedDailyExpense!
-                            .toStringAsFixed(2)),
+                        Text(FormatHelper().moneyFormat(
+                            budgetDetailSummary.recommendedDailyExpense!)),
                       ],
                     ),
                     const Spacer(),
                     Column(
                       children: [
                         Text(R.projectedspending.tr),
-                        Text(budgetDetailSummary.expectedExpense!
-                            .toStringAsFixed(2)),
+                        Text(FormatHelper().moneyFormat(double.parse(
+                            budgetDetailSummary.expectedExpense!
+                                .toStringAsFixed(2)))),
                       ],
                     ),
                   ],
@@ -124,8 +125,9 @@ class _BudgetInfoScreenState extends State<BudgetInfoScreen> {
                     Column(
                       children: [
                         Text(R.actualspending.tr),
-                        Text(budgetDetailSummary.realDailyExpense!
-                            .toStringAsFixed(2)),
+                        Text(FormatHelper().moneyFormat(double.parse(
+                            budgetDetailSummary.realDailyExpense!
+                                .toStringAsFixed(2)))),
                       ],
                     )
                   ],
@@ -183,7 +185,8 @@ class _BudgetInfoScreenState extends State<BudgetInfoScreen> {
           children: [
             Text(R.Totalbudget.tr),
             const Spacer(),
-            Text(FormatHelper().moneyFormat(budgetDetailSummary.totalBudget)),
+            Text(FormatHelper()
+                .moneyFormat(budgetDetailSummary.totalBudget?.toDouble())),
           ],
         ),
         const SizedBox(height: 5),
@@ -193,7 +196,7 @@ class _BudgetInfoScreenState extends State<BudgetInfoScreen> {
             Text(R.Totalexpense.tr),
             const Spacer(),
             Text(FormatHelper()
-                .moneyFormat(budgetDetailSummary.totalSpentAmount)),
+                .moneyFormat(budgetDetailSummary.totalSpentAmount?.toDouble())),
           ],
         ),
         const Divider(),
@@ -201,7 +204,7 @@ class _BudgetInfoScreenState extends State<BudgetInfoScreen> {
           children: [
             Text(R.Totalleft.tr),
             const Spacer(),
-            Text(FormatHelper().moneyFormat(totalLeft)),
+            Text(FormatHelper().moneyFormat(totalLeft.toDouble())),
           ],
         ),
         const SizedBox(height: 15),

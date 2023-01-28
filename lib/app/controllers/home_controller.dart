@@ -1,13 +1,16 @@
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 
 import '../../data/models/transaction.dart';
-import '../../data/services/transaction_service.dart';
+import '../../data/services/global_wallet_service.dart';
+import '../modules/transaction/edit_transaction.dart';
 
 class HomeController extends GetxController {
   var selectedReport = 1.obs;
   var transactions = <Transaction>[].obs;
+  var barChartData = <int>[0, 0].obs;
 
   void changeSelectedReport() {
     selectedReport.value = selectedReport.value == 0 ? 1 : 0;
@@ -18,16 +21,35 @@ class HomeController extends GetxController {
     Get.toNamed(myWalletRoute);
   }
 
-  void toEditTransactionScreen() {
-    // Get.to(()=> EditTransactionScreen(selectedTrans: Transaction(),));
-  }
-
-  getSummaryData() {
-    if (selectedReport.value == 0) {}
+  getSummaryData() async {
+    if (selectedReport.value == 0) {
+    } else {
+     await Future.wait([ GlobalWalletService.ins
+          .getExpenseReportByMonth(DateTime.now())
+          .then((value) {
+        if (value.isOk) {
+          barChartData[1] = value.data["totalAmount"];
+        } else {
+          EasyLoading.showToast(value.errorMessage);
+        }
+      }),
+      GlobalWalletService.ins
+          .getExpenseReportByMonth(
+              DateTime(DateTime.now().year, DateTime.now().month - 1))
+          .then((value) {
+        if (value.isOk) {
+          barChartData[0] = value.data["totalAmount"];
+          print(barChartData[0]);
+        } else {
+          EasyLoading.showToast(value.errorMessage);
+        }
+      }),]);
+     barChartData.refresh();
+    }
   }
 
   getRecentTransaction() async {
-    var res = await TransactionService.ins.getRecentlyTrans();
+    var res = await GlobalWalletService.ins.getRecentlyTrans();
     if (res.isOk) {
       transactions.value = [];
       for (int i = 0; i < res.data.length; i++) {

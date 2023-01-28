@@ -160,7 +160,7 @@ class _EventScreenState extends State<EventScreen>
                         style: const TextStyle(fontSize: 15),
                       ),
                       Text(
-                        FormatHelper().moneyFormat(e.spentAmount!.abs()),
+                        FormatHelper().moneyFormat(e.spentAmount!.abs().toDouble()),
                         style: const TextStyle(fontSize: 15),
                       ),
                     ],

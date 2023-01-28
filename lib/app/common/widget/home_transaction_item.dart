@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../data/models/transaction.dart';
 import '../../core/utils/utils.dart';
+import '../../modules/transaction/edit_transaction.dart';
 
 class HomeTransactionItem extends StatelessWidget {
-  const HomeTransactionItem(
-      {Key? key, required this.onTap, required this.transaction})
+  const HomeTransactionItem({Key? key, required this.transaction})
       : super(key: key);
 
-  final VoidCallback onTap;
   final Transaction transaction;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: onTap,
+      onTap: () =>
+          Get.to(() => EditTransactionScreen(selectedTrans: transaction)),
       contentPadding: const EdgeInsets.symmetric(vertical: 5),
       isThreeLine: true,
       dense: true,
@@ -35,7 +36,7 @@ class HomeTransactionItem extends StatelessWidget {
         ),
       ),
       trailing: Text(
-        FormatHelper().moneyFormat(transaction.amount),
+        FormatHelper().moneyFormat(transaction.amount?.toDouble()),
         style: TextStyle(
           color: transaction.category!.type == "Income"
               ? Colors.green

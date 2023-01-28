@@ -63,7 +63,7 @@ class _EventTransactionScreenState extends State<EventTransactionScreen> {
                       ),
                       const Spacer(),
                       Text(
-                        FormatHelper().moneyFormat(_calculateIncome()),
+                        FormatHelper().moneyFormat(_calculateIncome().toDouble()),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.blue,
@@ -82,7 +82,7 @@ class _EventTransactionScreenState extends State<EventTransactionScreen> {
                       ),
                       const Spacer(),
                       Text(
-                        FormatHelper().moneyFormat(_calculateExpense()),
+                        FormatHelper().moneyFormat(_calculateExpense().toDouble()),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.red,
@@ -98,7 +98,7 @@ class _EventTransactionScreenState extends State<EventTransactionScreen> {
                       const Spacer(),
                       Text(
                         FormatHelper().moneyFormat(
-                            _calculateIncome() - _calculateExpense()),
+                            (_calculateIncome() - _calculateExpense()).toDouble()),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

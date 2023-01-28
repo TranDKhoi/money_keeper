@@ -112,7 +112,7 @@ class FormatHelper {
     return formatTime;
   }
 
-  String moneyFormat(int? money) {
+  String moneyFormat(double? money) {
     if (money == null) {
       return NumberFormat.simpleCurrency(
         locale: 'vi',

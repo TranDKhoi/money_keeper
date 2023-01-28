@@ -46,7 +46,7 @@ class BudgetTransactionScreen extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        FormatHelper().moneyFormat(transaction.totalIncome),
+                        FormatHelper().moneyFormat(transaction.totalIncome?.toDouble()),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.blue,
@@ -65,7 +65,7 @@ class BudgetTransactionScreen extends StatelessWidget {
                       ),
                       const Spacer(),
                       Text(
-                        FormatHelper().moneyFormat(transaction.totalExpense),
+                        FormatHelper().moneyFormat(transaction.totalExpense?.toDouble()),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.red,
@@ -80,8 +80,8 @@ class BudgetTransactionScreen extends StatelessWidget {
                     children: [
                       const Spacer(),
                       Text(
-                        FormatHelper().moneyFormat(transaction.totalIncome! -
-                            transaction.totalExpense!),
+                        FormatHelper().moneyFormat((transaction.totalIncome! -
+                            transaction.totalExpense!).toDouble()),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
