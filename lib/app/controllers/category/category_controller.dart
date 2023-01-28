@@ -117,6 +117,10 @@ class CategoryController extends GetxController {
   }
 
   Future<void> deleteCategory(Category delCate) async {
+    if (selectedWallet.value.id == -1) {
+      EasyLoading.showToast(R.Cannotdeletestandard.tr);
+      return;
+    }
     EasyLoading.show();
     var res = await CategoryService.ins.deleteCategoryByWalletId(delCate);
     EasyLoading.dismiss();

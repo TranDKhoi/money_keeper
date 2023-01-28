@@ -175,4 +175,5 @@ class R {
   static const Oftheevent = "Oftheevent?";
   static const Email = "Email";
   static const Earned = "Earned";
+  static const Cannotdeletestandard = "Cannot delete standard's category";
 }

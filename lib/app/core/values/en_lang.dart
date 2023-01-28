@@ -171,5 +171,6 @@ const Map<String, String> enLanguagePackage = {
   R.Oftheevent: "Of the event?",
   R.Email: "Email",
   R.Earned: "Earned",
+  R.Cannotdeletestandard: "Cannot delete standard's category",
 
 };

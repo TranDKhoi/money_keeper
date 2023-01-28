@@ -12,7 +12,7 @@ class IconModalBottomSheet extends StatelessWidget {
         physics: const BouncingScrollPhysics(),
         child: Wrap(
           children: List.generate(
-            24,
+            33,
             (index) => Container(
               margin: const EdgeInsets.all(15),
               child: GestureDetector(

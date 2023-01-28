@@ -171,4 +171,6 @@ const Map<String, String> viLanguagePackage = {
   R.Oftheevent: "Thuộc sự kiện?",
   R.Email: "Tài khoản",
   R.Earned: "Thu được",
+  R.Cannotdeletestandard: "Không thể xoá danh mục tiêu chuẩn",
+
 };
