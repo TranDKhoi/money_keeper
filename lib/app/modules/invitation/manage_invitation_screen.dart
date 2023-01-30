@@ -54,12 +54,12 @@ class ManageInvitationScreen extends StatelessWidget {
         );
         break;
     }
+    print(invite.toJson());
 
     return ListTile(
       leading: CircleAvatar(
         backgroundColor: Colors.transparent,
-        backgroundImage: NetworkImage(invite.sender?.avatar ??
-            "https://d2v9ipibika81v.cloudfront.net/uploads/sites/210/Profile-Icon.png"),
+        child: Image.asset("assets/icons/invite.png"),
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 20),

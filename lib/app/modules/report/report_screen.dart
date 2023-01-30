@@ -18,7 +18,7 @@ class ReportScreen extends StatefulWidget {
 
 class _ReportScreenState extends State<ReportScreen>
     with SingleTickerProviderStateMixin {
-  final _controller = Get.find<ReportController>();
+  final _controller = Get.find<ReportController>()..initData();
   late TabController _tabController;
 
   @override
@@ -36,6 +36,7 @@ class _ReportScreenState extends State<ReportScreen>
 
   @override
   Widget build(BuildContext context) {
+    print(_controller.selectedWallet.value.balance);
     return Scaffold(
       appBar: AppBar(
         elevation: 5,
@@ -51,21 +52,19 @@ class _ReportScreenState extends State<ReportScreen>
           preferredSize: Size.fromHeight(context.screenSize.height * 0.1),
           child: Column(
             children: [
-              Obx(
-                () => DropdownButton<Wallet>(
-                  value: _controller.selectedWallet.value,
-                  icon: const Icon(Ionicons.caret_down),
-                  onChanged: (Wallet? value) {
-                    _controller.changeWallet(value!);
-                  },
-                  items: _controller.listWallet.map((Wallet value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(value.name!),
-                    );
-                  }).toList(),
-                ),
-              ),
+              Obx(() => DropdownButton<Wallet>(
+                value: _controller.selectedWallet.value,
+                icon: const Icon(Ionicons.caret_down),
+                onChanged: (Wallet? value) {
+                  _controller.changeWallet(value!);
+                },
+                items: _controller.listWallet.map((Wallet value) {
+                  return DropdownMenuItem(
+                    value: value,
+                    child: Text(value.name!),
+                  );
+                }).toList(),
+              )),
               TabBar(
                 controller: _tabController,
                 isScrollable: true,
@@ -76,9 +75,9 @@ class _ReportScreenState extends State<ReportScreen>
                 ),
                 tabs: _controller.listTimeline
                     .map((e) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Text(e),
-                        ))
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: Text(e),
+                ))
                     .toList(),
               ),
             ],

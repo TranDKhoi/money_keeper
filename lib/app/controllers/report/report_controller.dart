@@ -25,9 +25,8 @@ class ReportController extends GetxController {
 
   var dy = RxList<double>(); // cột dọc biểu đồ
 
-  initData()async{
+  initData() async{
     var walletController = Get.find<MyWalletController>();
-    await walletController.getAllWallet();
     listWallet.value = [...walletController.listWallet,...walletController.listGroupWallet];
     selectedWallet.value = listWallet[0];
     generateTimeLine();

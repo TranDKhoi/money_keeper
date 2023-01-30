@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/planning/budget/budget_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
+import 'package:money_keeper/app/modules/invitation/manage_invitation_screen.dart';
 import 'package:money_keeper/app/routes/routes.dart';
+import 'package:money_keeper/data/models/invitation.dart';
 import 'package:money_keeper/data/models/notify.dart';
 
 import '../../controllers/notification/notification_controller.dart';
@@ -40,12 +42,11 @@ class NotifyScreen extends StatelessWidget {
     switch (notify.type) {
       case "BudgetExceed":
         icon = "assets/icons/warning.png";
-        // onTap = () => Get.to(() => BudgetInfoScreen());
         break;
       case "Reminder":
         icon = "assets/icons/alarm.png";
         break;
-      case "JoinWalletInvitation ":
+      case "JoinWalletInvitation":
         icon = "assets/icons/invite.png";
         break;
     }
@@ -61,7 +62,8 @@ class NotifyScreen extends StatelessWidget {
           case "Reminder":
             icon = "assets/icons/alarm.png";
             break;
-          case "JoinWalletInvitation ":
+          case "JoinWalletInvitation":
+            Get.to(()=>ManageInvitationScreen());
             icon = "assets/icons/invite.png";
             break;
         }
