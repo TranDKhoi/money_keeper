@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/bottombar_controller.dart';
@@ -224,12 +225,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    FormatHelper().moneyFormat(
-                                        _controller.barChartData[1].toDouble()),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
+                                  Obx(
+                                    () => Text(
+                                      FormatHelper().moneyFormat(_controller
+                                          .barChartData[1]
+                                          .toDouble()),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 30,
+                                      ),
                                     ),
                                   ),
                                   Obx(
@@ -243,7 +247,11 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               const Spacer(),
                               InkWell(
-                                  onTap: () => _controller.getSummaryData(),
+                                  onTap: () async {
+                                    EasyLoading.show();
+                                    await _controller.getSummaryData();
+                                    EasyLoading.dismiss();
+                                  },
                                   child: const Icon(Ionicons.refresh_outline))
                             ],
                           ),

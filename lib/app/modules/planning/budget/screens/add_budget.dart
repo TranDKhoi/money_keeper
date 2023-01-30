@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:money_keeper/app/common/widget/money_field.dart';
 import 'package:money_keeper/app/controllers/planning/budget/budget_controller.dart';
 
 import '../../../../core/values/r.dart';
@@ -33,22 +35,7 @@ class AddBudget extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    TextField(
-                      style: const TextStyle(
-                        fontSize: 30,
-                        color: Colors.green,
-                      ),
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(
-                        hintText: "0 đ",
-                        hintStyle: TextStyle(
-                          color: Colors.green,
-                        ),
-                        fillColor: Colors.transparent,
-                      ),
-                      onChanged: (value) =>
-                          budgetController.limitAmount = int.parse(value),
-                    ),
+                    MoneyField(controller: budgetController.limitAmount),
                     const SizedBox(height: 20),
                     //category
                     Row(
@@ -62,7 +49,9 @@ class AddBudget extends StatelessWidget {
                                     "assets/icons/${budgetController.category.value?.icon}.png"),
                               );
                             } else {
-                              return const CircleAvatar();
+                              return const CircleAvatar(
+                                backgroundColor: Colors.grey,
+                              );
                             }
                           },
                         ),
@@ -86,7 +75,8 @@ class AddBudget extends StatelessWidget {
                                 }
                               },
                               decoration: InputDecoration(
-                                contentPadding: EdgeInsets.zero,
+                                suffixIcon: const Icon(Ionicons.chevron_down),
+                                contentPadding: const EdgeInsets.only(top: 20),
                                 hintText:
                                     (budgetController.category.value == null)
                                         ? R.Selectcategory.tr

@@ -84,7 +84,7 @@ class MyWalletController extends GetxController {
     for (int i = 0; i < listGroupWallet.length; i++) {
       total += listGroupWallet[i].balance!;
     }
-    return FormatHelper().moneyFormat(total.toInt());
+    return FormatHelper().moneyFormat(total.toDouble());
   }
 
   void deleteWallet(int? id) async {

@@ -56,7 +56,8 @@ class AddTransactionController extends GetxController {
     }
 
     final newTran = Transaction();
-    newTran.amount = int.parse(amountController.text.trim());
+    newTran.amount =
+        int.parse(amountController.text.replaceAll(RegExp(r"\D"), "").trim());
     newTran.walletId = selectedWallet.value!.id!;
     newTran.categoryId = selectedCategory.value!.id!;
     newTran.createdAt = pickedDate.value;
@@ -70,7 +71,7 @@ class AddTransactionController extends GetxController {
       newTran.eventId = selectedEvent.value?.id;
     }
     newTran.participantIds = [];
-    if(selectedWallet.value?.type == 'Group') {
+    if (selectedWallet.value?.type == 'Group') {
       for (var element in listUserGroup) {
         newTran.participantIds!.add(element.id!);
       }

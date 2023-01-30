@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:in_date_utils/in_date_utils.dart';
@@ -27,7 +28,7 @@ class BudgetController extends GetxController {
 
   // add budget screen prop
   Rxn<Category> category = Rxn<Category>();
-  late int limitAmount;
+  final TextEditingController limitAmount = TextEditingController();
 
   // budget detail screen
   Budget budget = Budget();
@@ -128,14 +129,15 @@ class BudgetController extends GetxController {
 
   // add budget screen method
   Future<void> createBudget() async {
-    if (limitAmount <= 0 || category.value == null) {
+    if (limitAmount.text.trim().isEmpty || category.value == null) {
       EasyLoading.showToast(R.Pleaseenteralltheinformation);
       return;
     }
 
     try {
       CreateBudget createBudget = CreateBudget(
-        limitAmount: limitAmount,
+        limitAmount:
+            int.parse(limitAmount.text.trim().replaceAll(RegExp(r"\D"), "")),
         month: selectedDateTime.month,
         year: selectedDateTime.year,
         categoryId: category.value?.id,
@@ -163,14 +165,15 @@ class BudgetController extends GetxController {
 
   // edit budget method
   Future<void> editBudget() async {
-    if (limitAmount <= 0 || category.value == null) {
+    if (limitAmount.text.trim().isEmpty || category.value == null) {
       EasyLoading.showToast(R.Pleaseenteralltheinformation);
       return;
     }
 
     try {
       CreateBudget createBudget = CreateBudget(
-        limitAmount: limitAmount,
+        limitAmount:
+            int.parse(limitAmount.text.trim().replaceAll(RegExp(r"\D"), "")),
         month: selectedDateTime.month,
         year: selectedDateTime.year,
         categoryId: category.value?.id,

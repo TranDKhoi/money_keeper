@@ -78,7 +78,7 @@ class _BudgetInfoScreenState extends State<BudgetInfoScreen> {
                     radius: 20,
                     backgroundColor: Colors.transparent,
                     child: Image.asset(
-                        "assets/icons/${budget.category?.icon}.png"),
+                        "assets/icons/${budget.wallet?.icon}.png"),
                   ),
                   title: Text(
                       budgetController.selectedWallet.value.name as String),

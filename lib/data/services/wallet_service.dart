@@ -9,7 +9,9 @@ import '../models/wallet.dart';
 class WalletService extends GetConnect {
   final AccountController _ac = Get.find();
 
-  WalletService._();
+  WalletService._(){
+    timeout =  const Duration(seconds: 10);
+  }
 
   static final ins = WalletService._();
 

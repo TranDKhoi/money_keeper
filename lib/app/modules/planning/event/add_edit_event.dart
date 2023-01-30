@@ -67,7 +67,9 @@ class AddEditEventScreen extends StatelessWidget {
                                 "assets/icons/${_controller.selectedIcon.value!}.png"),
                           );
                         } else {
-                          return const CircleAvatar();
+                          return const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                          );
                         }
                       },
                     ),
@@ -128,7 +130,9 @@ class AddEditEventScreen extends StatelessWidget {
                 children: [
                   Obx(
                     () => _controller.selectedWallet.value == null
-                        ? const CircleAvatar()
+                        ? const CircleAvatar(
+                            backgroundColor: Colors.grey,
+                          )
                         : CircleAvatar(
                             backgroundColor: Colors.transparent,
                             backgroundImage: AssetImage(
@@ -149,7 +153,8 @@ class AddEditEventScreen extends StatelessWidget {
                           }
                         },
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.zero,
+                          suffixIcon: const Icon(Ionicons.chevron_down),
+                          contentPadding: const EdgeInsets.only(top: 20),
                           hintText:
                               _controller.selectedWallet.value?.name == null
                                   ? R.Selectwallet.tr

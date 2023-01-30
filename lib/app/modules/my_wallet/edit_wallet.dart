@@ -1,3 +1,4 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -22,25 +23,38 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
   final AccountController _ac = Get.find();
   final selectedWallet = Get.arguments as Wallet;
   late final textWalletName = TextEditingController(text: selectedWallet.name);
-  late final textWalletBalance = TextEditingController(text: selectedWallet.balance.toString());
+  late final textWalletBalance =
+      TextEditingController(text: selectedWallet.balance.toString());
   final TextfieldTagsController _tagController = TextfieldTagsController();
   late List<String> listMembers = [];
   late bool isGroupWallet = selectedWallet.type == 'Group' ? true : false;
 
+  final CurrencyTextInputFormatter _formatter =
+      CurrencyTextInputFormatter(locale: 'vi', decimalDigits: 0, symbol: "đ");
+
   @override
   void initState() {
-    selectedWallet.walletMembers?.forEach((element){
-      if(element.user!.email! != _ac.currentUser.value!.email){
+    selectedWallet.walletMembers?.forEach((element) {
+      if (element.user!.email! != _ac.currentUser.value!.email) {
         listMembers.add(element.user!.email!);
         _controller.listMember.add(element.user!);
       }
     });
+    _controller.selectedCategoryPic.value =
+        int.parse(selectedWallet.icon ?? "0");
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.selectedCategoryPic.value = null;
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(R.Editwallet.tr),
         actions: [
@@ -72,7 +86,10 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          var res = await showModalBottomSheet<int>(context: context, builder: (BuildContext context) => const IconModalBottomSheet());
+                          var res = await showModalBottomSheet<int>(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  const IconModalBottomSheet());
 
                           if (res != null) {
                             _controller.selectedCategoryPic.value = res;
@@ -83,14 +100,16 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                             return CircleAvatar(
                               radius: 20,
                               backgroundColor: Colors.transparent,
-                              child: Image.asset("assets/icons/${_controller.selectedCategoryPic.value}.png"),
+                              child: Image.asset(
+                                  "assets/icons/${_controller.selectedCategoryPic.value}.png"),
                             );
                           }
                           if (selectedWallet.icon != null) {
                             return CircleAvatar(
                               radius: 20,
                               backgroundColor: Colors.transparent,
-                              child: Image.asset("assets/icons/${selectedWallet.icon}.png"),
+                              child: Image.asset(
+                                  "assets/icons/${selectedWallet.icon}.png"),
                             );
                           }
                           return const CircleAvatar(
@@ -126,16 +145,24 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                       const SizedBox(width: 20),
                       Expanded(
                         child: TextFormField(
-                          controller: textWalletBalance,
+                          initialValue:
+                              _formatter.format(textWalletBalance.text),
                           keyboardType: TextInputType.number,
+                          onChanged: (val) {
+                            textWalletBalance.text =
+                                val.trim().replaceAll(RegExp(r"\D"), "");
+                          },
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 30,
+                            color: Colors.green,
                           ),
-                          decoration: InputDecoration(
+                          inputFormatters: [_formatter],
+                          decoration: const InputDecoration(
+                            hintText: "VND",
+                            hintStyle: TextStyle(
+                              color: Colors.green,
+                            ),
                             fillColor: Colors.transparent,
-                            filled: true,
-                            hintText: R.Balance.tr,
-                            suffix: const Text("VND"),
                           ),
                         ),
                       ),
@@ -163,7 +190,8 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                         TextFieldTags(
                           textfieldTagsController: _tagController,
                           initialTags: listMembers,
-                          inputfieldBuilder: (context, tec, fn, error, onChanged, onSubmitted) {
+                          inputfieldBuilder: (context, tec, fn, error,
+                              onChanged, onSubmitted) {
                             return ((context, sc, tags, onTagDelete) {
                               return TextField(
                                 controller: tec,
@@ -180,7 +208,9 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                                       width: 1.0,
                                     ),
                                   ),
-                                  hintText: _tagController.hasTags ? '' : "Enter email...",
+                                  hintText: _tagController.hasTags
+                                      ? ''
+                                      : "Enter email...",
                                   errorText: error,
                                   prefixIcon: tags.isNotEmpty
                                       ? SingleChildScrollView(
@@ -190,20 +220,30 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                                             children: tags.map((String tag) {
                                               return Container(
                                                 decoration: const BoxDecoration(
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(20.0),
                                                   ),
                                                   color: Colors.green,
                                                 ),
-                                                margin: const EdgeInsets.symmetric(horizontal: 5),
-                                                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 5),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10.0,
+                                                        vertical: 5.0),
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     InkWell(
                                                       child: Text(
                                                         tag,
-                                                        style: const TextStyle(color: Colors.white),
+                                                        style: const TextStyle(
+                                                            color:
+                                                                Colors.white),
                                                       ),
                                                       onTap: () {
                                                         print("$tag selected");
@@ -217,7 +257,12 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                                                         color: Colors.white,
                                                       ),
                                                       onTap: () {
-                                                        _controller.listMember.removeWhere((element) => element.email == tag);
+                                                        _controller.listMember
+                                                            .removeWhere(
+                                                                (element) =>
+                                                                    element
+                                                                        .email ==
+                                                                    tag);
                                                         onTagDelete(tag);
                                                       },
                                                     )
@@ -231,17 +276,20 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                                 ),
                                 onChanged: onChanged,
                                 onSubmitted: (result) async {
-                                  if(result == _ac.currentUser.value!.email) {
+                                  if (result == _ac.currentUser.value!.email) {
                                     EasyLoading.showToast(R.yourOwnerWallet);
                                     tec.clear();
                                     return;
                                   }
-                                  await _controller.checkAlreadyUser(email: result).then((value) {
+                                  await _controller
+                                      .checkAlreadyUser(email: result)
+                                      .then((value) {
                                     if (value == false) {
                                       EasyLoading.showToast(R.emailNotExits);
                                       tec.clear();
                                       return;
-                                    } else if (_tagController.getTags!.contains(result)) {
+                                    } else if (_tagController.getTags!
+                                        .contains(result)) {
                                       EasyLoading.showToast(R.emailEnteredThat);
                                       tec.clear();
                                       return;
@@ -265,7 +313,8 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
             onChanged: (val) {},
             isThreeLine: true,
             title: Text(R.Notincludeintotalbalance.tr),
-            subtitle: Text(R.Createanewwalletanddonotincludeitintototalbalance.tr),
+            subtitle:
+                Text(R.Createanewwalletanddonotincludeitintototalbalance.tr),
           ),
           const SizedBox(height: 30),
           GestureDetector(
@@ -291,8 +340,11 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ElevatedButton(
               onPressed: () {
-                if(isGroupWallet) {
-                  if (textWalletBalance.text.isEmpty || textWalletName.text.isEmpty || _controller.selectedCategoryPic.value == null || _controller.listMember.isEmpty) {
+                if (isGroupWallet) {
+                  if (textWalletBalance.text.isEmpty ||
+                      textWalletName.text.isEmpty ||
+                      _controller.selectedCategoryPic.value == null ||
+                      _controller.listMember.isEmpty) {
                     EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
                     return;
                   }
@@ -302,29 +354,33 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                       name: textWalletName.text.trim(),
                       type: "Group",
                       icon: _controller.selectedCategoryPic.value.toString(),
-                      memberIds: []
-                  );
+                      memberIds: []);
                   for (var element in _controller.listMember) {
                     newWallet.memberIds?.add(element.id!);
                   }
 
                   if (_controller.selectedCategoryGroup.value.id != -1) {
-                    newWallet.clonedCategoryWalletId = _controller.selectedCategoryGroup.value.id;
+                    newWallet.clonedCategoryWalletId =
+                        _controller.selectedCategoryGroup.value.id;
                   }
                   _controller.updateWallet(newWallet);
                 } else {
-                  if (textWalletBalance.text.isEmpty || textWalletName.text.isEmpty || _controller.selectedCategoryPic.value == null) {
+                  if (textWalletBalance.text.isEmpty ||
+                      _controller.selectedCategoryPic.value == null ||
+                      textWalletName.text.isEmpty) {
                     EasyLoading.showToast(R.Pleaseenteralltheinformation.tr);
                     return;
                   }
                   final newWallet = Wallet(
+                    id: selectedWallet.id,
                     balance: int.parse(textWalletBalance.text),
                     name: textWalletName.text.trim(),
                     type: "Personal",
                     icon: _controller.selectedCategoryPic.value.toString(),
                   );
                   if (_controller.selectedCategoryGroup.value.id != -1) {
-                    newWallet.clonedCategoryWalletId = _controller.selectedCategoryGroup.value.id;
+                    newWallet.clonedCategoryWalletId =
+                        _controller.selectedCategoryGroup.value.id;
                   }
                   _controller.updateWallet(newWallet);
                 }

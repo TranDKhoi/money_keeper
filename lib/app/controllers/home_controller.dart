@@ -5,7 +5,6 @@ import 'package:money_keeper/app/routes/routes.dart';
 
 import '../../data/models/transaction.dart';
 import '../../data/services/global_wallet_service.dart';
-import '../modules/transaction/edit_transaction.dart';
 
 class HomeController extends GetxController {
   var selectedReport = 1.obs;
@@ -23,28 +22,55 @@ class HomeController extends GetxController {
 
   getSummaryData() async {
     if (selectedReport.value == 0) {
+      await Future.wait([
+        GlobalWalletService.ins
+            .getExpenseReportByWeek(DateTime.now()
+                .subtract(Duration(days: DateTime.now().weekday - 1))
+                .day)
+            .then((value) {
+          if (value.isOk) {
+            barChartData[1] = value.data["totalAmount"];
+          } else {
+            EasyLoading.showToast(value.errorMessage);
+          }
+        }),
+        GlobalWalletService.ins
+            .getExpenseReportByWeek(DateTime.now()
+                    .subtract(Duration(days: DateTime.now().weekday - 1))
+                    .day -
+                7)
+            .then((value) {
+          if (value.isOk) {
+            barChartData[0] = value.data["totalAmount"];
+          } else {
+            EasyLoading.showToast(value.errorMessage);
+          }
+        }),
+      ]);
+      barChartData.refresh();
     } else {
-     await Future.wait([ GlobalWalletService.ins
-          .getExpenseReportByMonth(DateTime.now())
-          .then((value) {
-        if (value.isOk) {
-          barChartData[1] = value.data["totalAmount"];
-        } else {
-          EasyLoading.showToast(value.errorMessage);
-        }
-      }),
-      GlobalWalletService.ins
-          .getExpenseReportByMonth(
-              DateTime(DateTime.now().year, DateTime.now().month - 1))
-          .then((value) {
-        if (value.isOk) {
-          barChartData[0] = value.data["totalAmount"];
-          print(barChartData[0]);
-        } else {
-          EasyLoading.showToast(value.errorMessage);
-        }
-      }),]);
-     barChartData.refresh();
+      await Future.wait([
+        GlobalWalletService.ins
+            .getExpenseReportByMonth(DateTime.now())
+            .then((value) {
+          if (value.isOk) {
+            barChartData[1] = value.data["totalAmount"];
+          } else {
+            EasyLoading.showToast(value.errorMessage);
+          }
+        }),
+        GlobalWalletService.ins
+            .getExpenseReportByMonth(
+                DateTime(DateTime.now().year, DateTime.now().month - 1))
+            .then((value) {
+          if (value.isOk) {
+            barChartData[0] = value.data["totalAmount"];
+          } else {
+            EasyLoading.showToast(value.errorMessage);
+          }
+        }),
+      ]);
+      barChartData.refresh();
     }
   }
 
