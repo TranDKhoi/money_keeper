@@ -172,5 +172,8 @@ const Map<String, String> enLanguagePackage = {
   R.Email: "Email",
   R.Earned: "Earned",
   R.Cannotdeletestandard: "Cannot delete standard's category",
-
+  R.WithMember: "With member?",
+  R.yourOwnerWallet: 'You are already the wallet owner',
+  R.emailNotExits: 'User does not exist',
+  R.emailEnteredThat: 'You already entered that',
 };

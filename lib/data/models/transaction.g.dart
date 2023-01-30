@@ -26,6 +26,12 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) => Transaction(
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
+      participantIds: (json['participantIds'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
+      participants: (json['participants'] as List<dynamic>?)
+          ?.map((e) => User.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
@@ -41,4 +47,6 @@ Map<String, dynamic> _$TransactionToJson(Transaction instance) =>
       'event': instance.event?.toJson(),
       'image': instance.image,
       'createdAt': instance.createdAt?.toIso8601String(),
+      'participantIds': instance.participantIds,
+      'participants': instance.participants?.map((e) => e.toJson()).toList(),
     };

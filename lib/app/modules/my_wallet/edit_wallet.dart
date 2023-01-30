@@ -29,9 +29,10 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
 
   @override
   void initState() {
-    selectedWallet.members?.forEach((element){
-      if(element.email != _ac.currentUser.value!.email){
-        listMembers.add(element.email!);
+    selectedWallet.walletMembers?.forEach((element){
+      if(element.user!.email! != _ac.currentUser.value!.email){
+        listMembers.add(element.user!.email!);
+        _controller.listMember.add(element.user!);
       }
     });
     super.initState();
@@ -194,7 +195,7 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                                                   ),
                                                   color: Colors.green,
                                                 ),
-                                                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                                                margin: const EdgeInsets.symmetric(horizontal: 5),
                                                 padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                                                 child: Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -229,7 +230,25 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                                       : null,
                                 ),
                                 onChanged: onChanged,
-                                onSubmitted: onSubmitted,
+                                onSubmitted: (result) async {
+                                  if(result == _ac.currentUser.value!.email) {
+                                    EasyLoading.showToast(R.yourOwnerWallet);
+                                    tec.clear();
+                                    return;
+                                  }
+                                  await _controller.checkAlreadyUser(email: result).then((value) {
+                                    if (value == false) {
+                                      EasyLoading.showToast(R.emailNotExits);
+                                      tec.clear();
+                                      return;
+                                    } else if (_tagController.getTags!.contains(result)) {
+                                      EasyLoading.showToast(R.emailEnteredThat);
+                                      tec.clear();
+                                      return;
+                                    }
+                                    onSubmitted?.call(result);
+                                  });
+                                },
                               );
                             });
                           },
@@ -250,7 +269,7 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
           ),
           const SizedBox(height: 30),
           GestureDetector(
-            onTap: () {},
+            onTap: () => _controller.deleteWallet(selectedWallet.id),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -278,6 +297,7 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
                     return;
                   }
                   final newWallet = Wallet(
+                      id: selectedWallet.id,
                       balance: int.parse(textWalletBalance.text),
                       name: textWalletName.text.trim(),
                       type: "Group",

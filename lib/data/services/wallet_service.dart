@@ -22,6 +22,15 @@ class WalletService extends GetConnect {
     );
   }
 
+  Future<Response> getWalletMemberById({required int id}) async {
+    return await get(
+      "$api_url/wallets/$id/members",
+      headers: <String, String>{
+        'Authorization': _ac.currentUser.value!.token!,
+      },
+    );
+  }
+
   Future<Response> createNewWallet({required Wallet wallet}) async {
     return await post(
       "$api_url/wallets",

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/controllers/transaction/transaction_controller.dart';
 import 'package:money_keeper/data/models/transaction.dart';
 
+import '../../../data/models/user.dart';
 import '../../../data/services/storage_service.dart';
 import '../../../data/services/transaction_service.dart';
 import '../../core/utils/utils.dart';
@@ -12,6 +13,7 @@ import '../../core/values/r.dart';
 
 class EditTransactionController extends GetxController {
   var pickedImage = Rxn<String>();
+  var listUserGroup = <User>[].obs;
 
   void pickedImageGallery() async {
     String? picked = await ImageHelper.ins.pickSingleImage();
@@ -48,7 +50,12 @@ class EditTransactionController extends GetxController {
     if (editTrans.event != null) {
       editTrans.eventId = editTrans.event!.id;
     }
-
+    editTrans.participantIds = [];
+    if(listUserGroup.isNotEmpty){
+      for (var element in listUserGroup) {
+        editTrans.participantIds!.add(element.id!);
+      }
+    }
     EasyLoading.show();
     var res = await TransactionService.ins.updateTransaction(editTrans);
     EasyLoading.dismiss();

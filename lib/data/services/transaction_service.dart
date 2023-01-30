@@ -65,6 +65,14 @@ class TransactionService extends GetConnect {
         });
   }
 
+  Future<Response> getTransactionByTransactionId(int walletId,int transactionId) async {
+    return await get(
+        "$api_url/wallets/$walletId/transactions/$transactionId",
+        headers: <String, String>{
+          'Authorization': _ac.currentUser.value!.token!,
+        });
+  }
+
   Future<Response> getTransactionOfEvent(int walletId,int eventId) async {
     return await get(
         "$api_url/wallets/$walletId/transactions?EventId=$eventId",
@@ -73,7 +81,13 @@ class TransactionService extends GetConnect {
         });
   }
 
-
+  Future<Response> getRecentlyTrans() async{
+    return await get(
+        "$api_url/global-wallets/transactions/recently?Take=5",
+        headers: <String, String>{
+          'Authorization': _ac.currentUser.value!.token!,
+        });
+  }
 
 
   _getEndDate(String timeRange) {

@@ -176,4 +176,8 @@ class R {
   static const Email = "Email";
   static const Earned = "Earned";
   static const Cannotdeletestandard = "Cannot delete standard's category";
+  static const WithMember = "With member?";
+  static const yourOwnerWallet = 'You are already the wallet owner';
+  static const emailNotExits = 'User does not exist';
+  static const emailEnteredThat = 'You already entered that';
 }

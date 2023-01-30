@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/data/models/wallet.dart';
 import 'package:textfield_tags/textfield_tags.dart';
+import '../../controllers/account/account_controller.dart';
 import '../../controllers/wallet/my_wallet_controller.dart';
 import '../../core/values/r.dart';
 import '../category/widgets/category_icon_modal.dart';
@@ -19,6 +20,7 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
   final MyWalletController _controller = Get.find()..getAllCategoryGroup();
   final TextfieldTagsController _tagController = TextfieldTagsController();
   bool isGroupWallet = false;
+  final AccountController _ac = Get.find();
   final textWalletName = TextEditingController();
   final textWalletBalance = TextEditingController();
 
@@ -269,13 +271,19 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
                                   ),
                                   onChanged: onChanged,
                                   onSubmitted: (result) async {
+                                    if(result == _ac.currentUser.value!.email) {
+                                      EasyLoading.showToast(R.yourOwnerWallet);
+                                      tec.clear();
+                                      return;
+                                    }
                                     await _controller.checkAlreadyUser(email: result).then((value) {
                                       if (value == false) {
-                                        EasyLoading.showToast('User does not exist');
+                                        EasyLoading.showToast(R.emailNotExits);
                                         tec.clear();
                                         return null;
                                       } else if (_tagController.getTags!.contains(result)) {
-                                        EasyLoading.showToast('You already entered that');
+                                        EasyLoading.showToast(R.emailEnteredThat);
+                                        tec.clear();
                                         return null;
                                       }
                                       onSubmitted?.call(result);
@@ -344,6 +352,7 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
         name: textWalletName.text.trim(),
         type: "Personal",
         icon: _controller.selectedCategoryPic.value.toString(),
+        memberIds: []
       );
       if (_controller.selectedCategoryGroup.value.id != -1) {
         newWallet.clonedCategoryWalletId = _controller.selectedCategoryGroup.value.id;

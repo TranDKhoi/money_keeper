@@ -36,6 +36,7 @@ dependencies:
   timeago: ^3.3.0
   flutter_local_notifications: ^13.0.0
   textfield_tags: ^2.0.1
+  currency_text_input_formatter: ^2.1.8
 
 dev_dependencies:
   flutter_test:

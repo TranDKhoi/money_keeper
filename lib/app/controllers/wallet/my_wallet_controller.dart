@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 import 'package:money_keeper/data/services/services.dart';
-import 'package:money_keeper/data/services/wallet_service.dart';
-
 import '../../../data/models/user.dart';
 import '../../../data/models/wallet.dart';
 import '../../core/values/r.dart';
@@ -50,10 +48,12 @@ class MyWalletController extends GetxController {
     var res = await UserService.ins.checkAlreadyUser(email: email);
     EasyLoading.dismiss();
     if (res.isOk) {
-      return true;
-    }else{
-      return false;
+      if(res.body['data'] != null) {
+        listMember.add(User.fromJson(res.body['data']));
+        return true;
+      }
     }
+    return false;
   }
 
   void toEditWallet(Wallet selectedWallet) {
@@ -84,7 +84,7 @@ class MyWalletController extends GetxController {
     for (int i = 0; i < listGroupWallet.length; i++) {
       total += listGroupWallet[i].balance!;
     }
-    return FormatHelper().moneyFormat(total.toDouble());
+    return FormatHelper().moneyFormat(total.toInt());
   }
 
   void deleteWallet(int? id) async {

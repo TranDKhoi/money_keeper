@@ -172,5 +172,8 @@ const Map<String, String> viLanguagePackage = {
   R.Email: "Tài khoản",
   R.Earned: "Thu được",
   R.Cannotdeletestandard: "Không thể xoá danh mục tiêu chuẩn",
-
+  R.WithMember: "Với thành viên?",
+  R.yourOwnerWallet: 'Bạn đã là chủ ví',
+  R.emailNotExits: 'Email không tồn tại',
+  R.emailEnteredThat: 'Email đã được nhập',
 };

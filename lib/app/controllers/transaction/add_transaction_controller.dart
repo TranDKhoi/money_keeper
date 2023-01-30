@@ -5,6 +5,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:money_keeper/app/controllers/transaction/transaction_controller.dart';
 import 'package:money_keeper/data/models/transaction.dart';
+import 'package:money_keeper/data/models/user.dart';
 
 import '../../../data/models/category.dart';
 import '../../../data/models/event.dart';
@@ -20,6 +21,7 @@ class AddTransactionController extends GetxController {
   var selectedCategory = Rxn<Category>();
   var selectedWallet = Rxn<Wallet>();
   var selectedEvent = Rxn<Event>();
+  var listUserGroup = <User>[];
   final amountController = TextEditingController();
   final noteController = TextEditingController();
 
@@ -67,10 +69,15 @@ class AddTransactionController extends GetxController {
     if (selectedEvent.value != null) {
       newTran.eventId = selectedEvent.value?.id;
     }
+    newTran.participantIds = [];
+    if(selectedWallet.value?.type == 'Group') {
+      for (var element in listUserGroup) {
+        newTran.participantIds!.add(element.id!);
+      }
+    }
     EasyLoading.show();
     var res = await TransactionService.ins.createNewTransaction(newTran);
     EasyLoading.dismiss();
-
     if (res.isOk) {
       Get.back();
       Get.find<TransactionController>().initData();

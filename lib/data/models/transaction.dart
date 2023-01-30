@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:money_keeper/data/models/event.dart';
 
 import 'category.dart';
+import 'user.dart';
 import 'wallet.dart';
 
 part 'transaction.g.dart';
@@ -19,6 +20,8 @@ class Transaction {
   Event? event;
   String? image;
   DateTime? createdAt;
+  List<int>? participantIds;
+  List<User>? participants;
 
   Transaction(
       {this.id,
@@ -31,7 +34,9 @@ class Transaction {
       this.eventId,
       this.event,
       this.image,
-      this.createdAt});
+      this.createdAt,
+      this.participantIds,
+      this.participants});
 
   factory Transaction.fromJson(Map<String, dynamic> json) =>
       _$TransactionFromJson(json);

@@ -1,12 +1,15 @@
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/transaction/edit_transaction_controller.dart';
-
+import 'package:money_keeper/data/models/wallet_member.dart';
+import 'package:money_keeper/data/services/services.dart';
 import '../../../data/models/transaction.dart';
+import '../../../data/models/user.dart';
+import '../../common/widget/inkWell_wrapper.dart';
+import '../../controllers/account/account_controller.dart';
 import '../../controllers/wallet/my_wallet_controller.dart';
 import '../../core/utils/utils.dart';
 import '../../core/values/r.dart';
@@ -26,19 +29,51 @@ class EditTransactionScreen extends StatefulWidget {
 
 class _EditTransactionScreenState extends State<EditTransactionScreen> {
   Transaction tempTrans = Transaction();
-
   final _controller = Get.put(EditTransactionController());
-
   final walletController = Get.find<MyWalletController>();
+  final AccountController _ac = Get.find();
+  List<User> user = [];
+  var tapPosition = const Offset(0.0, 0.0);
+  bool isGetData = false;
 
   @override
   void initState() {
-    tempTrans =
-        Transaction.fromJson(jsonDecode(jsonEncode(widget.selectedTrans)));
-    tempTrans.wallet = walletController.listWallet
-        .where((element) => element.id == widget.selectedTrans.walletId)
-        .first;
+    initData();
     super.initState();
+  }
+
+  void initData() async {
+    EasyLoading.show();
+    var res = await TransactionService.ins.getTransactionByTransactionId(widget.selectedTrans.walletId!, widget.selectedTrans.id!);
+    if(res.isOk) {
+      tempTrans = Transaction.fromJson(res.body['data']);
+    } else {
+      EasyLoading.showToast(res.errorMessage);
+    }
+    user.clear();
+    if(tempTrans.participants!.isNotEmpty) {
+      _controller.listUserGroup.value = tempTrans.participants!;
+    } else {
+      _controller.listUserGroup.clear();
+    }
+    if (tempTrans.wallet!.type == 'Group') {
+      res = await WalletService.ins.getWalletMemberById(id: widget.selectedTrans.walletId!);
+
+      if(res.isOk) {
+        res.body["data"].forEach((v) {
+          if (v != null) {
+            var userTemp = WalletMember.fromJson(v).user!;
+            if (userTemp.email != _ac.currentUser.value!.email) {
+              user.add(userTemp);
+            }
+          }
+        });
+      } else {
+        EasyLoading.showToast(res.errorMessage);
+      }
+    }
+    EasyLoading.dismiss();
+    setState(() => isGetData = true);
   }
 
   @override
@@ -53,7 +88,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: isGetData ? SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
@@ -93,7 +128,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                         const SizedBox(width: 20),
                         Expanded(
                           child: TextField(
-                            enabled: true,
+                            enabled: false,
                             onTap: () async {
                               FocusScope.of(context).requestFocus(FocusNode());
                               var res = await Get.toNamed(myWalletRoute,
@@ -104,6 +139,15 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                                   setState(() {
                                     tempTrans.wallet = res;
                                   });
+                                  _controller.listUserGroup.clear();
+                                  user.clear();
+                                  if (tempTrans.wallet!.type == 'Group') {
+                                    tempTrans.wallet?.walletMembers?.forEach((element) {
+                                      if (element.user!.email != _ac.currentUser.value!.email) {
+                                        _controller.listUserGroup.add(element.user!);
+                                      }
+                                    });
+                                  }
                                 }
                               }
                             },
@@ -203,6 +247,82 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                           ),
                         ),
                       ],
+                    ),
+                    Visibility(
+                      visible: tempTrans.wallet?.type == 'Group',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 10),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.groups,
+                                size: 35,
+                              ),
+                              const SizedBox(width: 20),
+                              Visibility(
+                                visible: _controller.listUserGroup.isEmpty,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(R.WithMember.tr, style: const TextStyle(fontSize: 16),),
+                                    const SizedBox(width: 10),
+                                  ],
+                                ),
+                              ),
+                              Expanded(
+                                child: Wrap(
+                                  spacing: 10,
+                                  runSpacing: 5,
+                                  children: List.generate(_controller.listUserGroup.length + 1, (index) {
+                                    if (index == _controller.listUserGroup.length) {
+                                      return InkWellWrapper(
+                                        onTapDown: (details) {
+                                          tapPosition = details.globalPosition;
+                                        },
+                                        onTap: () {
+                                          final RenderBox overlay = Overlay.of(context)?.context.findRenderObject() as RenderBox;
+                                          showMenu(
+                                            context: context,
+                                            position: RelativeRect.fromRect(
+                                                tapPosition & const Size(40, 40), // smaller rect, the touch area
+                                                Offset.zero & overlay.size // Bigger rect, the entire screen
+                                            ),
+                                            items: List.generate(user.length, (index) {
+                                              return PopupMenuItem(
+                                                value: index,
+                                                onTap: () {
+                                                  if (!_controller.listUserGroup.any((element) => element.email == user[index].email)) {
+                                                    setState(() {
+                                                      _controller.listUserGroup.add(user[index]);
+                                                    });
+                                                  }
+                                                },
+                                                child: Text(user[index].email!),
+                                              );
+                                            }),
+                                            constraints: const BoxConstraints(
+                                              minWidth: 20,
+                                              maxWidth: 250,
+                                            ),
+                                          );
+                                        },
+                                        borderRadius: BorderRadius.circular(10),
+                                        paddingChild: const EdgeInsets.all(6),
+                                        color: Colors.grey.withOpacity(0.5),
+                                        child: const Icon(Icons.add, size: 25),
+                                      );
+                                    } else {
+                                      return buildEmailTag(index);
+                                    }
+                                  }),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 20),
                     //date
@@ -409,6 +529,33 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                 ],
               ),
             ),
+          ],
+        ),
+      ) : const SizedBox.shrink(),
+    );
+  }
+
+  buildEmailTag(index) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(left: 7, top: 5, bottom: 5),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(_controller.listUserGroup[index].email ?? '', style: const TextStyle(fontSize: 13)),
+            InkWellWrapper(
+              onTap: () => setState(() => _controller.listUserGroup.removeAt(index)),
+              borderRadius: BorderRadius.circular(15),
+              paddingChild: const EdgeInsets.all(5),
+              child: const Icon(
+                Icons.close,
+                size: 15,
+              ),
+            )
           ],
         ),
       ),

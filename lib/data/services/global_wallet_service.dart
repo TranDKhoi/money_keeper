@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../app/controllers/account/account_controller.dart';
 import '../../app/core/values/strings.dart';
@@ -30,12 +31,16 @@ class GlobalWalletService extends GetConnect {
     });
   }
 
-  // Future<Response> getExpenseReportByWeek() async {
-  //   return await get("$api_url/global-wallets/expense", query: <String, String>{
-  //     "StartDate": _getStartWeek(),
-  //     "EndDate": _getEndWeek(),
-  //   }, headers: <String, String>{
-  //     'Authorization': _ac.currentUser.value!.token!,
-  //   });
-  // }
+  Future<Response> getExpenseReportByWeek(int startDay) async {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    final String formatted = formatter.format(
+        DateTime(DateTime.now().year, DateTime.now().month, startDay)
+            .add(const Duration(days: 6)));
+    return await get("$api_url/global-wallets/expense", query: <String, String>{
+      "StartDate": "${DateTime.now().year}-${DateTime.now().month}-$startDay",
+      "EndDate": formatted,
+    }, headers: <String, String>{
+      'Authorization': _ac.currentUser.value!.token!,
+    });
+  }
 }
