@@ -58,27 +58,20 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       EasyLoading.showToast(res.errorMessage);
     }
     user.clear();
-    if (tempTrans.participants!.isNotEmpty) {
-      _controller.listUserGroup.value = tempTrans.participants!;
-    } else {
-      _controller.listUserGroup.clear();
+    if(tempTrans.participants != null) {
+      if (tempTrans.participants!.isNotEmpty) {
+        _controller.listUserGroup.value = tempTrans.participants!;
+      } else {
+        _controller.listUserGroup.clear();
+      }
     }
     if (tempTrans.wallet!.type == 'Group') {
-      res = await WalletService.ins
-          .getWalletMemberById(id: widget.selectedTrans.walletId!);
-
-      if (res.isOk) {
-        res.body["data"].forEach((v) {
-          if (v != null) {
-            var userTemp = WalletMember.fromJson(v).user!;
-            if (userTemp.email != _ac.currentUser.value!.email) {
-              user.add(userTemp);
-            }
-          }
-        });
-      } else {
-        EasyLoading.showToast(res.errorMessage);
-      }
+      var kq = walletController.listGroupWallet.firstWhere((element) => element.id == tempTrans.walletId);
+      kq.walletMembers?.forEach((element) {
+        if (element.user!.email != _ac.currentUser.value!.email) {
+          user.add(element.user!);
+        }
+      });
     }
     EasyLoading.dismiss();
     setState(() => isGetData = true);
