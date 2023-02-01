@@ -318,7 +318,43 @@ class _EditWalletScreenState extends State<EditWalletScreen> {
           ),
           const SizedBox(height: 30),
           GestureDetector(
-            onTap: () => _controller.deleteWallet(selectedWallet.id),
+            onTap: () async {
+              var res = await showDialog(
+                context: context,
+                builder: (_) => Center(
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(R.DELETETHISWALLETFOREVER.tr),
+                          const SizedBox(height: 20),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () => Get.back(result: false),
+                                  child: Text(R.No.tr)),
+                              const SizedBox(width: 20),
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.redAccent,
+                                  ),
+                                  onPressed: () => Get.back(result: true),
+                                  child: Text(R.Yes.tr)),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+              if (res != null && res) {
+                _controller.deleteWallet(selectedWallet.id);
+              }
+            },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,

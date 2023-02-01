@@ -1,5 +1,6 @@
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:money_keeper/app/controllers/bottombar_controller.dart';
 import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/routes/routes.dart';
 import 'package:money_keeper/data/models/daily_report.dart';
@@ -28,6 +29,11 @@ class ReportController extends GetxController {
   initData() async{
     var walletController = Get.find<MyWalletController>();
     listWallet.value = [...walletController.listWallet,...walletController.listGroupWallet];
+    if(listWallet.isEmpty) {
+      EasyLoading.showToast(R.Walleterror.tr);
+      Get.find<BottomBarController>().currentIndex.value = 0;
+      return;
+    }
     selectedWallet.value = listWallet[0];
     generateTimeLine();
     selectedTimeLine.value = listTimeline[listTimeline.length - 2];

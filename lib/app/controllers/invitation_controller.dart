@@ -15,9 +15,11 @@ class InvitationController extends GetxController {
 
     if (res.isOk) {
       listInvite.value = [];
+      var tempList = <Invitation>[];
       for (int i = 0; i < res.data.length; i++) {
-        listInvite.add(Invitation.fromJson(res.data[i]));
+        tempList.add(Invitation.fromJson(res.data[i]));
       }
+      listInvite.value = List.from(tempList.reversed);
     } else {
       EasyLoading.showToast(res.errorMessage);
     }

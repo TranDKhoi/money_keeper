@@ -8,6 +8,7 @@ import 'package:money_keeper/data/services/transaction_service.dart';
 import '../../../data/models/transactions_by_time.dart';
 import '../../core/values/r.dart';
 import '../../modules/transaction/edit_transaction.dart';
+import '../bottombar_controller.dart';
 import '../wallet/my_wallet_controller.dart';
 
 class TransactionController extends GetxController {
@@ -22,6 +23,11 @@ class TransactionController extends GetxController {
   initData() async {
     var walletController = Get.find<MyWalletController>();
     listWallet.value = [...walletController.listWallet,...walletController.listGroupWallet];
+    if(listWallet.isEmpty) {
+      EasyLoading.showToast(R.Walleterror.tr);
+      Get.find<BottomBarController>().currentIndex.value = 0;
+      return;
+    }
     selectedWallet.value = listWallet[0];
     generateTimeLine();
     selectedTimeLine.value = listTimeline[listTimeline.length - 2];
