@@ -101,7 +101,6 @@ class _BudgetScreenState extends State<BudgetScreen>
                             Text(
                               R.noneBudget.tr,
                               style: const TextStyle(
-                                color: Colors.black,
                                 fontSize: 20,
                               ),
                             ),
@@ -109,7 +108,6 @@ class _BudgetScreenState extends State<BudgetScreen>
                             Text(
                               R.pressPlusBudget.tr,
                               style: const TextStyle(
-                                color: Colors.black,
                                 fontSize: 16,
                               ),
                             ),

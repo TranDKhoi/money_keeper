@@ -36,16 +36,16 @@ class _ReportScreenState extends State<ReportScreen>
 
   @override
   Widget build(BuildContext context) {
-    print(_controller.selectedWallet.value.balance);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 5,
         centerTitle: true,
         title: Column(
           children: [
             Text(R.Balance.tr),
-            Obx(() => Text(FormatHelper()
-                .moneyFormat(_controller.selectedWallet.value.balance?.toDouble()))),
+            Obx(() => Text(FormatHelper().moneyFormat(
+                _controller.selectedWallet.value.balance?.toDouble()))),
           ],
         ),
         bottom: PreferredSize(
@@ -53,18 +53,18 @@ class _ReportScreenState extends State<ReportScreen>
           child: Column(
             children: [
               Obx(() => DropdownButton<Wallet>(
-                value: _controller.selectedWallet.value,
-                icon: const Icon(Ionicons.caret_down),
-                onChanged: (Wallet? value) {
-                  _controller.changeWallet(value!);
-                },
-                items: _controller.listWallet.map((Wallet value) {
-                  return DropdownMenuItem(
-                    value: value,
-                    child: Text(value.name!),
-                  );
-                }).toList(),
-              )),
+                    value: _controller.selectedWallet.value,
+                    icon: const Icon(Ionicons.caret_down),
+                    onChanged: (Wallet? value) {
+                      _controller.changeWallet(value!);
+                    },
+                    items: _controller.listWallet.map((Wallet value) {
+                      return DropdownMenuItem(
+                        value: value,
+                        child: Text(value.name!),
+                      );
+                    }).toList(),
+                  )),
               TabBar(
                 controller: _tabController,
                 isScrollable: true,
@@ -75,9 +75,9 @@ class _ReportScreenState extends State<ReportScreen>
                 ),
                 tabs: _controller.listTimeline
                     .map((e) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: Text(e),
-                ))
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Text(e),
+                        ))
                     .toList(),
               ),
             ],
@@ -102,7 +102,8 @@ class _ReportScreenState extends State<ReportScreen>
               Text(R.Summary.tr),
               Obx(
                 () => Text(
-                  FormatHelper().moneyFormat(_controller.summary.value.toDouble()),
+                  FormatHelper()
+                      .moneyFormat(_controller.summary.value.toDouble()),
                   style: TextStyle(
                     fontSize: 25,
                     color: _controller.summary.value < 0
@@ -159,7 +160,8 @@ class _ReportScreenState extends State<ReportScreen>
               ),
               Obx(
                 () => Text(
-                  FormatHelper().moneyFormat(_controller.incomeSummary.value.toDouble()),
+                  FormatHelper()
+                      .moneyFormat(_controller.incomeSummary.value.toDouble()),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
@@ -206,7 +208,8 @@ class _ReportScreenState extends State<ReportScreen>
               ),
               Obx(
                 () => Text(
-                  FormatHelper().moneyFormat(_controller.expenseSummary.value.toDouble()),
+                  FormatHelper()
+                      .moneyFormat(_controller.expenseSummary.value.toDouble()),
                   style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

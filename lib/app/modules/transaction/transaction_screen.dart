@@ -39,6 +39,7 @@ class _TransactionScreenState extends State<TransactionScreen>
       appBar: AppBar(
         elevation: 5,
         centerTitle: true,
+        automaticallyImplyLeading: false,
         title: Column(
           children: [
             Text(R.Balance.tr),

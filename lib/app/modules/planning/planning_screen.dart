@@ -20,6 +20,7 @@ class _PlanningScreenState extends State<PlanningScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(R.Planning.tr),
+        automaticallyImplyLeading: false,
       ),
       //////////////////
       body: ListView(
