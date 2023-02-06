@@ -19,19 +19,28 @@ class TransactionController extends GetxController {
 
   var transactionsByTime = TransactionsByTime().obs;
 
-
   initData() async {
     var walletController = Get.find<MyWalletController>();
-    listWallet.value = [...walletController.listWallet,...walletController.listGroupWallet];
-    if(listWallet.isEmpty) {
+
+    Wallet globalWallet = Wallet(
+        name: R.Totalwallet.tr, id: -1, balance: _calculateTotalBalance());
+
+    listWallet.value = [
+      globalWallet,
+      ...walletController.listWallet,
+      ...walletController.listGroupWallet
+    ];
+
+    if (listWallet.isEmpty) {
       EasyLoading.showToast(R.Walleterror.tr);
       Get.find<BottomBarController>().currentIndex.value = 0;
       return;
     }
+
     selectedWallet.value = listWallet[0];
     generateTimeLine();
     selectedTimeLine.value = listTimeline[listTimeline.length - 2];
-    getTransactionByWalletId();
+    changeWallet(selectedWallet.value);
   }
 
   void toCreateTransactionScreen() {
@@ -94,7 +103,18 @@ class TransactionController extends GetxController {
     return total;
   }
 
-  getGlobalTransaction() {}
+  getGlobalTransaction() async {
+    EasyLoading.show();
+    var res = await TransactionService.ins
+        .getGlobalTransaction(selectedTimeLine.value!);
+    EasyLoading.dismiss();
+
+    if (res.isOk) {
+      transactionsByTime.value = TransactionsByTime.fromJson(res.data);
+    } else {
+      EasyLoading.showToast(res.errorMessage);
+    }
+  }
 
   getTransactionByWalletId() async {
     EasyLoading.show();

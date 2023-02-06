@@ -7,7 +7,6 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/app/controllers/transaction/edit_transaction_controller.dart';
-import 'package:money_keeper/data/models/wallet_member.dart';
 import 'package:money_keeper/data/services/services.dart';
 
 import '../../../data/models/transaction.dart';
@@ -58,7 +57,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       EasyLoading.showToast(res.errorMessage);
     }
     user.clear();
-    if(tempTrans.participants != null) {
+    if (tempTrans.participants != null) {
       if (tempTrans.participants!.isNotEmpty) {
         _controller.listUserGroup.value = tempTrans.participants!;
       } else {
@@ -66,7 +65,8 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       }
     }
     if (tempTrans.wallet!.type == 'Group') {
-      var kq = walletController.listGroupWallet.firstWhere((element) => element.id == tempTrans.walletId);
+      var kq = walletController.listGroupWallet
+          .firstWhere((element) => element.id == tempTrans.walletId);
       kq.walletMembers?.forEach((element) {
         if (element.user!.email != _ac.currentUser.value!.email) {
           user.add(element.user!);
@@ -515,7 +515,11 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
                         if (tempTrans.image != null) {
                           return Stack(
                             children: [
-                              Image.network(tempTrans.image!),
+                              Image.network(
+                                tempTrans.image!,
+                                errorBuilder: (context, _, __) =>
+                                    const Center(),
+                              ),
                               GestureDetector(
                                 onTap: () {
                                   setState(() {

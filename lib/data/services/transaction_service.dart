@@ -56,6 +56,27 @@ class TransactionService extends GetConnect {
           'Authorization': _ac.currentUser.value!.token!,
         });
   }
+  Future<Response> getGlobalTransaction(
+      String timeRange,
+      ) async {
+    if (timeRange == R.Lastmonth.tr) {
+      timeRange =
+      "${DateTime.now().month - 1 <= 0 ? 12 : DateTime.now().month - 1}/${DateTime.now().year}";
+    } else if (timeRange == R.Thismonth.tr) {
+      timeRange = "${DateTime.now().month}/${DateTime.now().year}";
+    } else if (timeRange == R.Nextmonth.tr) {
+      timeRange =
+      "${DateTime.now().month + 1 >= 13 ? 1 : DateTime.now().month + 1}/${DateTime.now().year}";
+    }
+    return await get("$api_url/global-wallets/transactions",
+        query: <String, String>{
+          "StartDate": _getStartDate(timeRange),
+          "EndDate": _getEndDate(timeRange),
+        },
+        headers: <String, String>{
+          'Authorization': _ac.currentUser.value!.token!,
+        });
+  }
 
   Future<Response> deleteTransaction(Transaction delTrans) async {
     return await delete(

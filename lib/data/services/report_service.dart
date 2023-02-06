@@ -12,7 +12,6 @@ class ReportService extends GetConnect {
 
   final AccountController _ac = Get.find();
 
-
   Future<Response> getDailyReportByWalletId(
       {required int walletId, required String timeRange}) async {
     if (timeRange == R.Lastmonth.tr) {
@@ -24,62 +23,110 @@ class ReportService extends GetConnect {
       timeRange =
           "${DateTime.now().month + 1 >= 13 ? 1 : DateTime.now().month + 1}/${DateTime.now().year}";
     }
-    return await get(
-      "$api_url/wallets/$walletId/statistic/group",
-      query: <String, String>{
-        "StartDate": _getStartDate(timeRange),
-        "EndDate": _getEndDate(timeRange),
-      },
-      headers: <String,String>{
-        'Authorization': _ac.currentUser.value!.token!,
-      }
-    );
+    return await get("$api_url/wallets/$walletId/statistic/group",
+        query: <String, String>{
+          "StartDate": _getStartDate(timeRange),
+          "EndDate": _getEndDate(timeRange),
+        },
+        headers: <String, String>{
+          'Authorization': _ac.currentUser.value!.token!,
+        });
+  }
+
+  Future<Response> getDailyReportGlobal({required String timeRange}) async {
+    if (timeRange == R.Lastmonth.tr) {
+      timeRange =
+          "${DateTime.now().month - 1 <= 0 ? 12 : DateTime.now().month - 1}/${DateTime.now().year}";
+    } else if (timeRange == R.Thismonth.tr) {
+      timeRange = "${DateTime.now().month}/${DateTime.now().year}";
+    } else if (timeRange == R.Nextmonth.tr) {
+      timeRange =
+          "${DateTime.now().month + 1 >= 13 ? 1 : DateTime.now().month + 1}/${DateTime.now().year}";
+    }
+    return await get("$api_url/global-wallets/group", query: <String, String>{
+      "StartDate": _getStartDate(timeRange),
+      "EndDate": _getEndDate(timeRange),
+    }, headers: <String, String>{
+      'Authorization': _ac.currentUser.value!.token!,
+    });
   }
 
   Future<Response> getIncomeReportByWalletId(
       {required int walletId, required String timeRange}) async {
     if (timeRange == R.Lastmonth.tr) {
       timeRange =
-      "${DateTime.now().month - 1 <= 0 ? 12 : DateTime.now().month - 1}/${DateTime.now().year}";
+          "${DateTime.now().month - 1 <= 0 ? 12 : DateTime.now().month - 1}/${DateTime.now().year}";
     } else if (timeRange == R.Thismonth.tr) {
       timeRange = "${DateTime.now().month}/${DateTime.now().year}";
     } else if (timeRange == R.Nextmonth.tr) {
       timeRange =
-      "${DateTime.now().month + 1 >= 13 ? 1 : DateTime.now().month + 1}/${DateTime.now().year}";
+          "${DateTime.now().month + 1 >= 13 ? 1 : DateTime.now().month + 1}/${DateTime.now().year}";
     }
-    return await get(
-        "$api_url/wallets/$walletId/statistic/income",
+    return await get("$api_url/wallets/$walletId/statistic/income",
         query: <String, String>{
           "StartDate": _getStartDate(timeRange),
           "EndDate": _getEndDate(timeRange),
         },
-        headers: <String,String>{
+        headers: <String, String>{
           'Authorization': _ac.currentUser.value!.token!,
-        }
-    );
+        });
+  }
+
+  Future<Response> getIncomeReportGlobal({required String timeRange}) async {
+    if (timeRange == R.Lastmonth.tr) {
+      timeRange =
+          "${DateTime.now().month - 1 <= 0 ? 12 : DateTime.now().month - 1}/${DateTime.now().year}";
+    } else if (timeRange == R.Thismonth.tr) {
+      timeRange = "${DateTime.now().month}/${DateTime.now().year}";
+    } else if (timeRange == R.Nextmonth.tr) {
+      timeRange =
+          "${DateTime.now().month + 1 >= 13 ? 1 : DateTime.now().month + 1}/${DateTime.now().year}";
+    }
+    return await get("$api_url/global-wallets/income", query: <String, String>{
+      "StartDate": _getStartDate(timeRange),
+      "EndDate": _getEndDate(timeRange),
+    }, headers: <String, String>{
+      'Authorization': _ac.currentUser.value!.token!,
+    });
   }
 
   Future<Response> getExpenseReportByWalletId(
       {required int walletId, required String timeRange}) async {
     if (timeRange == R.Lastmonth.tr) {
       timeRange =
-      "${DateTime.now().month - 1 <= 0 ? 12 : DateTime.now().month - 1}/${DateTime.now().year}";
+          "${DateTime.now().month - 1 <= 0 ? 12 : DateTime.now().month - 1}/${DateTime.now().year}";
     } else if (timeRange == R.Thismonth.tr) {
       timeRange = "${DateTime.now().month}/${DateTime.now().year}";
     } else if (timeRange == R.Nextmonth.tr) {
       timeRange =
-      "${DateTime.now().month + 1 >= 13 ? 1 : DateTime.now().month + 1}/${DateTime.now().year}";
+          "${DateTime.now().month + 1 >= 13 ? 1 : DateTime.now().month + 1}/${DateTime.now().year}";
     }
-    return await get(
-        "$api_url/wallets/$walletId/statistic/expense",
+    return await get("$api_url/wallets/$walletId/statistic/expense",
         query: <String, String>{
           "StartDate": _getStartDate(timeRange),
           "EndDate": _getEndDate(timeRange),
         },
-        headers: <String,String>{
+        headers: <String, String>{
           'Authorization': _ac.currentUser.value!.token!,
-        }
-    );
+        });
+  }
+
+  Future<Response> getExpenseReportGlobal({required String timeRange}) async {
+    if (timeRange == R.Lastmonth.tr) {
+      timeRange =
+          "${DateTime.now().month - 1 <= 0 ? 12 : DateTime.now().month - 1}/${DateTime.now().year}";
+    } else if (timeRange == R.Thismonth.tr) {
+      timeRange = "${DateTime.now().month}/${DateTime.now().year}";
+    } else if (timeRange == R.Nextmonth.tr) {
+      timeRange =
+          "${DateTime.now().month + 1 >= 13 ? 1 : DateTime.now().month + 1}/${DateTime.now().year}";
+    }
+    return await get("$api_url/global-wallets/expense", query: <String, String>{
+      "StartDate": _getStartDate(timeRange),
+      "EndDate": _getEndDate(timeRange),
+    }, headers: <String, String>{
+      'Authorization': _ac.currentUser.value!.token!,
+    });
   }
 
   _getEndDate(String timeRange) {

@@ -26,19 +26,28 @@ class ReportController extends GetxController {
 
   var dy = RxList<double>(); // cột dọc biểu đồ
 
-  initData() async{
+  initData() async {
     var walletController = Get.find<MyWalletController>();
-    listWallet.value = [...walletController.listWallet,...walletController.listGroupWallet];
-    if(listWallet.isEmpty) {
+
+    Wallet globalWallet = Wallet(
+        name: R.Totalwallet.tr, id: -1, balance: _calculateTotalBalance());
+
+    listWallet.value = [
+      globalWallet,
+      ...walletController.listWallet,
+      ...walletController.listGroupWallet
+    ];
+
+    if (listWallet.isEmpty) {
       EasyLoading.showToast(R.Walleterror.tr);
       Get.find<BottomBarController>().currentIndex.value = 0;
       return;
     }
+
     selectedWallet.value = listWallet[0];
     generateTimeLine();
     selectedTimeLine.value = listTimeline[listTimeline.length - 2];
-
-    getReportData();
+    changeWallet(selectedWallet.value);
   }
 
   getReportData() async {
@@ -101,9 +110,17 @@ class ReportController extends GetxController {
 
   Future<void> _getLineData() async {
     EasyLoading.show();
-    var res = await ReportService.ins.getDailyReportByWalletId(
-        walletId: selectedWallet.value.id!, timeRange: selectedTimeLine.value!);
+    Response res;
+    if (selectedWallet.value.id == -1) {
+      res = await ReportService.ins
+          .getDailyReportGlobal(timeRange: selectedTimeLine.value!);
+    } else {
+      res = await ReportService.ins.getDailyReportByWalletId(
+          walletId: selectedWallet.value.id!,
+          timeRange: selectedTimeLine.value!);
+    }
     EasyLoading.dismiss();
+
     if (res.isOk) {
       dailyReport.value = [];
       dy.value = [];
@@ -137,38 +154,70 @@ class ReportController extends GetxController {
   }
 
   void _getIncomeData() {
-    ReportService.ins
-        .getIncomeReportByWalletId(
-            walletId: selectedWallet.value.id!,
-            timeRange: selectedTimeLine.value!)
-        .then((res) {
-      if (res.isOk) {
-        incomePie.value = [];
-        incomeSummary.value = res.data["totalAmount"];
-        for (int i = 0; i < res.data["details"].length; i++) {
-          incomePie.add(PieReport.fromJson(res.data["details"][i]));
+    if (selectedWallet.value.id == -1) {
+      ReportService.ins
+          .getIncomeReportGlobal(timeRange: selectedTimeLine.value!)
+          .then((res) {
+        if (res.isOk) {
+          incomePie.value = [];
+          incomeSummary.value = res.data["totalAmount"];
+          for (int i = 0; i < res.data["details"].length; i++) {
+            incomePie.add(PieReport.fromJson(res.data["details"][i]));
+          }
+        } else {
+          EasyLoading.showToast(res.errorMessage);
         }
-      } else {
-        EasyLoading.showToast(res.errorMessage);
-      }
-    });
+      });
+    } else {
+      ReportService.ins
+          .getIncomeReportByWalletId(
+              walletId: selectedWallet.value.id!,
+              timeRange: selectedTimeLine.value!)
+          .then((res) {
+        if (res.isOk) {
+          incomePie.value = [];
+          incomeSummary.value = res.data["totalAmount"];
+          for (int i = 0; i < res.data["details"].length; i++) {
+            incomePie.add(PieReport.fromJson(res.data["details"][i]));
+          }
+        } else {
+          EasyLoading.showToast(res.errorMessage);
+        }
+      });
+    }
   }
 
   void _getExpenseData() {
-    ReportService.ins
-        .getExpenseReportByWalletId(
-            walletId: selectedWallet.value.id!,
-            timeRange: selectedTimeLine.value!)
-        .then((res) {
-      if (res.isOk) {
-        expensePie.value = [];
-        expenseSummary.value = res.data["totalAmount"];
-        for (int i = 0; i < res.data["details"].length; i++) {
-          expensePie.add(PieReport.fromJson(res.data["details"][i]));
+    if (selectedWallet.value.id == -1) {
+      ReportService.ins
+          .getExpenseReportGlobal(timeRange: selectedTimeLine.value!)
+          .then((res) {
+        if (res.isOk) {
+          expensePie.value = [];
+          expenseSummary.value = res.data["totalAmount"];
+          for (int i = 0; i < res.data["details"].length; i++) {
+            expensePie.add(PieReport.fromJson(res.data["details"][i]));
+          }
+        } else {
+          EasyLoading.showToast(res.errorMessage);
         }
-      } else {
-        EasyLoading.showToast(res.errorMessage);
-      }
-    });
+      });
+    } else {
+      ReportService.ins
+          .getExpenseReportByWalletId(
+              walletId: selectedWallet.value.id!,
+              timeRange: selectedTimeLine.value!)
+          .then((res) {
+        if (res.isOk) {
+          expensePie.value = [];
+          expenseSummary.value = res.data["totalAmount"];
+          for (int i = 0; i < res.data["details"].length; i++) {
+            expensePie.add(PieReport.fromJson(res.data["details"][i]));
+          }
+        } else {
+          EasyLoading.showToast(res.errorMessage);
+        }
+      });
+    }
   }
 }
