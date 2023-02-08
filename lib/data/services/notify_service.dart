@@ -15,4 +15,18 @@ class NotifyService extends GetConnect {
       'Authorization': _ac.currentUser.value!.token!,
     });
   }
+
+  Future<Response> seenById({required int id}) async {
+    return await get("$api_url/notifications/$id/seen",
+        headers: <String, String>{
+          'Authorization': _ac.currentUser.value!.token!,
+        });
+  }
+
+  Future<Response> seenAllNotify() async {
+    return await get("$api_url/notifications/seen-all",
+        headers: <String, String>{
+          'Authorization': _ac.currentUser.value!.token!,
+        });
+  }
 }

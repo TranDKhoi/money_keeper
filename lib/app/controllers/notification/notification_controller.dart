@@ -26,8 +26,8 @@ class NotificationController extends GetxController {
           if (!listNotify.contains(newNoti)) {
             listNotify.add(Notify.fromJson(notifyItem[0]));
           }
-          PushService.ins
-              .showNotification(title: R.Overspent.tr, body: newNoti.description);
+          PushService.ins.showNotification(
+              title: R.Overspent.tr, body: newNoti.description);
         });
   }
 
@@ -44,5 +44,12 @@ class NotificationController extends GetxController {
     } else {
       EasyLoading.showToast(res.errorMessage);
     }
+  }
+
+  seenAllNotify() async {
+    EasyLoading.show();
+    await NotifyService.ins.seenAllNotify();
+    EasyLoading.dismiss();
+    getAllNotify();
   }
 }

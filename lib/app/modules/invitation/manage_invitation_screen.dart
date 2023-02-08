@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 import 'package:money_keeper/data/models/invitation.dart';
 
 import '../../controllers/invitation_controller.dart';
+import '../../core/utils/utils.dart';
 import '../../core/values/r.dart';
 
 class ManageInvitationScreen extends StatelessWidget {
@@ -54,7 +55,6 @@ class ManageInvitationScreen extends StatelessWidget {
         );
         break;
     }
-    print(invite.toJson());
 
     return ListTile(
       leading: CircleAvatar(
@@ -63,10 +63,33 @@ class ManageInvitationScreen extends StatelessWidget {
       ),
       title: Padding(
         padding: const EdgeInsets.only(bottom: 20),
-        child: Text(R.Youhavenewinvite.tr),
+        child: Column(
+          children: [
+            Text(
+                "${R.Youhavenewinvite.tr} ${invite.wallet?.name} ${R.from.tr} ${invite.sender?.email}"),
+            // const SizedBox(height: 10),
+            // Row(
+            //   children: [
+            //     Center(
+            //       child: CircleAvatar(
+            //         radius: 15,
+            //         backgroundImage: NetworkImage(invite.sender?.avatar ??
+            //             "https://d2v9ipibika81v.cloudfront.net/uploads/sites/210/Profile-Icon.png"),
+            //       ),
+            //     ),
+            //     const SizedBox(width: 5),
+            //     Text(invite.sender?.email ?? ""),
+            //   ],
+            // ),
+          ],
+        ),
       ),
-      subtitle: invite.status == "New"
-          ? Row(
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(FormatHelper().getTimeAgo(invite.createdAt) ?? ""),
+          if (invite.status == "New")
+            Row(
               mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
@@ -88,8 +111,9 @@ class ManageInvitationScreen extends StatelessWidget {
                   ),
                 )
               ],
-            )
-          : null,
+            ),
+        ],
+      ),
       trailing: icon,
     );
   }

@@ -1,5 +1,5 @@
-
 import 'package:json_annotation/json_annotation.dart';
+import 'package:money_keeper/data/models/budget.dart';
 import 'package:money_keeper/data/models/transaction.dart';
 import 'package:money_keeper/data/models/user.dart';
 import 'package:money_keeper/data/models/wallet.dart';
@@ -8,7 +8,6 @@ part 'notify.g.dart';
 
 @JsonSerializable()
 class Notify {
-
   int? id;
   String? description;
   String? type;
@@ -20,10 +19,11 @@ class Notify {
   Transaction? transaction;
   int? budgetId;
   DateTime? createdAt;
-  // Budget? budget;
+  Budget? budget;
+  bool? isSeen;
 
   Notify(
-  {this.id,
+      {this.id,
       this.description,
       this.type,
       this.userId,
@@ -33,11 +33,11 @@ class Notify {
       this.transactionId,
       this.transaction,
       this.budgetId,
-      this.createdAt});
+      this.createdAt,
+      this.budget,
+      this.isSeen});
 
-
-  factory Notify.fromJson(Map<String, dynamic> json) =>
-      _$NotifyFromJson(json);
+  factory Notify.fromJson(Map<String, dynamic> json) => _$NotifyFromJson(json);
 
   Map<String, dynamic> toJson() => _$NotifyToJson(this);
 }

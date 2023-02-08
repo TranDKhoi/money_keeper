@@ -26,6 +26,10 @@ Notify _$NotifyFromJson(Map<String, dynamic> json) => Notify(
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
+      budget: json['budget'] == null
+          ? null
+          : Budget.fromJson(json['budget'] as Map<String, dynamic>),
+      isSeen: json['isSeen'] as bool?,
     );
 
 Map<String, dynamic> _$NotifyToJson(Notify instance) => <String, dynamic>{
@@ -40,4 +44,6 @@ Map<String, dynamic> _$NotifyToJson(Notify instance) => <String, dynamic>{
       'transaction': instance.transaction,
       'budgetId': instance.budgetId,
       'createdAt': instance.createdAt?.toIso8601String(),
+      'budget': instance.budget,
+      'isSeen': instance.isSeen,
     };

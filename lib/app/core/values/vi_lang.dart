@@ -176,4 +176,6 @@ const Map<String, String> viLanguagePackage = {
   R.yourOwnerWallet: 'Bạn đã là chủ ví',
   R.emailNotExits: 'Email không tồn tại',
   R.emailEnteredThat: 'Email đã được nhập',
+  R.Seenall: 'Đã xem',
+  R.from: 'từ',
 };

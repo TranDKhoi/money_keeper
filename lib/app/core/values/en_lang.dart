@@ -176,4 +176,6 @@ const Map<String, String> enLanguagePackage = {
   R.yourOwnerWallet: 'You are already the wallet owner',
   R.emailNotExits: 'User does not exist',
   R.emailEnteredThat: 'You already entered that',
+  R.Seenall: 'Seen all',
+  R.from: 'from',
 };

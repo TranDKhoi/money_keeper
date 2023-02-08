@@ -180,4 +180,6 @@ class R {
   static const yourOwnerWallet = 'You are already the wallet owner';
   static const emailNotExits = 'User does not exist';
   static const emailEnteredThat = 'You already entered that';
+  static const Seenall = 'Seenall';
+  static const from = 'from';
 }

@@ -5,9 +5,9 @@ import 'package:money_keeper/app/controllers/planning/budget/budget_controller.d
 import 'package:money_keeper/app/core/utils/utils.dart';
 import 'package:money_keeper/app/modules/invitation/manage_invitation_screen.dart';
 import 'package:money_keeper/app/routes/routes.dart';
-import 'package:money_keeper/data/models/invitation.dart';
 import 'package:money_keeper/data/models/notify.dart';
 
+import '../../../data/services/notify_service.dart';
 import '../../controllers/notification/notification_controller.dart';
 import '../../core/values/r.dart';
 
@@ -21,9 +21,9 @@ class NotifyScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(R.Notification.tr),
         actions: [
-          IconButton(
-              onPressed: () => _controller.getAllNotify(),
-              icon: const Icon(Ionicons.refresh))
+          TextButton(
+              onPressed: () => _controller.seenAllNotify(),
+            child: Text(R.Seenall.tr),)
         ],
       ),
       body: Obx(
@@ -53,6 +53,7 @@ class NotifyScreen extends StatelessWidget {
 
     return ListTile(
       onTap: () async {
+        NotifyService.ins.seenById(id: notify.id!);
         switch (notify.type) {
           case "BudgetExceed":
             await Get.put(BudgetController())
@@ -63,7 +64,7 @@ class NotifyScreen extends StatelessWidget {
             icon = "assets/icons/alarm.png";
             break;
           case "JoinWalletInvitation":
-            Get.to(()=>ManageInvitationScreen());
+            Get.to(() => ManageInvitationScreen());
             icon = "assets/icons/invite.png";
             break;
         }
@@ -81,12 +82,15 @@ class NotifyScreen extends StatelessWidget {
                 maxLines: 3,
               )),
           const Spacer(),
-          const Expanded(
-            flex: 1,
-            child: Icon(
-              Icons.circle,
-              size: 15,
-              color: Colors.redAccent,
+          Visibility(
+            visible: !(notify.isSeen ?? false),
+            child: const Expanded(
+              flex: 1,
+              child: Icon(
+                Icons.circle,
+                size: 15,
+                color: Colors.redAccent,
+              ),
             ),
           ),
         ],
